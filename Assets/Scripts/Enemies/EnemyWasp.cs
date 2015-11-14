@@ -67,10 +67,10 @@ public class EnemyWasp : EnemyInfo {
     }
     void readyUp()
     {
-        lookAt(player); 
+        lookAt(player);
         //animate here
-
-        if(curReadyTime < 0)
+        Debug.Log(curReadyTime);
+        if(curReadyTime <= 0)
         {
             curReadyTime = readyTime;
             chargeStartPos = transform.position;

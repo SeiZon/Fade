@@ -9,7 +9,6 @@ public class Painting : MonoBehaviour {
     Vector3 desiredScale = Vector3.zero;
     SphereCollider sphereCollider;
     bool scale = true;
-    bool shrink = false;
     bool addedToGroup = false;
     Player player;
     TwinStickController playercontroller;
@@ -48,9 +47,6 @@ public class Painting : MonoBehaviour {
                 checkForGrouping();
                 lastScale = transform.lossyScale.x;
             }
-        }else if(shrink)
-        {
-            //begin skrinking
         }
 
         //Below: Runs after splat is at full size
@@ -62,7 +58,8 @@ public class Painting : MonoBehaviour {
         }
 
         if (transform.lossyScale.x < minSizeBeforeDestroy) {
-            CheckToRevealGeometry();
+            transform.localScale = Vector3.zero;
+            HideAll();
             playercontroller.RemoveFromSplats(this);
             splatGroup.splats.Remove(this);
             Destroy(gameObject);
@@ -77,13 +74,7 @@ public class Painting : MonoBehaviour {
         }
         */
 	}
-
-    public void beginShrink()
-    {
-        scale = false;
-        shrink = true;
-    }
-
+    
     void checkForGrouping() {
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.lossyScale.x / 2);
         bool foundGroup = false;
@@ -132,6 +123,29 @@ public class Painting : MonoBehaviour {
         addedToGroup = false;
     }
 
+    void HideAll() {
+        for (int i = 0; i < revealedGeometry.Count; i++) {
+            Transform t = revealedGeometry[i];
+            
+            foreach (Transform child in t.GetComponentsInChildren<Transform>()) {
+                child.gameObject.layer = LayerMask.NameToLayer("Hidden Geometry");
+                MeshRenderer mr = child.GetComponent<MeshRenderer>();
+                if (mr != null) {
+                    mr.enabled = false;
+                }
+            }
+        }
+        for (int i = 0; i < revealedKeyObjects.Count; i++) {
+            Transform t = revealedKeyObjects[i];
+            
+            foreach (Transform child in t.GetComponentsInChildren<Transform>()) {
+                child.gameObject.layer = LayerMask.NameToLayer("Hidden KeyObjects");
+                MeshRenderer mr = child.GetComponent<MeshRenderer>();
+                if (mr != null) mr.enabled = false;
+            }
+        }
+    }
+
     void CheckToRevealGeometry() {
         List<Transform> currentObjects = new List<Transform>();
         Collider[] hitColliders = Physics.OverlapSphere(transform.position, transform.lossyScale.x / 2);
@@ -139,19 +153,15 @@ public class Painting : MonoBehaviour {
             currentObjects.Add(c.transform);
             if (c.gameObject.layer == LayerMask.NameToLayer("Hidden KeyObjects")) {
                 if (scale) revealedKeyObjects.Add(c.transform);
-            }
+            } 
             else if (c.gameObject.layer == LayerMask.NameToLayer("Hidden Geometry")) {
                 if (scale) revealedGeometry.Add(c.transform);
             }
             else continue;
-
-
-            c.gameObject.layer = LayerMask.NameToLayer("Default");
-            MeshRenderer mr = c.GetComponent<MeshRenderer>();
-            if (mr != null) mr.enabled = true;
-            foreach (Transform t in c.transform) {
+            
+            foreach (Transform t in c.GetComponentsInChildren<Transform>()) {
                 t.gameObject.layer = LayerMask.NameToLayer("Default");
-                mr = t.GetComponent<MeshRenderer>();
+                MeshRenderer mr = t.GetComponent<MeshRenderer>();
                 if (mr != null) mr.enabled = true;
             }
         }
@@ -162,14 +172,14 @@ public class Painting : MonoBehaviour {
             Transform t = revealedGeometry[i];
             if (!currentObjects.Contains(t)) {
                 revealedGeometry.Remove(t);
+                Debug.Log(t.gameObject.name);
 
-                t.gameObject.layer = LayerMask.NameToLayer("Hidden Geometry");
-                MeshRenderer mr = t.GetComponent<MeshRenderer>();
-                if (mr != null) mr.enabled = false;
-                foreach (Transform child in t) {
+                foreach (Transform child in t.GetComponentsInChildren<Transform>()) {
                     child.gameObject.layer = LayerMask.NameToLayer("Hidden Geometry");
-                    mr = t.GetComponent<MeshRenderer>();
-                    if (mr != null) mr.enabled = false;
+                    MeshRenderer mr = child.GetComponent<MeshRenderer>();
+                    if (mr != null) {
+                        mr.enabled = false;
+                    }
                 }
             }
         }
@@ -178,12 +188,9 @@ public class Painting : MonoBehaviour {
             if (!currentObjects.Contains(t)) {
                 revealedKeyObjects.Remove(t);
 
-                t.gameObject.layer = LayerMask.NameToLayer("Hidden KeyObjects");
-                MeshRenderer mr = t.GetComponent<MeshRenderer>();
-                if (mr != null) mr.enabled = false;
-                foreach (Transform child in t) {
+               foreach (Transform child in t.GetComponentsInChildren<Transform>()) {
                     child.gameObject.layer = LayerMask.NameToLayer("Hidden KeyObjects");
-                    mr = t.GetComponent<MeshRenderer>();
+                    MeshRenderer mr = child.GetComponent<MeshRenderer>();
                     if (mr != null) mr.enabled = false;
                 }
             }

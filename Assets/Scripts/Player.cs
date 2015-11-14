@@ -3,19 +3,19 @@ using System.Collections;
 
 public class Player : MonoBehaviour {
 
-    [SerializeField]
-    protected float INITIALHP = 100;
+    [SerializeField] protected float INITIALHP = 100;
     /*[SerializeField]
     protected float MAXENERGY = 100;
     [SerializeField]
     protected float INITIALENERGY = 100;*/
     //[SerializeField] protected float shootReloadTime = 3f;
-    [SerializeField]
-    protected float pushReloadTime = 3f;
-    [SerializeField]
-    protected float sonarReloadTime = 3f;
-    [SerializeField]
-    protected float sonarHealthCost = 0;
+    [SerializeField] protected float pushReloadTime = 3f;
+    [SerializeField] protected float sonarReloadTime = 3f;
+    [SerializeField] protected float sonarHealthCost = 0;
+
+    //FOR TESTING: TODO: REMOVE!
+    [SerializeField] protected bool DEBUGMODE = false;
+
     //private float shootReloadRemaining = 0;
     private float pushReloadRemaining = 0;
     private float sonarReloadRemaining = 0;
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour {
         //Play Drain animation (Needs to be continous
 
         //TESTING REMOVE
-        //return true;
+        if (DEBUGMODE) return true;
 
         if (currentHp >= INITIALHP) return false;
         else {
