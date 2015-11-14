@@ -22,8 +22,6 @@ public class TwinStickController : MonoBehaviour {
 	[SerializeField] protected float moveSpeed = 30;
     [SerializeField] protected float maxShotChargeTime = 3;
 	[SerializeField] protected float minShotChargeTime = 1;
-	[SerializeField] protected float maxShotSpeed = 5;
-    [SerializeField] protected float minShotSpeed = 2;
     [SerializeField] protected float rumbleSensivity = 1;
     [SerializeField] protected float maxDrainSpeed = 1;
     [SerializeField] protected float drainSpeedAccel = 1;
@@ -115,9 +113,10 @@ public class TwinStickController : MonoBehaviour {
                 shotChargeSoundIsPlaying = false;
                 audioSource.Stop();
                 audioSource.PlayOneShot(shotReleaseSoundClip, soundVolume);
-                float chargePercent = ((currentShotCharge - minShotChargeTime) / (maxShotChargeTime - minShotChargeTime)) * 100;
-                float shotSpeed = ((maxShotSpeed - minShotSpeed) / 100) * chargePercent + minShotSpeed;
-                Shoot(shotSpeed);
+                GameData.ShotType shotType;
+                if (currentShotCharge == maxShotChargeTime) shotType = GameData.ShotType.Charged;
+                else shotType = GameData.ShotType.Normal;
+                Shoot(shotType);
                 currentShotCharge = 0;
             }
             else
@@ -211,11 +210,12 @@ public class TwinStickController : MonoBehaviour {
 
     }
 
-    void Shoot(float bulletSpeed) {
+    void Shoot(GameData.ShotType shotType) {
         GameObject shotGo = Instantiate(shotPrefab, barrelEnd.position, transform.rotation) as GameObject;
         player.Shoot(shotGo.transform);
         Shot shot = shotGo.GetComponent<Shot>();
-        shot.Initialize(bulletSpeed, GameData.shotDamageTable[(int)player.team], player.team);
+        float bulletSpeed = GameData.shotMoveSpeedTable[(int)shotType];
+        shot.Initialize(bulletSpeed, GameData.shotDamageTable[(int)player.team], player.team, shotType);
     }
 
     void Use(InteractableObject iObj) {

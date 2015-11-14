@@ -4,6 +4,7 @@ using System.Collections;
 public class Shot : MonoBehaviour {
 
     public GameData.Team team;
+    public GameData.ShotType shotType;
 	public GameObject shotParticle;
     public GameObject shotParticlePlayer;
 
@@ -11,10 +12,11 @@ public class Shot : MonoBehaviour {
     float moveSpeed;
     int damage;
 
-    public void Initialize(float moveSpeed, int damage, GameData.Team team) {
+    public void Initialize(float moveSpeed, int damage, GameData.Team team, GameData.ShotType shotType) {
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         this.team = team;
+        this.shotType = shotType;
     }
 
 	// Use this for initialization

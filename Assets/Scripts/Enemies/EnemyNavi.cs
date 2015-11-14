@@ -6,14 +6,18 @@ public class EnemyNavi : EnemyInfo {
     [SerializeField] Transform barrelEnd;
     [SerializeField] GameObject shotPrefab;
     [SerializeField] int gunCooldown, stunTime, maxAttackDistance, minAttackDistance, evadeSpeed, detectRadius;
+    [SerializeField] float dodgeSpeed = 1, dodgeDistance = 1;
 
     CapsuleCollider capCollider;
 
     int curGunCooldown = 0, curStunTime;
-    float averageDistance = 0;
+    float averageDistance = 0, dodgeDurationRemaining = 0;
     bool backOff = false;
     bool closingIn = false;
     bool attacking = false;
+    bool dodgingLeft = false, dodgingRight = false;
+    Vector3 dodgeDestination;
+    Transform incomingProjectile;
 
     public enum enemyState
     {
@@ -120,6 +124,30 @@ public class EnemyNavi : EnemyInfo {
                 gameObject.layer = LayerMask.NameToLayer("Invincible");
             }
         }
+
+        if (dodgingRight) {
+            if (dodgeDurationRemaining >= 1) {
+                dodgeDurationRemaining = 0;
+                dodgingRight = false;
+            }
+            else {
+                transform.position = Vector3.Lerp(transform.position, dodgeDestination, dodgeDurationRemaining);
+
+                dodgeDurationRemaining += Time.deltaTime * dodgeSpeed;
+            }
+        }
+        else if (dodgingLeft) {
+
+            if (dodgeDurationRemaining >= 1) {
+                dodgeDurationRemaining = 0;
+                dodgingLeft = false;
+            }
+            else {
+                transform.position = Vector3.Lerp(transform.position, dodgeDestination, dodgeDurationRemaining);
+
+                dodgeDurationRemaining += Time.deltaTime * dodgeSpeed;
+            }
+        }
 	}
 
     void checkForIncomingShots(Transform shot)
@@ -131,6 +159,7 @@ public class EnemyNavi : EnemyInfo {
         foreach (RaycastHit hit in hitinfo) {
             if (hit.transform == transform) {
                 state = enemyState.evade;
+                incomingProjectile = shot;
             }
         }
     }
@@ -206,7 +235,7 @@ public class EnemyNavi : EnemyInfo {
             {
                 GameObject shotGo = Instantiate(shotPrefab, barrelEnd.position, barrelEnd.rotation) as GameObject;
                 Shot shot = shotGo.GetComponent<Shot>();
-                shot.Initialize(GameData.shotMoveSpeedTable[(int)team], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], team);
+                shot.Initialize(GameData.shotMoveSpeedTable[(int)team], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], team, GameData.ShotType.Normal);
 
                 curGunCooldown = gunCooldown;
             }
@@ -215,22 +244,30 @@ public class EnemyNavi : EnemyInfo {
     void evade()
     {
 
-        int directionChoice = Random.Range(1, 3);
-
-        switch(directionChoice)
-        {
-            case 1:
-                transform.Translate(Vector3.right * -evadeSpeed * 2 * Time.deltaTime);
-                break;
-            case 2:
-                transform.Translate(Vector3.right * evadeSpeed * 2 * Time.deltaTime);
-                break;
-            default:
-                transform.Translate(Vector3.right * evadeSpeed * 2 * Time.deltaTime);
-                break;
+        Vector3 relativePos = transform.InverseTransformPoint(incomingProjectile.position);
+        //Incoming bullet is on the left, dodge right
+        if (relativePos.x < 0) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("DodgeRight")) animator.SetTrigger("DodgeRight");
+            dodgingRight = true;
+            dodgingLeft = false;
+            dodgeDestination = transform.position + transform.right * dodgeDistance;
         }
-
+        //Incoming bullet is on the right, dodge left
+        else if (relativePos.x > 0) {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("DodgeLeft")) animator.SetTrigger("DodgeLeft");
+            dodgingLeft = true;
+            dodgingRight = false;
+            dodgeDestination = transform.position + transform.right * -dodgeDistance;
+        }
+        //Incoming bullet is coming from straight ahead, dodge left(?)
+        else {
+            if (!animator.GetCurrentAnimatorStateInfo(0).IsName("DodgeLeft")) animator.SetTrigger("DodgeLeft");
+            dodgingLeft = true;
+            dodgingRight = false;
+            dodgeDestination = transform.position + transform.right * -dodgeDistance;
+        }
         state = enemyState.move;
+        dodgeDurationRemaining = 0;
     }
     void stunned()
     {

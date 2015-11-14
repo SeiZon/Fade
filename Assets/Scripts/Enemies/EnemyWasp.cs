@@ -3,13 +3,15 @@ using System.Collections;
 
 public class EnemyWasp : EnemyInfo {
     [SerializeField] int detectRadius, chargeDistance;
+    [SerializeField] Transform rotatingPoint;
+    [SerializeField] float maxRotateSpeed = 1;
 
     Vector3 chargeStartPos = Vector3.zero;
 
     //used for placeholder, until ready up animation is added
     int readyTime = 200;
     int curReadyTime;
-    //
+    float currentRotationSpeed = 0;
 
     enum enemyState
     {
@@ -69,7 +71,7 @@ public class EnemyWasp : EnemyInfo {
     {
         lookAt(player);
         //animate here
-        Debug.Log(curReadyTime);
+        rotatingPoint.RotateAround(transform.forward, Mathf.Lerp(currentRotationSpeed, maxRotateSpeed, Mathf.Abs((((100 / (float)readyTime) * curReadyTime)) / 100 - 1)));
         if(curReadyTime <= 0)
         {
             curReadyTime = readyTime;

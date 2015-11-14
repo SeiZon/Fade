@@ -18,16 +18,16 @@ public class GameData {
         //Enemy5
         20 };
     public static float[] shotMoveSpeedTable = {
-        //Player
-        25f,
-        //Enemy1
-        10f,
+        //Player - NormalShot
+        10,
+        //Player - ChargedShot
+        20,
         //Enemy2
-        20f,
+        10,
         //Enemy3
-        20f,
+        10,
         //Enemy4
-        20f };
+        10 };
 
     public enum Team {
         Player = 0,
@@ -37,7 +37,7 @@ public class GameData {
 
     public enum ShotType {
         Normal = 0,
-        Special1 = 1,
+        Charged = 1,
         Special2 = 2,
         Special3 = 3
     }
