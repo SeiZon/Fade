@@ -1,0 +1,236 @@
+fileFormatVersion: 2
+guid: 00cb69dbf658d70418b46784981e94cd
+timeCreated: 1447080449
+licenseType: Free
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: enemy02_body
+    100004: enemy02_body 1
+    100006: enemy02_sphere
+    100008: L_lowerwing
+    100010: L_upperwing
+    100012: polySurface1
+    100014: polySurface10
+    100016: polySurface10 1
+    100018: polySurface11
+    100020: polySurface11 1
+    100022: polySurface12
+    100024: polySurface13
+    100026: polySurface13 1
+    100028: polySurface14
+    100030: polySurface15
+    100032: polySurface16
+    100034: polySurface17
+    100036: polySurface18
+    100038: polySurface2
+    100040: polySurface20
+    100042: polySurface22
+    100044: polySurface23
+    100046: polySurface3
+    100048: polySurface4
+    100050: polySurface5
+    100052: polySurface5 1
+    100054: polySurface6
+    100056: polySurface6 1
+    100058: polySurface7
+    100060: polySurface8
+    100062: polySurface9
+    100064: pPyramid1
+    100066: pPyramid2
+    100068: pPyramid3
+    100070: pPyramid4
+    100072: pSphere1
+    100074: pSphere2
+    100076: R_lowerwing
+    100078: R_upperwing
+    100080: transform1
+    100082: transform10
+    100084: transform11
+    100086: transform12
+    100088: transform13
+    100090: transform14
+    100092: transform15
+    100094: transform16
+    100096: transform17
+    100098: transform18
+    100100: transform19
+    100102: transform2
+    100104: transform20
+    100106: transform21
+    100108: transform22
+    100110: transform23
+    100112: transform24
+    100114: transform25
+    100116: transform26
+    100118: transform27
+    100120: transform28
+    100122: transform29
+    100124: transform3
+    100126: transform30
+    100128: transform31
+    100130: transform32
+    100132: transform33
+    100134: transform34
+    100136: transform4
+    100138: transform5
+    100140: transform6
+    100142: transform7
+    100144: transform8
+    100146: transform9
+    400000: //RootNode
+    400002: enemy02_body
+    400004: enemy02_body 1
+    400006: enemy02_sphere
+    400008: L_lowerwing
+    400010: L_upperwing
+    400012: polySurface1
+    400014: polySurface10
+    400016: polySurface10 1
+    400018: polySurface11
+    400020: polySurface11 1
+    400022: polySurface12
+    400024: polySurface13
+    400026: polySurface13 1
+    400028: polySurface14
+    400030: polySurface15
+    400032: polySurface16
+    400034: polySurface17
+    400036: polySurface18
+    400038: polySurface2
+    400040: polySurface20
+    400042: polySurface22
+    400044: polySurface23
+    400046: polySurface3
+    400048: polySurface4
+    400050: polySurface5
+    400052: polySurface5 1
+    400054: polySurface6
+    400056: polySurface6 1
+    400058: polySurface7
+    400060: polySurface8
+    400062: polySurface9
+    400064: pPyramid1
+    400066: pPyramid2
+    400068: pPyramid3
+    400070: pPyramid4
+    400072: pSphere1
+    400074: pSphere2
+    400076: R_lowerwing
+    400078: R_upperwing
+    400080: transform1
+    400082: transform10
+    400084: transform11
+    400086: transform12
+    400088: transform13
+    400090: transform14
+    400092: transform15
+    400094: transform16
+    400096: transform17
+    400098: transform18
+    400100: transform19
+    400102: transform2
+    400104: transform20
+    400106: transform21
+    400108: transform22
+    400110: transform23
+    400112: transform24
+    400114: transform25
+    400116: transform26
+    400118: transform27
+    400120: transform28
+    400122: transform29
+    400124: transform3
+    400126: transform30
+    400128: transform31
+    400130: transform32
+    400132: transform33
+    400134: transform34
+    400136: transform4
+    400138: transform5
+    400140: transform6
+    400142: transform7
+    400144: transform8
+    400146: transform9
+    2300000: enemy02_sphere
+    2300002: L_lowerwing
+    2300004: L_upperwing
+    2300006: R_lowerwing
+    2300008: R_upperwing
+    3300000: enemy02_sphere
+    3300002: L_lowerwing
+    3300004: L_upperwing
+    3300006: R_lowerwing
+    3300008: R_upperwing
+    4300000: enemy02_sphere
+    4300002: L_upperwing
+    4300004: R_upperwing
+    4300006: L_lowerwing
+    4300008: R_lowerwing
+    7400000: Take 001
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 100
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
