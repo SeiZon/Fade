@@ -12,6 +12,7 @@ public class TwinStickController : MonoBehaviour {
     [SerializeField] protected float rightTriggerDeadzone = 0.1f;
     [SerializeField] protected float leftTriggerDeadzone = 0.1f;
     [SerializeField] protected GameObject shotPrefab;
+    [SerializeField] protected float playerRotationSpeed = 1;
     [SerializeField] protected Transform barrelEnd;
     [SerializeField] protected float useRadius = 2;
     [SerializeField] protected float useCooldown = 2;
@@ -45,6 +46,7 @@ public class TwinStickController : MonoBehaviour {
 
     GamepadState padState;
     float rotationAngle = 0;
+    float rotationAngleGoal = 0;
     float useRemaining = 0;
     float currentShotCharge = 0;
     float actualDrainSpeed = 0;
@@ -53,6 +55,7 @@ public class TwinStickController : MonoBehaviour {
     Player player;
     CapsuleCollider capCollider;
     SplatGroup drainGroup;
+    
 
     // Use this for initialization
     void Start () {
@@ -69,6 +72,9 @@ public class TwinStickController : MonoBehaviour {
 		
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
+        if (padState.rightStickAxis == Vector2.zero && padState.LeftStickAxis != Vector2.zero) {
+            rotationAngleGoal = Mathf.Atan2(padState.LeftStickAxis.x, padState.LeftStickAxis.y) * Mathf.Rad2Deg;
+        }
         
 	}
 
@@ -76,18 +82,17 @@ public class TwinStickController : MonoBehaviour {
 	void Update () {
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		if (useRemaining > 0) useRemaining -= Time.deltaTime;
-
-		//transform.Translate(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity, Space.World);
-
         
         //Rotates player to face in the direction of the right stick, if right stick not applied, faces same direction as before
         if (padState.rightStickAxis == Vector2.zero) {
-            transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
         }
         else {
-            rotationAngle = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+            rotationAngleGoal = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
         }
+
+        //Rotates the player at a given Max speed
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal, 0), playerRotationSpeed * Time.deltaTime);
+
 
         //Shoot if right trigger is pulled enough
         if (padState.RightTrigger > rightTriggerDeadzone)
@@ -236,7 +241,7 @@ public class TwinStickController : MonoBehaviour {
 			//particleSystemSonarBlip.Emit(
 		}
 	}
-    
+
     public void AddToSplats(Painting painting) {
         if (splatsUnderPlayer.Contains(painting)) return;
         splatsUnderPlayer.Add(painting);
