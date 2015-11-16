@@ -9,7 +9,7 @@ public class BasicPainting : MonoBehaviour
     [SerializeField] int elementNo = 0;
 
     //temporary texture
-    public Texture2D tmpTexture; 
+    public Texture2D tmpTexture;
 
     void Start()
     {

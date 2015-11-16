@@ -26,12 +26,13 @@ public class InteractableObject : MonoBehaviour {
     public void Use() {
         if (!usable) return;
         if (!toggleable && !repeatable) usable = false;
+        GroundButton button = GetComponent<GroundButton>();
+        if (button != null) {
+            button.Activate(triggeredObjects);
+        }
         if (repeatable) {
             //Trigger things that needs triggering
-            GroundButton button = GetComponent<GroundButton>();
-            if (button != null) {
-                button.Activate(triggeredObjects);
-            }
+            
         }
         else {
             toggleState = !toggleState;

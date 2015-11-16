@@ -173,7 +173,6 @@ public class TwinStickController : MonoBehaviour {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, sonarRange);
             List<Vector3> blips = new List<Vector3>();
             foreach (Collider c in hitColliders) {
-                if (c.gameObject.layer != LayerMask.NameToLayer("Hidden KeyObjects")) continue;
                 bool isVisible = false;
                 foreach (MeshRenderer m in c.gameObject.GetComponentsInChildren<MeshRenderer>()) {
                     if (m.enabled) {
@@ -188,6 +187,7 @@ public class TwinStickController : MonoBehaviour {
                     }
                 }
                 else {
+                    if (c.gameObject.layer != LayerMask.NameToLayer("Hidden KeyObjects")) continue;
                     blips.Add(c.transform.position);
                 }
             }
@@ -232,7 +232,7 @@ public class TwinStickController : MonoBehaviour {
 
 	void Sonar(Vector3[] blips) {
 		foreach (Vector3 v in blips) {
-			particleSystemSonarBlip.Emit(new Vector3(v.x, 0.5f, v.z), Vector3.zero, 0.5f, 2, Color.red);
+			particleSystemSonarBlip.Emit(transform.InverseTransformPoint(v), Vector3.zero, 0.5f, 2, Color.red);
 			//particleSystemSonarBlip.Emit(
 		}
 	}
