@@ -171,7 +171,7 @@ public class TwinStickController : MonoBehaviour {
             Push(hitEnemies.ToArray(), pushForce);
         }
 
-        //Charge and use Sonar - TODO: Add resource cost test (Player.canSonar())
+        //Sonar
         if (padState.LeftTrigger > leftTriggerDeadzone && player.canSonar) {
             player.Sonar();
             particleSystemSonar.Play();
@@ -186,10 +186,18 @@ public class TwinStickController : MonoBehaviour {
                     }
                 }
                 if (isVisible) {
+                    Activator activator = c.gameObject.GetComponent<Activator>();
+                    if (activator != null) {
+                        if (activator.sonarTriggered) activator.Activate();
+                    }
+
+
+                    //TO BE REMOVED
                     InteractableObject io = c.gameObject.GetComponent<InteractableObject>();
                     if (io != null) {
                         if (io.canBeTriggeredBySonar) io.Use();
                     }
+
                 }
                 else {
                     if (c.gameObject.layer != LayerMask.NameToLayer("Hidden KeyObjects")) continue;

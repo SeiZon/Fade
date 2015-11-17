@@ -45,7 +45,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 465486}
   m_Layer: 8
-  m_Name: activation_crystal
+  m_Name: Crystal_Dummy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

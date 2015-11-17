@@ -92,7 +92,7 @@ MonoBehaviour:
   unvealRadius: 4
   explosionDelay: 15
   enemyOrb: 0
-  splatPrefab: {fileID: 173498, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
+  splatPrefab: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
 --- !u!135 &13526578
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -163,7 +163,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: splatPrefab
       value: 
-      objectReference: {fileID: 173498, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
+      objectReference: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 111612}
