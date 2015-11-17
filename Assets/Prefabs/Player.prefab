@@ -91,7 +91,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: .467621893, y: 4.75001955, z: 2.27630115}
+  m_LocalPosition: {x: 11.6000004, y: 6.90999985, z: -26.2000008}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 470246}
@@ -106,7 +106,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 197186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -.189999998, y: 0, z: -.239999995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 423292}
@@ -192,13 +192,13 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161864}
   serializedVersion: 2
-  m_Mass: .800000012
-  m_Drag: 3
-  m_AngularDrag: .5
+  m_Mass: 1
+  m_Drag: 10
+  m_AngularDrag: 2
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 0
   m_CollisionDetection: 2
 --- !u!82 &8208544
 AudioSource:
@@ -294,14 +294,14 @@ MonoBehaviour:
   pushConeRadiusDegrees: 45
   pushRange: 15
   sonarRange: 30
-  moveSpeed: 210
+  moveSpeed: 500
   maxShotChargeTime: 1.79999995
   minShotChargeTime: .100000001
   rumbleSensivity: .800000012
   maxDrainSpeed: 1
   drainSpeedAccel: .00499999989
   particleSystemSonar: {fileID: 19859704}
-  particleSystemSonarBlip: {fileID: 0}
+  particleSystemSonarBlip: {fileID: 19859704}
   audioSource: {fileID: 8208544}
   soundVolume: 1
   moveSoundClip: {fileID: 0}
