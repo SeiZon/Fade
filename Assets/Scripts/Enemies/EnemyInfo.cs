@@ -5,6 +5,7 @@ public abstract class EnemyInfo : MonoBehaviour {
 
     [SerializeField] protected int startHealth, moveSpeed, turnSpeed, damage;
     [SerializeField] protected GameObject orbPrefab;
+    [SerializeField] protected GameObject dieParticle;
 
     protected Transform player;
     protected int curHealth;

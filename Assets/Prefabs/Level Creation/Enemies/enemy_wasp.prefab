@@ -211,6 +211,7 @@ MonoBehaviour:
   turnSpeed: 3
   damage: 20
   orbPrefab: {fileID: 111612, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
+  dieParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
   detectRadius: 15
   chargeDistance: 15
   rotatingPoint: {fileID: 406160}
@@ -279,6 +280,10 @@ Prefab:
       propertyPath: rotatingPoint
       value: 
       objectReference: {fileID: 406160}
+    - target: {fileID: 0}
+      propertyPath: dieParticle
+      value: 
+      objectReference: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 179300}

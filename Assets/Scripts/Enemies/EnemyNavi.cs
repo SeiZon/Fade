@@ -288,6 +288,7 @@ public class EnemyNavi : EnemyInfo {
         //Player.OnPlayerShot -= checkForIncomingShots;
         base.Die();
         Instantiate(orbPrefab, transform.position + (transform.up * 2), Quaternion.identity);
+        if (dieParticle != null) Instantiate(dieParticle, transform.position + (transform.up * 2), Quaternion.identity);
         enemySpawner.EnemyKilled();
         Destroy(gameObject);
     }

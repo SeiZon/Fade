@@ -1,53 +1,53 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &144376
+--- !u!1 &194900
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
   m_Component:
-  - 4: {fileID: 448960}
-  - 198: {fileID: 19875652}
-  - 199: {fileID: 19930614}
-  - 114: {fileID: 11422408}
+  - 4: {fileID: 455794}
+  - 198: {fileID: 19861686}
+  - 199: {fileID: 19927680}
+  - 114: {fileID: 11446988}
   m_Layer: 0
-  m_Name: shot_hit_particle
+  m_Name: enemy_die
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &448960
+--- !u!4 &455794
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144376}
+  m_GameObject: {fileID: 194900}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 9.56000042, y: 6.23999977, z: 3.66720772}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &11422408
+--- !u!114 &11446988
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144376}
+  m_GameObject: {fileID: 194900}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfbbbb87455f87f44ad4b7abb0751794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 50
---- !u!198 &19875652
+--- !u!198 &19861686
 ParticleSystem:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144376}
+  m_GameObject: {fileID: 194900}
   lengthInSec: 1
   startDelay: 0
   speed: 1
@@ -1065,12 +1065,12 @@ ParticleSystem:
     subEmitterCollision1: {fileID: 0}
     subEmitterDeath: {fileID: 0}
     subEmitterDeath1: {fileID: 0}
---- !u!199 &19930614
+--- !u!199 &19927680
 ParticleSystemRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 144376}
+  m_GameObject: {fileID: 194900}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -1093,7 +1093,7 @@ ParticleSystemRenderer:
   m_MaxParticleSize: .5
   m_CameraVelocityScale: 0
   m_VelocityScale: 2
-  m_LengthScale: -5
+  m_LengthScale: -20
   m_SortingFudge: 0
   m_NormalDirection: 1
   m_SortMode: 0
@@ -1107,36 +1107,8 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 0}
-      propertyPath: ShapeModule.radius
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: InitialModule.maxNumParticles
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: looping
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: duration
-      value: 50
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 0}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
+    m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 144376}
+  m_RootGameObject: {fileID: 194900}
   m_IsPrefabParent: 1
