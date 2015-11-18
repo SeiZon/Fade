@@ -76,7 +76,7 @@ MonoBehaviour:
   team: 1
   shotType: 0
   shotParticle: {fileID: 144376, guid: fd27711b8b668eb4aa2aa381c1628a90, type: 2}
-  shotParticlePlayer: {fileID: 144376, guid: 4958f3e5dcf08ad449e0e69e4096cf88, type: 2}
+  shotParticlePlayer: {fileID: 193772, guid: 26f208c7632b1fb479a2c746e46908c3, type: 2}
   lifeTime: 2
 --- !u!135 &13581298
 SphereCollider:
@@ -140,7 +140,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: shotParticlePlayer
       value: 
-      objectReference: {fileID: 144376, guid: 4958f3e5dcf08ad449e0e69e4096cf88, type: 2}
+      objectReference: {fileID: 193772, guid: 26f208c7632b1fb479a2c746e46908c3, type: 2}
     - target: {fileID: 0}
       propertyPath: shotParticle
       value: 

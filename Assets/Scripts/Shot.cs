@@ -11,12 +11,18 @@ public class Shot : MonoBehaviour {
     [SerializeField] float lifeTime = 3;
     float moveSpeed;
     int damage;
+    Transform shooter;
 
-    public void Initialize(float moveSpeed, int damage, GameData.Team team, GameData.ShotType shotType) {
+    public void Initialize(float moveSpeed, int damage, GameData.Team team, GameData.ShotType shotType, Transform shooter = null) {
         this.moveSpeed = moveSpeed;
         this.damage = damage;
         this.team = team;
         this.shotType = shotType;
+
+        if(shooter != null)
+        {
+            this.shooter = shooter;
+        }
     }
 
 	// Use this for initialization
@@ -51,7 +57,8 @@ public class Shot : MonoBehaviour {
             Player enemy = collision.gameObject.GetComponent<Player>();
             if (enemy != null) {
                 enemy.TakeDamage(damage);
-                Instantiate(shotParticlePlayer, enemy.transform.position, Quaternion.identity);
+                GameObject pa = Instantiate(shotParticlePlayer, enemy.transform.position, Quaternion.identity) as GameObject;
+                if(shooter != null) pa.transform.LookAt(shooter);
             }
             
         }

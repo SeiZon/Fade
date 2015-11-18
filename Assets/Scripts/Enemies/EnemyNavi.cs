@@ -235,7 +235,7 @@ public class EnemyNavi : EnemyInfo {
             {
                 GameObject shotGo = Instantiate(shotPrefab, barrelEnd.position, barrelEnd.rotation) as GameObject;
                 Shot shot = shotGo.GetComponent<Shot>();
-                shot.Initialize(GameData.shotMoveSpeedTable[(int)team], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], team, GameData.ShotType.Normal);
+                shot.Initialize(GameData.shotMoveSpeedTable[(int)team], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], team, GameData.ShotType.Normal, transform);
 
                 curGunCooldown = gunCooldown;
             }
