@@ -12,6 +12,7 @@ public class Player : MonoBehaviour {
     [SerializeField] protected float pushReloadTime = 3f;
     [SerializeField] protected float sonarReloadTime = 3f;
     [SerializeField] protected float sonarHealthCost = 0;
+    [SerializeField] protected float absorbMultiplier = 1000;
 
     //FOR TESTING: TODO: REMOVE!
     [SerializeField] protected bool DEBUGMODE = false;
@@ -108,7 +109,6 @@ public class Player : MonoBehaviour {
 
     public bool Drain(float amount) {
         //Play Drain animation (Needs to be continous
-
         //TESTING REMOVE
         if (DEBUGMODE) return true;
 
@@ -145,7 +145,8 @@ public class Player : MonoBehaviour {
     {
         if (alpha != (currentHp / INITIALHP))
         {
-            alpha = (currentHp / INITIALHP);
+            //0.5 = 0%
+            alpha = ((0.5f / INITIALHP) * currentHp) + 0.5f;
             foreach (Material indic in healthIndicators)
             {
                 Color baseColor = Color.white;

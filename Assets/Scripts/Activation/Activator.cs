@@ -52,9 +52,10 @@ public class Activator : MonoBehaviour {
             Debug.LogWarning("ERROR: Activator on " + gameObject.name + " has enabled both Toggleable and Repeatable. This is not possible. Please disable one of the two.");
             return;
         }
-        if (!toggleable || !repeatable) usable = false;
+        if (!toggleable && !repeatable) usable = false;
         if (toggleable) {
             isActivated = !isActivated;
+            Debug.Log("TEST:" + isActivated);
         }
         else  {
             isActivated = true;

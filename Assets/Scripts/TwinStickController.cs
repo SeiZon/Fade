@@ -50,6 +50,7 @@ public class TwinStickController : MonoBehaviour {
     float useRemaining = 0;
     float currentShotCharge = 0;
     float actualDrainSpeed = 0;
+    float currentDrainAccel = 0;
     bool isInsideColor;
     List<Painting> splatsUnderPlayer;
     Player player;
@@ -210,7 +211,10 @@ public class TwinStickController : MonoBehaviour {
 
         //Try to absorb color from underneath you, if you are not doing anything else, and you have capacity to absorb
         if (padState.A && padState.LeftTrigger < leftTriggerDeadzone && padState.RightTrigger < rightTriggerDeadzone && drainGroup != null) {
-            actualDrainSpeed = Mathf.Lerp(actualDrainSpeed, maxDrainSpeed, drainSpeedAccel * Time.deltaTime);
+            currentDrainAccel += drainSpeedAccel * Time.deltaTime;
+            if (currentDrainAccel > maxDrainSpeed)
+                currentDrainAccel = maxDrainSpeed;
+            actualDrainSpeed = Mathf.Lerp(actualDrainSpeed, maxDrainSpeed, currentDrainAccel);
                 
             if (player.Drain(drainGroup.splats.Count * actualDrainSpeed * Time.deltaTime)) {
                 drainGroup.Drain(actualDrainSpeed);
