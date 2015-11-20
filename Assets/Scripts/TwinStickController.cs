@@ -82,7 +82,8 @@ public class TwinStickController : MonoBehaviour {
         }
         if (stepIntervalRemaining <= 0) {
             audioSource_walking.Stop();
-            audioSource_walking.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)]);
+            if (footsteps.Length > 0)
+                audioSource_walking.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)]);
             stepIntervalRemaining = 1;
         }
 	}

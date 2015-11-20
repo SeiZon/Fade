@@ -502,6 +502,7 @@ MonoBehaviour:
   damage: 50
   orbPrefab: {fileID: 111612, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
   dieParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
+  aggroRange: 40
   barrelEnd: {fileID: 438824}
   shotPrefab: {fileID: 198944, guid: f72d90f42850b924fa04531af08562a9, type: 2}
   gunCooldown: 150
@@ -584,6 +585,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_PlayOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: aggroRange
+      value: 40
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

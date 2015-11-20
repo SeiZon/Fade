@@ -52,6 +52,9 @@ public class Shot : MonoBehaviour {
                     orb.explodeIt();
                 }
             }
+            Player myself = collision.gameObject.GetComponent<Player>();
+            if (myself != null) return;
+            Destroy(gameObject);
         }
         else if (team == GameData.Team.Enemy) {
             Player enemy = collision.gameObject.GetComponent<Player>();
@@ -60,8 +63,9 @@ public class Shot : MonoBehaviour {
                 GameObject pa = Instantiate(shotParticlePlayer, enemy.transform.position, Quaternion.identity) as GameObject;
                 if(shooter != null) pa.transform.LookAt(shooter);
             }
-            
+            EnemyInfo enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
+            if (enemyInfo != null) return;
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

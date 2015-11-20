@@ -6,6 +6,7 @@ public abstract class EnemyInfo : MonoBehaviour {
     [SerializeField] protected int startHealth, moveSpeed, turnSpeed, damage;
     [SerializeField] protected GameObject orbPrefab;
     [SerializeField] protected GameObject dieParticle;
+    [SerializeField] protected float aggroRange;
 
     protected Transform player;
     protected int curHealth;
@@ -43,7 +44,6 @@ public abstract class EnemyInfo : MonoBehaviour {
 
     public void Pushed(float force, Vector3 pushOrigin)
     {
-		pushed = true;
         if (canGetPush)
         {
             //Play pushed animation

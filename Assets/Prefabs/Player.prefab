@@ -32,6 +32,7 @@ GameObject:
   - 82: {fileID: 8208544}
   - 82: {fileID: 8235802}
   - 82: {fileID: 8232270}
+  - 82: {fileID: 8266846}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -48,7 +49,6 @@ GameObject:
   m_Component:
   - 4: {fileID: 470246}
   - 33: {fileID: 3320144}
-  - 136: {fileID: 13633556}
   - 23: {fileID: 2353614}
   m_Layer: 0
   m_Name: Cylinder
@@ -93,7 +93,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.12928104, y: 3.49000001, z: 3.02318048}
+  m_LocalPosition: {x: .467621893, y: 4.75001955, z: 2.27630115}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 470246}
@@ -412,6 +412,76 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!82 &8266846
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161864}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11434204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -435,7 +505,7 @@ MonoBehaviour:
   pushForce: 10
   pushConeRadiusDegrees: 45
   pushRange: 15
-  sonarRange: 30
+  sonarRange: 10
   moveSpeed: 500
   maxShotChargeTime: 1.79999995
   minShotChargeTime: .100000001
@@ -450,6 +520,7 @@ MonoBehaviour:
   onShotRelease: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5, type: 3}
   onHit: {fileID: 0}
   onSonar: {fileID: 0}
+  isDraining: {fileID: 0}
   onPush: {fileID: 0}
   footsteps: []
 --- !u!114 &11492320
@@ -473,19 +544,6 @@ MonoBehaviour:
   currentHp: 0
   healthIndicators:
   - {fileID: 2100000, guid: a4a9ff947e3c0ed48aac8b04108e9580, type: 2}
---- !u!136 &13633556
-CapsuleCollider:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 192260}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: .5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!136 &13681766
 CapsuleCollider:
   m_ObjectHideFlags: 1

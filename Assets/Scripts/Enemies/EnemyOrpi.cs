@@ -10,6 +10,7 @@ public class EnemyOrpi : EnemyInfo{
 
     float curChargeDuration;
     float curChargeSpeed = 0;
+    bool toFire = false;
 
     Vector3 playerPos;
 
@@ -81,9 +82,9 @@ public class EnemyOrpi : EnemyInfo{
             audioSource.PlayOneShot(isRegenerating);
         }
 
-        if(orbReady && pushed)
+        if(orbReady && toFire)
         {
-            pushed = false;
+            toFire = false;
             state = enemyState.chargeUp;
             audioSource.Stop();
             audioSource.PlayOneShot(isCharging);
@@ -111,7 +112,8 @@ public class EnemyOrpi : EnemyInfo{
 
             leafs.localRotation = Quaternion.identity;
 
-            orbReady = true; pushed = false;
+            orbReady = true;
+            toFire = false;
             state = enemyState.idle;
         }
     }
@@ -150,5 +152,9 @@ public class EnemyOrpi : EnemyInfo{
         }
     }
 
+    public override void TakeDamage(int dmg) {
+        if (toFire) return;
+        toFire = true;
+    }
 
 }

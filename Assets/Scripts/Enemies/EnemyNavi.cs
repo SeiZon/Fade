@@ -245,6 +245,8 @@ public class EnemyNavi : EnemyInfo {
         }
     }
     void evade() {
+        Debug.Log(Vector3.Distance(transform.position, player.position));
+        if (Vector3.Distance(transform.position, player.position) > aggroRange) return;
         audioSource.Stop();
         audioSource.PlayOneShot(isDodging);
         Vector3 relativePos = transform.InverseTransformPoint(incomingProjectile.position);
@@ -269,6 +271,7 @@ public class EnemyNavi : EnemyInfo {
             dodgingRight = false;
             dodgeDestination = transform.position + transform.right * -dodgeDistance;
         }
+
         state = enemyState.move;
         dodgeDurationRemaining = 0;
     }
