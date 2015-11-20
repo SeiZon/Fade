@@ -4,16 +4,19 @@ using System.Collections;
 public class Activator_GroundButton : Activator {
 
     [SerializeField] MeshRenderer[] activationCrystals;
+    [SerializeField] AudioClip whenPlayerInside, onActivate;
     CapsuleCollider playerDetector;
     Player player;
     bool crystalsRevealed = false;
     bool playerNearby = false;
+    AudioSource audioSource;
 
     // Use this for initialization
     protected override void Start () {
         base.Start();
         playerDetector = GetComponent<CapsuleCollider>();
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        audioSource = GetComponent<AudioSource>();
     }
 	
 	// Update is called once per frame
@@ -25,6 +28,9 @@ public class Activator_GroundButton : Activator {
         crystalsRevealed = test;
         Bounds playerCheck = playerDetector.bounds;
         PlayerNearby(playerCheck.Contains(player.transform.position));
+        if (playerNearby && !audioSource.isPlaying) {
+            audioSource.PlayOneShot(whenPlayerInside);
+        }
     }
 
     void PlayerNearby(bool isNearby) {
@@ -34,7 +40,8 @@ public class Activator_GroundButton : Activator {
 
     public override void Activate() {
         if (!crystalsRevealed || !playerNearby) return;
-        
+        audioSource.Stop();
+        audioSource.PlayOneShot(onActivate);
         base.Activate();
     }
 }

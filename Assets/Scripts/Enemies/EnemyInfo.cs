@@ -10,6 +10,7 @@ public abstract class EnemyInfo : MonoBehaviour {
     protected Transform player;
     protected int curHealth;
     protected EnemySpawner enemySpawner;
+    protected AudioSource audioSource;
 
     protected bool canGetPush = true;
     protected bool pushed = false;
@@ -17,15 +18,16 @@ public abstract class EnemyInfo : MonoBehaviour {
     protected Animator animator;
 
 	// Use this for initialization
-	protected void Start () {
+	protected virtual void Start () {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         team = GameData.Team.Enemy;
         curHealth = startHealth;
         enemySpawner = GameObject.FindGameObjectWithTag("EnemySpawner").GetComponent<EnemySpawner>();
         animator = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
 	}
 
-    protected void Update() {
+    protected virtual void Update() {
         if (player == null) enabled = false;
     }
     
@@ -36,7 +38,7 @@ public abstract class EnemyInfo : MonoBehaviour {
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);    
     }
 
-    protected void Die() {
+    protected virtual void Die() {
     }
 
     public void Pushed(float force, Vector3 pushOrigin)
@@ -49,7 +51,7 @@ public abstract class EnemyInfo : MonoBehaviour {
             rbody.AddForce((transform.position - pushOrigin).normalized * force, ForceMode.Impulse);
         }
     }
-    public void TakeDamage(int dmg)
+    public virtual void TakeDamage(int dmg)
     {
         curHealth -= dmg;
     }

@@ -47,6 +47,7 @@ GameObject:
   - 65: {fileID: 6553310}
   - 136: {fileID: 13645530}
   - 114: {fileID: 11472046}
+  - 82: {fileID: 8227350}
   m_Layer: 8
   m_Name: ground_button
   m_TagString: Untagged
@@ -896,6 +897,76 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: .930000007, y: 3.71000004, z: .689999998}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8227350
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 118092}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11472046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -918,6 +989,8 @@ MonoBehaviour:
   - {fileID: 2350048}
   - {fileID: 2302896}
   - {fileID: 2300066}
+  whenPlayerInside: {fileID: 0}
+  onActivate: {fileID: 0}
 --- !u!136 &13645530
 CapsuleCollider:
   m_ObjectHideFlags: 1

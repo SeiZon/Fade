@@ -4,12 +4,12 @@ using System.Collections;
 public class EnemyOrpi : EnemyInfo{
 
     [SerializeField] Transform orb, leafs, leafY1, leafY2, leafX1, leafX2;
-
     [SerializeField] float regenerationSpeed = 15;
-
     [SerializeField] float maxChargeSpeed = 500, chargeDuration = 15, orbFlySpeed = 100;
+    [SerializeField] AudioClip isCharging, isRegenerating, onShoot;
+
     float curChargeDuration;
-     float curChargeSpeed = 0;
+    float curChargeSpeed = 0;
 
     Vector3 playerPos;
 
@@ -26,7 +26,7 @@ public class EnemyOrpi : EnemyInfo{
     }
     public enemyState state = enemyState.idle;
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         base.Start();
         curChargeDuration = chargeDuration;
 
@@ -49,7 +49,7 @@ public class EnemyOrpi : EnemyInfo{
         }
     }
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
 	    switch(state)
         {
             case enemyState.idle:
@@ -65,7 +65,7 @@ public class EnemyOrpi : EnemyInfo{
                 fire();
                 break;
             case enemyState.die:
-                die();
+                //die();
                 break;
             default:
                 break;
@@ -77,12 +77,16 @@ public class EnemyOrpi : EnemyInfo{
         if(!orbReady)
         {
             state = enemyState.regenerateOrb;
+            audioSource.Stop();
+            audioSource.PlayOneShot(isRegenerating);
         }
 
         if(orbReady && pushed)
         {
             pushed = false;
             state = enemyState.chargeUp;
+            audioSource.Stop();
+            audioSource.PlayOneShot(isCharging);
         }
     }
     void regenerateOrb()
@@ -122,6 +126,8 @@ public class EnemyOrpi : EnemyInfo{
             leafY1.localRotation = Quaternion.Euler(new Vector3(0, 0, 270));
             leafY2.localRotation = Quaternion.Euler(new Vector3(0, 0, 90));
             state = enemyState.fire;
+            audioSource.Stop();
+            audioSource.PlayOneShot(onShoot);
         }
         else
         {
@@ -142,10 +148,6 @@ public class EnemyOrpi : EnemyInfo{
             orbReady = false;
             state = enemyState.idle;
         }
-    }
-    void die()
-    {
-
     }
 
 

@@ -7,6 +7,7 @@ public class EnemyNavi : EnemyInfo {
     [SerializeField] GameObject shotPrefab;
     [SerializeField] int gunCooldown, stunTime, maxAttackDistance, minAttackDistance, evadeSpeed, detectRadius;
     [SerializeField] float dodgeSpeed = 1, dodgeDistance = 1;
+    [SerializeField] AudioClip onHit, onDestroyed, onShoot, isDodging;
 
     CapsuleCollider capCollider;
 
@@ -30,7 +31,7 @@ public class EnemyNavi : EnemyInfo {
     }
     public enemyState state = enemyState.move;
 	
-    void Start()
+    protected override void Start()
     {
         base.Start();
         curStunTime = stunTime;
@@ -56,8 +57,8 @@ public class EnemyNavi : EnemyInfo {
         }
     }
 
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    protected override void Update () {
         base.Update();
         switch (state)
         {
@@ -87,7 +88,7 @@ public class EnemyNavi : EnemyInfo {
             case enemyState.die:
                 animator.SetBool("Forward", false);
                 animator.SetBool("Backoff", false);
-                die();
+                Die();
                 break;
             default:
                 break;
@@ -236,14 +237,16 @@ public class EnemyNavi : EnemyInfo {
                 GameObject shotGo = Instantiate(shotPrefab, barrelEnd.position, barrelEnd.rotation) as GameObject;
                 Shot shot = shotGo.GetComponent<Shot>();
                 shot.Initialize(GameData.shotMoveSpeedTable[(int)team], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], team, GameData.ShotType.Normal, transform);
+                audioSource.Stop();
+                audioSource.PlayOneShot(onShoot);
 
                 curGunCooldown = gunCooldown;
             }
         }
     }
-    void evade()
-    {
-
+    void evade() {
+        audioSource.Stop();
+        audioSource.PlayOneShot(isDodging);
         Vector3 relativePos = transform.InverseTransformPoint(incomingProjectile.position);
         //Incoming bullet is on the left, dodge right
         if (relativePos.x < 0) {
@@ -283,13 +286,21 @@ public class EnemyNavi : EnemyInfo {
             transform.Rotate(Vector3.up * turnSpeed * 100 * Time.deltaTime);
         }
     }
-    void die()
+    protected override void Die()
     {
         //Player.OnPlayerShot -= checkForIncomingShots;
         base.Die();
+        audioSource.Stop();
+        audioSource.PlayOneShot(onDestroyed);
         Instantiate(orbPrefab, transform.position + (transform.up * 2), Quaternion.identity);
         if (dieParticle != null) Instantiate(dieParticle, transform.position + (transform.up * 2), Quaternion.identity);
         enemySpawner.EnemyKilled();
         Destroy(gameObject);
+    }
+
+    public override void TakeDamage(int dmg) {
+        audioSource.Stop();
+        base.TakeDamage(dmg);
+        audioSource.PlayOneShot(onHit);
     }
 }

@@ -5,13 +5,20 @@ using System.Collections.Generic;
 public class Orb : MonoBehaviour {
 
     [SerializeField] float unvealRadius = 5, explosionDelay = 100;
-    bool explode = false;
-
     [SerializeField] bool enemyOrb = false;
     [SerializeField] GameObject splatPrefab;
+    [SerializeField] AudioClip onExplode;
 
-	// Update is called once per frame
-	void Update () {
+    AudioSource audioSource;
+    bool explode = false;
+    bool hasExploded = false;
+
+    void Start() {
+        audioSource = GetComponent<AudioSource>();
+    }
+
+    // Update is called once per frame
+    void Update () {
 	    if(explode)
         {
             if(explosionDelay <= 0)
@@ -22,6 +29,11 @@ public class Orb : MonoBehaviour {
             {
                 explosionDelay--;
             }
+        }
+
+        if (hasExploded) {
+            if (!audioSource.isPlaying)
+                Destroy(gameObject);
         }
 	}
 
@@ -35,27 +47,6 @@ public class Orb : MonoBehaviour {
 
     public void beginExploding()
     {
-        //find all objects thats hidden and within radius, and reveal them
-
-
-		/*Collider[] hitColliders = Physics.OverlapSphere(transform.position, unvealRadius);
-		foreach (Collider c in hitColliders) {
-			if ((c.gameObject.layer != LayerMask.NameToLayer("Hidden KeyObjects") && c.gameObject.layer != LayerMask.NameToLayer("Hidden Geometry"))) continue;
-			List<MeshRenderer> renderers = new List<MeshRenderer>();
-
-			MeshRenderer mr = c.GetComponent<MeshRenderer>();
-			if(mr != null) renderers.Add(mr);
-			renderers.AddRange(c.GetComponentsInChildren<MeshRenderer>());
-			foreach (MeshRenderer m in renderers) {
-				m.enabled = true;
-			}
-
-			c.transform.gameObject.layer = LayerMask.NameToLayer("Default");
-			foreach (Transform t in c.transform) {
-				t.gameObject.layer = LayerMask.NameToLayer("Default");
-			}
-		}*/
-
         //Cast raycast down and get all the gameobject below this orb
         Vector3 down = transform.TransformDirection(Vector3.down);
 
@@ -66,13 +57,6 @@ public class Orb : MonoBehaviour {
             //if ground below
             if (hit.collider.gameObject.tag == "Ground")
             {
-                //reveal texture
-                /*BasicPainting bp = hit.transform.GetComponent<BasicPainting>();
-
-                int x = Mathf.RoundToInt(hit.textureCoord.x * bp.tmpTexture.height);
-                int y = Mathf.RoundToInt(hit.textureCoord.y * bp.tmpTexture.height);
-                bp.paint(x, y);*/
-
                 //instantiate paint
                 Instantiate(splatPrefab, hit.point, Quaternion.identity);
             }
@@ -88,8 +72,10 @@ public class Orb : MonoBehaviour {
             }
         }
 
-        //destroy gameobject
-        Destroy(gameObject);
+        audioSource.PlayOneShot(onExplode);
+        GetComponent<SphereCollider>().enabled = false;
+        GetComponent<MeshRenderer>().enabled = false;
+        hasExploded = true;
     }
 
     void OnCollisionEnter(Collision collision)

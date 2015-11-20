@@ -5,6 +5,7 @@ public class EnemyWasp : EnemyInfo {
     [SerializeField] int detectRadius, chargeDistance;
     [SerializeField] Transform rotatingPoint;
     [SerializeField] float maxRotateSpeed = 1;
+    [SerializeField] AudioClip onHit, onDestroyed, onCharge;
 
     Vector3 chargeStartPos = Vector3.zero;
 
@@ -22,7 +23,7 @@ public class EnemyWasp : EnemyInfo {
     }
     enemyState state = enemyState.idle;
 	// Use this for initialization
-	void Start () {
+	protected override void Start () {
         base.Start();
         curReadyTime = readyTime;
 	}
@@ -36,7 +37,7 @@ public class EnemyWasp : EnemyInfo {
     }
 
 	// Update is called once per frame
-	void Update () {
+	protected override void Update () {
         base.Update();
 	    switch(state)
         {
@@ -50,7 +51,7 @@ public class EnemyWasp : EnemyInfo {
                 charge();
                 break;
             case enemyState.die:
-                die();
+                Die();
                 break;
         }
 
@@ -77,6 +78,8 @@ public class EnemyWasp : EnemyInfo {
             curReadyTime = readyTime;
             chargeStartPos = transform.position;
             state = enemyState.charge;
+            audioSource.Stop();
+            audioSource.PlayOneShot(onCharge);
         }
 
     }
@@ -91,13 +94,21 @@ public class EnemyWasp : EnemyInfo {
             state = enemyState.idle;
         }
     }
-    void die() 
+    protected override void Die() 
     {
         base.Die();
+        audioSource.Stop();
+        audioSource.PlayOneShot(onDestroyed);
         Instantiate(orbPrefab, transform.position + (transform.forward * 2), Quaternion.identity);
         if (dieParticle != null) Instantiate(dieParticle, transform.position + (transform.up * 2), Quaternion.identity);
         enemySpawner.EnemyKilled();
         Destroy(gameObject);
+    }
+
+    public override void TakeDamage(int dmg) {
+        base.TakeDamage(dmg);
+        audioSource.Stop();
+        audioSource.PlayOneShot(onHit);
     }
 
     void OnCollisionEnter(Collision collision)

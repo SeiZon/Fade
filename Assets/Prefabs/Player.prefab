@@ -30,6 +30,8 @@ GameObject:
   - 114: {fileID: 11492320}
   - 54: {fileID: 5443562}
   - 82: {fileID: 8208544}
+  - 82: {fileID: 8235802}
+  - 82: {fileID: 8232270}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -270,6 +272,146 @@ AudioSource:
       tangentMode: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
+--- !u!82 &8232270
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161864}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+--- !u!82 &8235802
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 161864}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11434204
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -302,16 +444,14 @@ MonoBehaviour:
   drainSpeedAccel: .00999999978
   particleSystemSonar: {fileID: 19859704}
   particleSystemSonarBlip: {fileID: 19859704}
-  audioSource: {fileID: 8208544}
   soundVolume: 1
-  moveSoundClip: {fileID: 0}
-  shotChargeSoundClip: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
-  shotReleaseSoundClip: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5,
-    type: 3}
-  dmgSoundClip: {fileID: 0}
-  sonarSoundClip: {fileID: 0}
-  pushSoundClip: {fileID: 0}
-  activateSoundClip: {fileID: 0}
+  stepSoundIntervalMultiplier: .25
+  isChargingShot: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
+  onShotRelease: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5, type: 3}
+  onHit: {fileID: 0}
+  onSonar: {fileID: 0}
+  onPush: {fileID: 0}
+  footsteps: []
 --- !u!114 &11492320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1500,6 +1640,14 @@ Prefab:
       propertyPath: minShotChargeTime
       value: .5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: isChargingShot
+      value: 
+      objectReference: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onShotRelease
+      value: 
+      objectReference: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 161864}

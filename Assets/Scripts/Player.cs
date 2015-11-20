@@ -4,11 +4,6 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
     [SerializeField] protected float INITIALHP = 100;
-    /*[SerializeField]
-    protected float MAXENERGY = 100;
-    [SerializeField]
-    protected float INITIALENERGY = 100;*/
-    //[SerializeField] protected float shootReloadTime = 3f;
     [SerializeField] protected float pushReloadTime = 3f;
     [SerializeField] protected float sonarReloadTime = 3f;
     [SerializeField] protected float sonarHealthCost = 0;
@@ -16,14 +11,13 @@ public class Player : MonoBehaviour {
 
     //FOR TESTING: TODO: REMOVE!
     [SerializeField] protected bool DEBUGMODE = false;
-
-    //private float shootReloadRemaining = 0;
+    
     private float pushReloadRemaining = 0;
     private float sonarReloadRemaining = 0;
-    public GameObject pushingParticles;
+    TwinStickController controller;
 
-    public float currentHp;// { get; private set; }
-    //public float currentEnergy { get; private set; }
+    public GameObject pushingParticles;
+    public float currentHp;
     public GameData.Team team { get; private set; }
     public bool canShoot { get; private set; }
     public bool canPush { get; private set; }
@@ -44,6 +38,7 @@ public class Player : MonoBehaviour {
         //currentEnergy = INITIALENERGY;
         team = GameData.Team.Player;
         canShoot = true;
+        controller = GetComponent<TwinStickController>();
 
         //health indicator
         foreach (Material indic in healthIndicators)
@@ -135,6 +130,7 @@ public class Player : MonoBehaviour {
     public void TakeDamage(float dmg) {
         //Play take damage animation
         currentHp -= dmg;
+        controller.TakeDamage();
     }
 
     void Die() {

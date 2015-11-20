@@ -30,20 +30,16 @@ public class TwinStickController : MonoBehaviour {
     //Inspector Variables
     [SerializeField] ParticleSystem particleSystemSonar;
 	[SerializeField] ParticleSystem particleSystemSonarBlip;
-    [SerializeField] AudioSource audioSource;
 
     //Player sounds
     [SerializeField] float soundVolume = 1;
-    [SerializeField] AudioClip moveSoundClip;
-    [SerializeField] AudioClip shotChargeSoundClip;
+    [SerializeField] protected float stepSoundIntervalMultiplier = 0.25f;
+    [SerializeField] AudioClip isChargingShot, onShotRelease, onHit, onSonar, isDraining, onPush;
+    [SerializeField] AudioClip[] footsteps;
     bool shotChargeSoundIsPlaying;
-    [SerializeField] AudioClip shotReleaseSoundClip;
-    [SerializeField] AudioClip dmgSoundClip;
-    [SerializeField] AudioClip sonarSoundClip;
-    [SerializeField] AudioClip pushSoundClip;
-    [SerializeField] AudioClip activateSoundClip;
+    float stepIntervalRemaining = 0;
 
-
+    AudioSource audioSource_walking, audioSource_shooting, audioSource_draining, audioSource_misc;
     GamepadState padState;
     float rotationAngle = 0;
     float rotationAngleGoal = 0;
@@ -63,7 +59,12 @@ public class TwinStickController : MonoBehaviour {
         player = GetComponent<Player>();
         capCollider = GetComponent<CapsuleCollider>();
         splatsUnderPlayer = new List<Painting>();
-	}
+        AudioSource[] aSources = GetComponents<AudioSource>();
+        audioSource_walking = aSources[0];
+        audioSource_shooting = aSources[1];
+        audioSource_draining = aSources[2];
+        audioSource_misc = aSources[3];
+    }
 
     void OnDisable() {
         XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
@@ -76,7 +77,14 @@ public class TwinStickController : MonoBehaviour {
         if (padState.rightStickAxis == Vector2.zero && padState.LeftStickAxis != Vector2.zero) {
             rotationAngleGoal = Mathf.Atan2(padState.LeftStickAxis.x, padState.LeftStickAxis.y) * Mathf.Rad2Deg;
         }
-        
+        if (padState.LeftStickAxis != Vector2.zero && stepIntervalRemaining > 0) {
+            stepIntervalRemaining -= Time.deltaTime * stepSoundIntervalMultiplier * padState.LeftStickAxis.magnitude;
+        }
+        if (stepIntervalRemaining <= 0) {
+            audioSource_walking.Stop();
+            audioSource_walking.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)]);
+            stepIntervalRemaining = 1;
+        }
 	}
 
 	// Update is called once per frame
@@ -100,15 +108,15 @@ public class TwinStickController : MonoBehaviour {
         {
 			XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge/maxShotChargeTime) * rumbleSensivity, (currentShotCharge/maxShotChargeTime) * rumbleSensivity);
             if (!shotChargeSoundIsPlaying) {
-                audioSource.PlayOneShot(shotChargeSoundClip, soundVolume);
+                audioSource_shooting.PlayOneShot(isChargingShot, soundVolume);
                 shotChargeSoundIsPlaying = true;
             }
-            if (shotChargeSoundIsPlaying && !audioSource.isPlaying)
+            if (shotChargeSoundIsPlaying && !audioSource_shooting.isPlaying)
                 shotChargeSoundIsPlaying = false;
             currentShotCharge += Time.deltaTime;
             if (currentShotCharge > maxShotChargeTime) {
                 currentShotCharge = maxShotChargeTime;
-                audioSource.Stop();
+                audioSource_shooting.Stop();
                 shotChargeSoundIsPlaying = false;
             }
         }
@@ -117,8 +125,8 @@ public class TwinStickController : MonoBehaviour {
             if (currentShotCharge > minShotChargeTime)
             {
                 shotChargeSoundIsPlaying = false;
-                audioSource.Stop();
-                audioSource.PlayOneShot(shotReleaseSoundClip, soundVolume);
+                audioSource_shooting.Stop();
+                audioSource_shooting.PlayOneShot(onShotRelease, soundVolume);
                 GameData.ShotType shotType;
                 if (currentShotCharge == maxShotChargeTime) shotType = GameData.ShotType.Charged;
                 else shotType = GameData.ShotType.Normal;
@@ -131,7 +139,7 @@ public class TwinStickController : MonoBehaviour {
             }
             XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
             if (shotChargeSoundIsPlaying)
-                audioSource.Stop();
+                audioSource_shooting.Stop();
         }
 
         //Use closest item to the player that is within use range
@@ -156,7 +164,8 @@ public class TwinStickController : MonoBehaviour {
         //Pushes enemies in front of player in cone
         if (padState.RightShoulder && player.canPush) {
             player.Push();
-
+            audioSource_misc.Stop();
+            audioSource_misc.PlayOneShot(onPush);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, pushRange);
             List<EnemyInfo> hitEnemies = new List<EnemyInfo>();
             foreach (Collider c in hitColliders) {
@@ -176,6 +185,8 @@ public class TwinStickController : MonoBehaviour {
         if (padState.LeftTrigger > leftTriggerDeadzone && player.canSonar) {
             player.Sonar();
             particleSystemSonar.Play();
+            audioSource_misc.Stop();
+            audioSource_misc.PlayOneShot(onSonar);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, sonarRange);
             List<Vector3> blips = new List<Vector3>();
             foreach (Collider c in hitColliders) {
@@ -218,6 +229,12 @@ public class TwinStickController : MonoBehaviour {
                 
             if (player.Drain(drainGroup.splats.Count * actualDrainSpeed * Time.deltaTime)) {
                 drainGroup.Drain(actualDrainSpeed);
+                if (!audioSource_draining.isPlaying)
+                    audioSource_draining.PlayOneShot(isDraining);
+            }
+            else {
+                if (audioSource_draining.isPlaying)
+                    audioSource_draining.Stop();
             }
         }
         else {
@@ -280,5 +297,10 @@ public class TwinStickController : MonoBehaviour {
             drainGroup = splatsUnderPlayer[0].splatGroup;
         }
 
+    }
+
+    public void TakeDamage() {
+        audioSource_misc.Stop();
+        audioSource_misc.PlayOneShot(onHit);
     }
 }
