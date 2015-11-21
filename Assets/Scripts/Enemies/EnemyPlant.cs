@@ -17,7 +17,6 @@ public class EnemyPlant : EnemyInfo {
         {
             base.Die();
             Instantiate(orbPrefab, transform.position + (transform.up * 2), Quaternion.identity);
-            if (dieParticle != null) Instantiate(dieParticle, transform.position + (transform.up * 2), Quaternion.identity);
             Destroy(gameObject);
         }
 	}

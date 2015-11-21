@@ -296,7 +296,6 @@ public class EnemyNavi : EnemyInfo {
         audioSource.Stop();
         audioSource.PlayOneShot(onDestroyed);
         Instantiate(orbPrefab, transform.position + (transform.up * 2), Quaternion.identity);
-        if (dieParticle != null) Instantiate(dieParticle, transform.position + (transform.up * 2), Quaternion.identity);
         enemySpawner.EnemyKilled();
         Destroy(gameObject);
     }

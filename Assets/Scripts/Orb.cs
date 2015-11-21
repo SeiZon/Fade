@@ -7,6 +7,7 @@ public class Orb : MonoBehaviour {
     [SerializeField] float unvealRadius = 5, explosionDelay = 100;
     [SerializeField] bool enemyOrb = false;
     [SerializeField] GameObject splatPrefab;
+    [SerializeField] GameObject explodeParticle;
     [SerializeField] AudioClip onExplode;
 
     AudioSource audioSource;
@@ -68,11 +69,16 @@ public class Orb : MonoBehaviour {
         {
             if (Vector3.Distance(orb.transform.position, transform.position) <= unvealRadius)
             {
-                orb.GetComponent<Orb>().explode = true;
+                Orb or = orb.GetComponent<Orb>();
+                if (or != null)
+                {
+                    orb.GetComponent<Orb>().explode = true;
+                }
             }
         }
 
         audioSource.PlayOneShot(onExplode);
+        if (explodeParticle != null) Instantiate(explodeParticle, transform.position, Quaternion.identity);
         GetComponent<SphereCollider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;
         hasExploded = true;

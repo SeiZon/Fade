@@ -8,6 +8,8 @@ public class EnemyOrpi : EnemyInfo{
     [SerializeField] float maxChargeSpeed = 500, chargeDuration = 15, orbFlySpeed = 100;
     [SerializeField] AudioClip isCharging, isRegenerating, onShoot;
 
+    ParticleSystem landingIndicator;
+
     float curChargeDuration;
     float curChargeSpeed = 0;
     bool toFire = false;
@@ -32,6 +34,9 @@ public class EnemyOrpi : EnemyInfo{
         curChargeDuration = chargeDuration;
 
         canGetPush = false;
+
+        landingIndicator = transform.FindChild("orpi_indicator").GetComponent<ParticleSystem>();
+        if(landingIndicator.isPlaying) landingIndicator.Stop();
 	}
 
     void FixedUpdate()
@@ -82,12 +87,17 @@ public class EnemyOrpi : EnemyInfo{
             audioSource.PlayOneShot(isRegenerating);
         }
 
+        if (orbReady)
+        {
+            if (landingIndicator.isPlaying) landingIndicator.Stop();
+        }
+
         if(orbReady && toFire)
         {
             toFire = false;
             state = enemyState.chargeUp;
             audioSource.Stop();
-            audioSource.PlayOneShot(isCharging);
+            audioSource.PlayOneShot(isCharging);   
         }
     }
     void regenerateOrb()
@@ -138,6 +148,9 @@ public class EnemyOrpi : EnemyInfo{
     }
     void fire()
     {
+        if (!landingIndicator.isPlaying) landingIndicator.Play();
+        landingIndicator.transform.position = playerPos;
+
         if(Vector3.Distance(transform.position, orb.position) < 50)
         {
             orb.Translate(Vector3.forward * orbFlySpeed * Time.deltaTime);

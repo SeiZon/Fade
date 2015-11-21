@@ -6,6 +6,7 @@ public class EnemyWasp : EnemyInfo {
     [SerializeField] Transform rotatingPoint;
     [SerializeField] float maxRotateSpeed = 1;
     [SerializeField] AudioClip onHit, onDestroyed, onCharge;
+    [SerializeField] GameObject speedParticle;
 
     Vector3 chargeStartPos = Vector3.zero;
 
@@ -63,6 +64,8 @@ public class EnemyWasp : EnemyInfo {
 
     void idle()
     {
+        if (speedParticle.activeSelf) speedParticle.SetActive(false);
+
         if(Vector3.Distance(transform.position, player.position) <= detectRadius)
         {
             state = enemyState.readyUp;
@@ -70,6 +73,8 @@ public class EnemyWasp : EnemyInfo {
     }
     void readyUp()
     {
+        if (speedParticle.activeSelf) speedParticle.SetActive(false);
+
         lookAt(player);
         //animate here
         rotatingPoint.RotateAround(transform.forward, Mathf.Lerp(currentRotationSpeed, maxRotateSpeed, Mathf.Abs((((100 / (float)readyTime) * curReadyTime)) / 100 - 1)));
@@ -85,12 +90,15 @@ public class EnemyWasp : EnemyInfo {
     }
     void charge()
     {
+        if (!speedParticle.activeSelf) speedParticle.SetActive(true);
+
         if(Vector3.Distance(chargeStartPos, transform.position) < chargeDistance)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
         }
         else
         {
+            if (speedParticle.activeSelf) speedParticle.SetActive(false);
             state = enemyState.idle;
         }
     }
@@ -100,7 +108,6 @@ public class EnemyWasp : EnemyInfo {
         audioSource.Stop();
         audioSource.PlayOneShot(onDestroyed);
         Instantiate(orbPrefab, transform.position + (transform.forward * 2), Quaternion.identity);
-        if (dieParticle != null) Instantiate(dieParticle, transform.position + (transform.up * 2), Quaternion.identity);
         enemySpawner.EnemyKilled();
         Destroy(gameObject);
     }

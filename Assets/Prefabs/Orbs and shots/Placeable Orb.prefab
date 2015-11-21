@@ -13,6 +13,7 @@ GameObject:
   - 23: {fileID: 2382504}
   - 114: {fileID: 11441442}
   - 54: {fileID: 5450578}
+  - 82: {fileID: 8241562}
   m_Layer: 12
   m_Name: Placeable Orb
   m_TagString: Orb
@@ -78,6 +79,76 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!82 &8241562
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 111612}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11441442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -93,6 +164,8 @@ MonoBehaviour:
   explosionDelay: 15
   enemyOrb: 0
   splatPrefab: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
+  explodeParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
+  onExplode: {fileID: 0}
 --- !u!135 &13526578
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -164,6 +237,10 @@ Prefab:
       propertyPath: splatPrefab
       value: 
       objectReference: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: explodeParticle
+      value: 
+      objectReference: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 111612}

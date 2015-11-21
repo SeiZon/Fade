@@ -30,6 +30,8 @@ public class TwinStickController : MonoBehaviour {
     //Inspector Variables
     [SerializeField] ParticleSystem particleSystemSonar;
 	[SerializeField] ParticleSystem particleSystemSonarBlip;
+    [SerializeField] Color keyObjectEmitColor;
+    [SerializeField] ParticleSystem particleDrain;
 
     //Player sounds
     [SerializeField] float soundVolume = 1;
@@ -229,6 +231,8 @@ public class TwinStickController : MonoBehaviour {
             actualDrainSpeed = Mathf.Lerp(actualDrainSpeed, maxDrainSpeed, currentDrainAccel);
                 
             if (player.Drain(drainGroup.splats.Count * actualDrainSpeed * Time.deltaTime)) {
+                if (!particleDrain.isPlaying) particleDrain.Play();
+
                 drainGroup.Drain(actualDrainSpeed);
                 if (!audioSource_draining.isPlaying)
                     audioSource_draining.PlayOneShot(isDraining);
@@ -236,11 +240,13 @@ public class TwinStickController : MonoBehaviour {
             else {
                 if (audioSource_draining.isPlaying)
                     audioSource_draining.Stop();
+                if (particleDrain.isPlaying) particleDrain.Stop();
             }
         }
         else {
             actualDrainSpeed = 0;
             player.StopDraining();
+            if (particleDrain.isPlaying) particleDrain.Stop();
         }
 
     }
@@ -266,8 +272,9 @@ public class TwinStickController : MonoBehaviour {
     }
 
 	void Sonar(Vector3[] blips) {
+        particleSystemSonar.Emit(transform.position, Vector3.zero, 0.25f, 1, particleSystemSonar.startColor);
 		foreach (Vector3 v in blips) {
-			particleSystemSonarBlip.Emit(transform.InverseTransformPoint(v), Vector3.zero, 0.5f, 2, Color.red);
+			particleSystemSonarBlip.Emit(v, Vector3.zero, 0.1f, 1, keyObjectEmitColor);
 			//particleSystemSonarBlip.Emit(
 		}
 	}

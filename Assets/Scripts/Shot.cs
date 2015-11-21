@@ -44,7 +44,14 @@ public class Shot : MonoBehaviour {
             EnemyInfo enemy = collision.gameObject.GetComponent<EnemyInfo>();
             if (enemy != null) {
                 enemy.TakeDamage(damage);
-				Instantiate(shotParticle, enemy.transform.position, Quaternion.identity);
+
+                //check if we hit orpi. we don't want hit particle on orpi
+                EnemyOrpi orpi = collision.gameObject.GetComponent<EnemyOrpi>();
+
+                if (orpi == null)
+                {
+                    Instantiate(shotParticle, enemy.transform.position, Quaternion.identity);
+                }
             }
             else {
                 Orb orb = collision.gameObject.GetComponent<Orb>();

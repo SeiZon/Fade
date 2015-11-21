@@ -164,6 +164,7 @@ MonoBehaviour:
   explosionDelay: 0
   enemyOrb: 1
   splatPrefab: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
+  explodeParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
   onExplode: {fileID: 0}
 --- !u!135 &13526578
 SphereCollider:
@@ -244,6 +245,10 @@ Prefab:
       propertyPath: m_ProbeAnchor
       value: 
       objectReference: {fileID: 489550, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
+    - target: {fileID: 0}
+      propertyPath: explodeParticle
+      value: 
+      objectReference: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 111612}

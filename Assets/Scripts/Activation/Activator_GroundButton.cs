@@ -30,6 +30,7 @@ public class Activator_GroundButton : Activator {
         PlayerNearby(playerCheck.Contains(player.transform.position));
         if (playerNearby && !audioSource.isPlaying) {
             audioSource.PlayOneShot(whenPlayerInside);
+            Debug.Log("hello");
         }
     }
 
