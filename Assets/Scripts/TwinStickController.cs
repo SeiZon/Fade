@@ -165,6 +165,7 @@ public class TwinStickController : MonoBehaviour {
         }
 
         //Pushes enemies in front of player in cone
+        /*
         if (padState.RightShoulder && player.canPush) {
             player.Push();
             audioSource_misc.Stop();
@@ -182,7 +183,7 @@ public class TwinStickController : MonoBehaviour {
                 }
             }
             Push(hitEnemies.ToArray(), pushForce);
-        }
+        }*/
 
         //Sonar
         if (padState.LeftTrigger > leftTriggerDeadzone && player.canSonar) {
@@ -221,6 +222,23 @@ public class TwinStickController : MonoBehaviour {
             }
 
             Sonar(blips.ToArray());
+
+            hitColliders = Physics.OverlapSphere(transform.position, pushRange);
+            List<EnemyInfo> hitEnemies = new List<EnemyInfo>();
+            foreach (Collider c in hitColliders)
+            {
+                EnemyInfo hitEnemy = c.GetComponent<EnemyInfo>();
+                if (Vector3.Distance(transform.position, c.transform.position) < pushRange && hitEnemy != null)
+                {
+                    Vector3 directionToTarget = transform.position - hitEnemy.transform.position;
+                    float angle = Vector3.Angle(transform.forward, directionToTarget);
+                    if (Mathf.Abs(angle) >= 180 - pushConeRadiusDegrees)
+                    {
+                        hitEnemies.Add(hitEnemy);
+                    }
+                }
+            }
+            Push(hitEnemies.ToArray(), pushForce);
         }
 
         //Try to absorb color from underneath you, if you are not doing anything else, and you have capacity to absorb

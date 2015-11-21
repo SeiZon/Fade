@@ -43,11 +43,14 @@ public abstract class EnemyInfo : MonoBehaviour {
 
     public void Pushed(float force, Vector3 pushOrigin)
     {
+        Debug.Log("hwelllooo");
         if (canGetPush)
         {
             //Play pushed animation
             Rigidbody rbody = GetComponent<Rigidbody>();
             rbody.AddForce((transform.position - pushOrigin).normalized * force, ForceMode.Impulse);
+
+            pushed = true;
         }
     }
     public virtual void TakeDamage(int dmg)

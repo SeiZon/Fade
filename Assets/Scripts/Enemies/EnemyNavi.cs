@@ -36,7 +36,6 @@ public class EnemyNavi : EnemyInfo {
         base.Start();
         curStunTime = stunTime;
         capCollider = GetComponent<CapsuleCollider>();
-		canGetPush = false;
         averageDistance = (maxAttackDistance + minAttackDistance) / 2;
     }
 
