@@ -43,7 +43,6 @@ public abstract class EnemyInfo : MonoBehaviour {
 
     public void Pushed(float force, Vector3 pushOrigin)
     {
-        Debug.Log("hwelllooo");
         if (canGetPush)
         {
             //Play pushed animation
