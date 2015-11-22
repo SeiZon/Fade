@@ -34,7 +34,7 @@ public class Player : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
-        currentHp = INITIALHP; //Subject to change
+        //currentHp = INITIALHP; //Subject to change
         //currentEnergy = INITIALENERGY;
         team = GameData.Team.Player;
         canShoot = true;
