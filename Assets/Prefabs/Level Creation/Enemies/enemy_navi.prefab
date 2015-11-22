@@ -140,7 +140,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113360}
   m_LocalRotation: {x: 0, y: -.998394012, z: 0, w: .0566527918}
-  m_LocalPosition: {x: 6.59043646, y: 4, z: -48.1087341}
+  m_LocalPosition: {x: 16.6425114, y: 6.02098703, z: 16.8430347}
   m_LocalScale: {x: .781874418, y: .781874418, z: .781874418}
   m_Children:
   - {fileID: 438824}
@@ -460,7 +460,7 @@ Animator:
   m_GameObject: {fileID: 130212}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 79f00991621938d4a88858d7db71f64c, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -501,7 +501,6 @@ MonoBehaviour:
   turnSpeed: 3
   damage: 50
   orbPrefab: {fileID: 111612, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
-  dieParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
   aggroRange: 40
   barrelEnd: {fileID: 438824}
   shotPrefab: {fileID: 198944, guid: f72d90f42850b924fa04531af08562a9, type: 2}
@@ -513,10 +512,10 @@ MonoBehaviour:
   detectRadius: 10
   dodgeSpeed: 3
   dodgeDistance: 4
-  onHit: {fileID: 0}
+  onHit: {fileID: 8300000, guid: cf863da5ee922ff4ead5cef9b3446b0d, type: 3}
   onDestroyed: {fileID: 0}
   onShoot: {fileID: 0}
-  isDodging: {fileID: 0}
+  isDodging: {fileID: 8300000, guid: 701099f1e80e40d41baf64c0249c398e, type: 3}
   state: 0
 --- !u!136 &13668498
 CapsuleCollider:

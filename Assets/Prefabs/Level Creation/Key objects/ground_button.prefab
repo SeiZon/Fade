@@ -275,6 +275,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &163748
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 481666}
+  m_Layer: 8
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &173184
 GameObject:
   m_ObjectHideFlags: 1
@@ -489,7 +504,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 143916}
-  m_LocalRotation: {x: -.420603365, y: .568412662, z: -.568412662, w: .420603156}
+  m_LocalRotation: {x: -.420603305, y: .568412602, z: -.568412602, w: .420603096}
   m_LocalPosition: {x: -3.97575951, y: 1.87928605, z: .0752248764}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -543,14 +558,15 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 118092}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.6809797, y: 2.64053035, z: -.676422119}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: 0, y: .0686446205, z: 0, w: .997641206}
+  m_LocalPosition: {x: -22.7417831, y: -23.3125, z: -5.99602699}
+  m_LocalScale: {x: 1.25, y: 1.25, z: 1.25}
   m_Children:
   - {fileID: 459060}
   - {fileID: 481906}
   - {fileID: 449050}
   - {fileID: 458920}
+  - {fileID: 481666}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &458920
@@ -593,6 +609,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 458920}
   m_RootOrder: 3
+--- !u!4 &481666
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 163748}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 457776}
+  m_RootOrder: 4
 --- !u!4 &481770
 Transform:
   m_ObjectHideFlags: 1
@@ -1128,7 +1156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d1bc55efd705d7e46ba655321ac2a9bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usable: 0
+  usable: 1
   repeatable: 0
   toggleable: 0
   prerequisites: []
@@ -1173,7 +1201,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 5
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -1330,7 +1358,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4278190335
+        rgba: 4285098483
       minMaxState: 0
     startSize:
       scalar: 1
@@ -1400,13 +1428,13 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 10
+    maxNumParticles: 4
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 5
-    radius: 1
-    angle: 25
+    type: 4
+    radius: .800000012
+    angle: 20
     length: 5
     boxX: 1
     boxY: 1
@@ -2226,7 +2254,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 5
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -2383,7 +2411,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4278190335
+        rgba: 4285164276
       minMaxState: 0
     startSize:
       scalar: 1
@@ -2453,13 +2481,13 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 10
+    maxNumParticles: 4
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 5
-    radius: 1
-    angle: 25
+    type: 4
+    radius: .800000012
+    angle: 20
     length: 5
     boxX: 1
     boxY: 1
@@ -2611,8 +2639,8 @@ ParticleSystem:
         key7:
           serializedVersion: 2
           rgba: 0
-        ctime0: 0
-        ctime1: 65535
+        ctime0: 13685
+        ctime1: 17733
         ctime2: 0
         ctime3: 0
         ctime4: 0
@@ -2620,7 +2648,7 @@ ParticleSystem:
         ctime6: 0
         ctime7: 0
         atime0: 0
-        atime1: 9445
+        atime1: 16962
         atime2: 54163
         atime3: 65535
         atime4: 65535
@@ -3279,7 +3307,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 5
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -3436,7 +3464,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4278190335
+        rgba: 4285098483
       minMaxState: 0
     startSize:
       scalar: 1
@@ -3506,13 +3534,13 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 10
+    maxNumParticles: 4
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 5
-    radius: 1
-    angle: 25
+    type: 4
+    radius: .800000012
+    angle: 20
     length: 5
     boxX: 1
     boxY: 1
@@ -4332,7 +4360,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 5
+      scalar: 3
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -4489,7 +4517,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4278190335
+        rgba: 4285098483
       minMaxState: 0
     startSize:
       scalar: 1
@@ -4559,13 +4587,13 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 10
+    maxNumParticles: 4
   ShapeModule:
     serializedVersion: 2
     enabled: 1
-    type: 5
-    radius: 1
-    angle: 25
+    type: 4
+    radius: .800000012
+    angle: 20
     length: 5
     boxX: 1
     boxY: 1

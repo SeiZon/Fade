@@ -281,7 +281,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 161864}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.12928104, y: 3.49000001, z: 3.02318048}
+  m_LocalPosition: {x: -.579999983, y: 3.78999996, z: -1.21000004}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 470246}
@@ -428,7 +428,7 @@ MeshRenderer:
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 8b3fd9a66ffb18f4dbbe145b74449bba, type: 2}
   m_SubsetIndices: 
   m_StaticBatchRoot: {fileID: 0}
   m_UseLightProbes: 1
@@ -775,7 +775,7 @@ MonoBehaviour:
   pushConeRadiusDegrees: 45
   pushRange: 15
   sonarRange: 10
-  moveSpeed: 500
+  moveSpeed: 350
   maxShotChargeTime: 1.79999995
   minShotChargeTime: .100000001
   rumbleSensivity: .800000012
@@ -790,10 +790,11 @@ MonoBehaviour:
   isChargingShot: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
   onShotRelease: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5, type: 3}
   onHit: {fileID: 0}
-  onSonar: {fileID: 0}
+  onSonar: {fileID: 8300000, guid: 3b2a39b9978dda2469ae01288dfda42a, type: 3}
   isDraining: {fileID: 0}
   onPush: {fileID: 0}
   footsteps: []
+  canShoot: 0
 --- !u!114 &11492320
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -805,14 +806,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6e23e66ed3f0a44dbb89ae064d1996c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  INITIALHP: 1000
+  INITIALHP: 500
   pushReloadTime: 1
   sonarReloadTime: 3
   sonarHealthCost: 15
   absorbMultiplier: 8000
   DEBUGMODE: 0
   pushingParticles: {fileID: 199522, guid: 092a82a4dc75ad44c83e444698c08b8d, type: 2}
-  currentHp: 0
+  currentHp: 100
   healthIndicators:
   - {fileID: 2100000, guid: a4a9ff947e3c0ed48aac8b04108e9580, type: 2}
 --- !u!136 &13681766
@@ -7976,7 +7977,7 @@ ParticleSystem:
   InitialModule:
     enabled: 1
     startLifetime:
-      scalar: 1
+      scalar: .5
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -8133,7 +8134,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4282092875
+        rgba: 4287278737
       minMaxState: 0
     startSize:
       scalar: .25
@@ -8275,7 +8276,7 @@ ParticleSystem:
           inSlope: 2
           outSlope: 2
           tangentMode: 0
-        - time: 1
+        - time: .988326848
           value: 1
           inSlope: 0
           outSlope: 0
@@ -8339,13 +8340,13 @@ ParticleSystem:
       maxGradient:
         key0:
           serializedVersion: 2
-          rgba: 3359345995
+          rgba: 3364531856
         key1:
           serializedVersion: 2
-          rgba: 9474192
+          rgba: 3968332
         key2:
           serializedVersion: 2
-          rgba: 0
+          rgba: 9474192
         key3:
           serializedVersion: 2
           rgba: 0
@@ -8361,15 +8362,15 @@ ParticleSystem:
         key7:
           serializedVersion: 2
           rgba: 0
-        ctime0: 0
-        ctime1: 65535
-        ctime2: 0
+        ctime0: 9445
+        ctime1: 17155
+        ctime2: 65535
         ctime3: 0
         ctime4: 0
         ctime5: 0
         ctime6: 0
         ctime7: 0
-        atime0: 18697
+        atime0: 12914
         atime1: 61295
         atime2: 32382
         atime3: 41634
@@ -8377,7 +8378,7 @@ ParticleSystem:
         atime5: 0
         atime6: 0
         atime7: 0
-        m_NumColorKeys: 2
+        m_NumColorKeys: 3
         m_NumAlphaKeys: 2
       minGradient:
         key0:
