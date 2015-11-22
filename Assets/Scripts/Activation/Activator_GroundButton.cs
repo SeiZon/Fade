@@ -7,6 +7,8 @@ public class Activator_GroundButton : Activator {
     [SerializeField] AudioClip whenPlayerInside, onActivate;
     [SerializeField] GameObject activationParticle;
     [SerializeField] ParticleSystem playerNearbyParticle;
+    bool emitNearbyParticle = true;
+
     CapsuleCollider playerDetector;
     Player player;
     bool crystalsRevealed = false;
@@ -34,7 +36,7 @@ public class Activator_GroundButton : Activator {
             audioSource.PlayOneShot(whenPlayerInside);
         }
 
-        if (crystalsRevealed && playerNearby)
+        if (crystalsRevealed && playerNearby && emitNearbyParticle)
         {
             if (!playerNearbyParticle.isPlaying) playerNearbyParticle.Play();
         }
@@ -62,6 +64,8 @@ public class Activator_GroundButton : Activator {
                 Instantiate(activationParticle, mr.transform.position, Quaternion.identity);
             }
         }
+
+        emitNearbyParticle = false;
 
         base.Activate();
     }

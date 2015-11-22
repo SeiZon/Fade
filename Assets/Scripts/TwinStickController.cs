@@ -9,8 +9,8 @@ public class TwinStickController : MonoBehaviour {
     //Variables for tweaking
     [SerializeField] protected float leftStickSensivity = 0.25f;
     [SerializeField] protected float rightStickSensivity = 0.25f;
-    [SerializeField] protected float rightTriggerDeadzone = 0.1f;
-    [SerializeField] protected float leftTriggerDeadzone = 0.1f;
+    public float rightTriggerDeadzone = 0.1f;
+    public float leftTriggerDeadzone = 0.1f;
     [SerializeField] protected GameObject shotPrefab;
     [SerializeField] protected float playerRotationSpeed = 1;
     [SerializeField] protected Transform barrelEnd;
@@ -42,7 +42,10 @@ public class TwinStickController : MonoBehaviour {
     float stepIntervalRemaining = 0;
 
     AudioSource audioSource_walking, audioSource_shooting, audioSource_draining, audioSource_misc;
-    GamepadState padState;
+
+    [HideInInspector] public GamepadState padState;
+
+
     float rotationAngle = 0;
     float rotationAngleGoal = 0;
     float useRemaining = 0;
@@ -55,6 +58,9 @@ public class TwinStickController : MonoBehaviour {
     CapsuleCollider capCollider;
     SplatGroup drainGroup;
     
+    //only used for tutorial
+    public bool canShoot = true;
+
 
     // Use this for initialization
     void Start () {
@@ -107,44 +113,48 @@ public class TwinStickController : MonoBehaviour {
 
 
         //Shoot if right trigger is pulled enough
-        if (padState.RightTrigger > rightTriggerDeadzone)
+        if (canShoot)
         {
-			XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge/maxShotChargeTime) * rumbleSensivity, (currentShotCharge/maxShotChargeTime) * rumbleSensivity);
-            if (!shotChargeSoundIsPlaying) {
-                audioSource_shooting.PlayOneShot(isChargingShot, soundVolume);
-                shotChargeSoundIsPlaying = true;
+            if (padState.RightTrigger > rightTriggerDeadzone)
+            {
+                XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge / maxShotChargeTime) * rumbleSensivity, (currentShotCharge / maxShotChargeTime) * rumbleSensivity);
+                if (!shotChargeSoundIsPlaying)
+                {
+                    audioSource_shooting.PlayOneShot(isChargingShot, soundVolume);
+                    shotChargeSoundIsPlaying = true;
+                }
+                if (shotChargeSoundIsPlaying && !audioSource_shooting.isPlaying)
+                    shotChargeSoundIsPlaying = false;
+                currentShotCharge += Time.deltaTime;
+                if (currentShotCharge > maxShotChargeTime)
+                {
+                    currentShotCharge = maxShotChargeTime;
+                    audioSource_shooting.Stop();
+                    shotChargeSoundIsPlaying = false;
+                }
             }
-            if (shotChargeSoundIsPlaying && !audioSource_shooting.isPlaying)
-                shotChargeSoundIsPlaying = false;
-            currentShotCharge += Time.deltaTime;
-            if (currentShotCharge > maxShotChargeTime) {
-                currentShotCharge = maxShotChargeTime;
-                audioSource_shooting.Stop();
-                shotChargeSoundIsPlaying = false;
+            else if (currentShotCharge > 0)
+            {
+                if (currentShotCharge > minShotChargeTime)
+                {
+                    shotChargeSoundIsPlaying = false;
+                    audioSource_shooting.Stop();
+                    audioSource_shooting.PlayOneShot(onShotRelease, soundVolume);
+                    GameData.ShotType shotType;
+                    if (currentShotCharge == maxShotChargeTime) shotType = GameData.ShotType.Charged;
+                    else shotType = GameData.ShotType.Normal;
+                    Shoot(shotType);
+                    currentShotCharge = 0;
+                }
+                else
+                {
+                    currentShotCharge = 0;
+                }
+                XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                if (shotChargeSoundIsPlaying)
+                    audioSource_shooting.Stop();
             }
         }
-        else if (currentShotCharge > 0)
-        {
-            if (currentShotCharge > minShotChargeTime)
-            {
-                shotChargeSoundIsPlaying = false;
-                audioSource_shooting.Stop();
-                audioSource_shooting.PlayOneShot(onShotRelease, soundVolume);
-                GameData.ShotType shotType;
-                if (currentShotCharge == maxShotChargeTime) shotType = GameData.ShotType.Charged;
-                else shotType = GameData.ShotType.Normal;
-                Shoot(shotType);
-                currentShotCharge = 0;
-            }
-            else
-            {
-                currentShotCharge = 0;
-            }
-            XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
-            if (shotChargeSoundIsPlaying)
-                audioSource_shooting.Stop();
-        }
-
         //Use closest item to the player that is within use range
         if (padState.B && useRemaining <= 0) {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, useRadius);
