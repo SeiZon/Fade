@@ -4,6 +4,7 @@ using System.Collections;
 public class TriggerEnableShot : MonoBehaviour {
 
     Transform player;
+    [SerializeField] GameObject slingshot;
 	// Use this for initialization
 	void Start () {
         if (GetComponent<MeshRenderer>() != null)
@@ -21,6 +22,10 @@ public class TriggerEnableShot : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (!player.GetComponent<TwinStickController>().canShoot) player.GetComponent<TwinStickController>().canShoot = true;
+        if (other.GetComponent<Player>() != null) {
+            if (!player.GetComponent<TwinStickController>().canShoot) player.GetComponent<TwinStickController>().canShoot = true;
+
+            if (slingshot.activeSelf) slingshot.SetActive(false);
+        }
     }
 }

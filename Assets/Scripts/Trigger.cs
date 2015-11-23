@@ -69,10 +69,10 @@ public class Trigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        inTrigger = true;
         if(other.GetComponent<Player>() != null)
         {
-            foreach(GameObject obj in objectsToActivate)
+            inTrigger = true;
+            foreach (GameObject obj in objectsToActivate)
             {
                 if (obj != null && !obj.activeSelf)
                     obj.SetActive(true);
@@ -82,9 +82,9 @@ public class Trigger : MonoBehaviour {
 
     void OnTriggerExit(Collider other)
     {
-        inTrigger = false;
         if (other.GetComponent<Player>() != null && deactivateOnExit)
         {
+            inTrigger = false;
             diableObjects();
         }
     }
