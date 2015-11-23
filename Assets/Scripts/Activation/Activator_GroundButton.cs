@@ -2,8 +2,8 @@
 using System.Collections;
 
 public class Activator_GroundButton : Activator {
-
-    [SerializeField] MeshRenderer[] activationCrystals;
+    
+    [SerializeField] Crystal[] activationCrystals;
     [SerializeField] AudioClip whenPlayerInside, onActivate;
     [SerializeField] GameObject activationParticle;
     [SerializeField] ParticleSystem playerNearbyParticle;
@@ -13,6 +13,7 @@ public class Activator_GroundButton : Activator {
     Player player;
     bool crystalsRevealed = false;
     bool playerNearby = false;
+    bool justActivated = false;
     AudioSource audioSource;
 
     // Use this for initialization
@@ -26,8 +27,8 @@ public class Activator_GroundButton : Activator {
 	// Update is called once per frame
 	void Update () {
         bool test = true;
-        foreach (MeshRenderer m in activationCrystals) {
-            if (!m.enabled) test = false;
+        foreach (Crystal c in activationCrystals) {
+            if (!c.isVisible) test = false;
         }
         crystalsRevealed = test;
         Bounds playerCheck = playerDetector.bounds;
@@ -44,11 +45,18 @@ public class Activator_GroundButton : Activator {
         {
             if (playerNearbyParticle.isPlaying) playerNearbyParticle.Stop();
         }
+        foreach (Crystal c in activationCrystals) {
+            c.SetActivate(usable);
+        }
+        Debug.Log(usable);
     }
 
     void PlayerNearby(bool isNearby) {
         //Make stuff light up and be pretty if player is nearby
         playerNearby = isNearby;
+        foreach (Crystal c in activationCrystals) {
+            c.PlayerNearby(isNearby);
+        }
     }
 
     public override void Activate() {
@@ -56,17 +64,24 @@ public class Activator_GroundButton : Activator {
         audioSource.Stop();
         audioSource.PlayOneShot(onActivate);
 
+        foreach (Crystal c in activationCrystals) {
+            c.OnSonar();
+        }
+        justActivated = true;
         //Show particle
         if (activationParticle != null)
         {
-            foreach (MeshRenderer mr in activationCrystals)
+            foreach (Crystal c in activationCrystals)
             {
-                Instantiate(activationParticle, mr.transform.position, Quaternion.identity);
+                Instantiate(activationParticle, c.transform.position, Quaternion.identity);
             }
         }
 
         emitNearbyParticle = false;
 
         base.Activate();
+        foreach (Crystal c in activationCrystals) {
+            c.SetActivate(usable);
+        }
     }
 }

@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Activator : MonoBehaviour {
 
-    [SerializeField] bool usable;
+    [SerializeField] protected bool usable;
     [SerializeField] bool repeatable;
     [SerializeField] bool toggleable;
     [SerializeField] Activator[] prerequisites;
