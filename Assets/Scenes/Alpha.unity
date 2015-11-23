@@ -366,6 +366,10 @@ Prefab:
 Transform:
   m_PrefabParentObject: {fileID: 421166, guid: 8ffab4402b6868646bd56a9f8c2db75c, type: 2}
   m_PrefabInternal: {fileID: 60363810}
+--- !u!4 &61156515 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 423292, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
+  m_PrefabInternal: {fileID: 833588035}
 --- !u!1001 &82362408
 Prefab:
   m_ObjectHideFlags: 0
@@ -2655,6 +2659,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11492320, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
+      propertyPath: healthIndicatorsT.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 423292, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
       propertyPath: m_LocalPosition.x
       value: 11.6000004
@@ -2699,6 +2707,14 @@ Prefab:
       propertyPath: isDraining
       value: 
       objectReference: {fileID: 8300000, guid: 58da9e1863fe524449baf8313dc95ea7, type: 3}
+    - target: {fileID: 11492320, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
+      propertyPath: healthIndicatorsT.Array.data[0]
+      value: 
+      objectReference: {fileID: 1226926746}
+    - target: {fileID: 11492320, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
+      propertyPath: healthIndicatorsT.Array.data[1]
+      value: 
+      objectReference: {fileID: 61156515}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
   m_IsPrefabParent: 0
@@ -3946,6 +3962,10 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 21.844265, y: 12, z: 19.6734238}
   m_Center: {x: -27.682045, y: 0, z: -109.878922}
+--- !u!4 &1226926746 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 470246, guid: ccf55a8a811158f4ebf49260949bd4d7, type: 2}
+  m_PrefabInternal: {fileID: 833588035}
 --- !u!1001 &1233389296
 Prefab:
   m_ObjectHideFlags: 0

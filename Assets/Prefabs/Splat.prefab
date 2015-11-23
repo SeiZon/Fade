@@ -54,7 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42af1a949db15c4199c7db32b4d2aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredSize: 15
+  desiredSize: 8
   scaleSpeed: 3
   scaleUpdate: 1
   groupUpdate: 5
@@ -90,6 +90,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: scaleSpeed
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: desiredSize
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

@@ -48,6 +48,7 @@ public class Orb : MonoBehaviour {
 
     public void beginExploding()
     {
+        if (hasExploded) return;
         //Cast raycast down and get all the gameobject below this orb
         Vector3 down = transform.TransformDirection(Vector3.down);
 

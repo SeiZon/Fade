@@ -28,24 +28,27 @@ public class Player : MonoBehaviour {
     public static event PlayerShot OnPlayerShot;
 
     //health indic
-    [SerializeField] Material[] healthIndicators;
+    [SerializeField] Transform[] healthIndicatorsT;
+    [SerializeField] bool isTutorialLevel = false;
     float alpha = 1;
     //
 
     // Use this for initialization
     void Start() {
-        //currentHp = INITIALHP; //Subject to change
-        //currentEnergy = INITIALENERGY;
+        currentHp = INITIALHP;
+        if (isTutorialLevel) {
+            currentHp = 100;
+        }
         team = GameData.Team.Player;
         canShoot = true;
         controller = GetComponent<TwinStickController>();
-
-        //health indicator
-        foreach (Material indic in healthIndicators)
-        {
+        
+        foreach (Transform t in healthIndicatorsT) {
             Color finalColor = Color.white * Mathf.LinearToGammaSpace(0.003F);
-
-            indic.SetColor("_EmissionColor", finalColor);
+            MeshRenderer meshRend = t.GetComponent<MeshRenderer>();
+            foreach (Material m in meshRend.materials) {
+                m.SetColor("_EmissionColor", finalColor);
+            }
         }
         //
     }
@@ -139,17 +142,17 @@ public class Player : MonoBehaviour {
 
     void affectHealthIndicator()
     {
-        if (alpha != (currentHp / INITIALHP))
+        if (alpha != ((0.5f / INITIALHP) * currentHp) +0.5f)
         {
-            //0.5 = 0%
             alpha = ((0.5f / INITIALHP) * currentHp) + 0.5f;
-            foreach (Material indic in healthIndicators)
-            {
+
+            foreach (Transform t in healthIndicatorsT) {
                 Color baseColor = Color.white;
-
                 Color finalColor = baseColor * Mathf.LinearToGammaSpace(1-alpha);
-
-                indic.SetColor("_EmissionColor", finalColor);
+                MeshRenderer meshRend = t.GetComponent<MeshRenderer>();
+                foreach (Material m in meshRend.materials) {
+                    m.SetColor("_EmissionColor", finalColor);
+                }
             }
         }
     }
