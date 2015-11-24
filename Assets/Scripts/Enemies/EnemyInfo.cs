@@ -23,7 +23,7 @@ public abstract class EnemyInfo : MonoBehaviour {
         team = GameData.Team.Enemy;
         curHealth = startHealth;
         enemySpawner = GameObject.FindGameObjectWithTag("EnemySpawner").GetComponent<EnemySpawner>();
-        animator = GetComponent<Animator>();
+        if(GetComponent<Animator>() != null) animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 	}
 
@@ -46,9 +46,9 @@ public abstract class EnemyInfo : MonoBehaviour {
         if (canGetPush)
         {
             //Play pushed animation
-            Rigidbody rbody = GetComponent<Rigidbody>();
+            /*Rigidbody rbody = GetComponent<Rigidbody>();
             rbody.AddForce((transform.position - pushOrigin).normalized * force, ForceMode.Impulse);
-
+            */
             pushed = true;
         }
     }
