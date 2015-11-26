@@ -238,7 +238,6 @@ public class TwinStickController : MonoBehaviour {
                     horizontal = relativeAngle;
                     if (oppositeRotation) 
                         horizontal = relativeAngle - 2;
-                    Debug.Log(horizontal);
                 }
             }
             else {
