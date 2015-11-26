@@ -149,7 +149,7 @@ public class Player : MonoBehaviour {
             foreach (Transform t in healthIndicatorsT) {
                 Color baseColor = Color.white;
                 Color finalColor = baseColor * Mathf.LinearToGammaSpace(1-alpha);
-                MeshRenderer meshRend = t.GetComponent<MeshRenderer>();
+                SkinnedMeshRenderer meshRend = t.GetComponent<SkinnedMeshRenderer>();
                 foreach (Material m in meshRend.materials) {
                     m.SetColor("_EmissionColor", finalColor);
                 }

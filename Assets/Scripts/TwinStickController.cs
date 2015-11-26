@@ -32,6 +32,10 @@ public class TwinStickController : MonoBehaviour {
 	[SerializeField] ParticleSystem particleSystemSonarBlip;
     [SerializeField] Color keyObjectEmitColor;
     [SerializeField] ParticleSystem particleDrain;
+    [SerializeField] MeshRenderer aimLine;
+    [SerializeField] Transform[] slingshotEnds;
+    [SerializeField] Transform slingshot;
+    [SerializeField] Transform leftHand;
 
     //Player sounds
     [SerializeField] float soundVolume = 1;
@@ -58,6 +62,7 @@ public class TwinStickController : MonoBehaviour {
     SplatGroup drainGroup;
     Animator animator;
     Vector2 lastLeftStickPosition = new Vector2(0, 1);
+    LineRenderer slingshotLineRenderer;
     
     //only used for tutorial
     public bool canShoot = true;
@@ -74,6 +79,7 @@ public class TwinStickController : MonoBehaviour {
         audioSource_draining = aSources[2];
         audioSource_misc = aSources[3];
         animator = GetComponent<Animator>();
+        slingshotLineRenderer = slingshot.GetComponent<LineRenderer>();
     }
 
     void OnDisable() {
@@ -106,11 +112,16 @@ public class TwinStickController : MonoBehaviour {
         else {
             oppositeRotation = false;
         }
+
         //Rotates the player at a given Max speed
-        if (!oppositeRotation)
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal, 0), playerRotationSpeed * Time.deltaTime);
-        else
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal + 180, 0), playerRotationSpeed * Time.deltaTime);
+        float rotMod = 0;
+        if (oppositeRotation)
+            rotMod += 180;
+        if (padState.rightStickAxis != Vector2.zero)
+            rotMod += 90;
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal + rotMod, 0), playerRotationSpeed * Time.deltaTime);
+
         if (padState.LeftStickAxis != Vector2.zero) lastLeftStickPosition = padState.LeftStickAxis;
     }
 
@@ -118,19 +129,27 @@ public class TwinStickController : MonoBehaviour {
 	void Update () {
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		if (useRemaining > 0) useRemaining -= Time.deltaTime;
-
+        aimLine.enabled = (padState.rightStickAxis != Vector2.zero);
         //Rotates player to face in the direction of the right stick, if right stick not applied, faces same direction as before
 
         float aimAngle = 0;
         if (padState.rightStickAxis == Vector2.zero) {
+            slingshotLineRenderer.SetVertexCount(2);
+            slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
+            slingshotLineRenderer.SetPosition(1, slingshotEnds[1].position);
         }
         else {
             aimAngle = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
+            slingshotLineRenderer.SetVertexCount(3);
+            slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
+            slingshotLineRenderer.SetPosition(1, leftHand.position);
+            slingshotLineRenderer.SetPosition(2, slingshotEnds[1].position);
         }
         
         barrelEnd.rotation = Quaternion.AngleAxis(aimAngle, barrelEnd.up);
 
         //Animations
+
         Vector2 tempLeftStickAxis = padState.LeftStickAxis;
         if (padState.LeftStickAxis == Vector2.zero) {
             tempLeftStickAxis = lastLeftStickPosition;
@@ -176,7 +195,17 @@ public class TwinStickController : MonoBehaviour {
         }
         animator.SetFloat("Vertical", vertical);
         animator.SetFloat("Horizontal", horizontal);
-        
+        animator.SetBool("RightStickInUse", (padState.rightStickAxis != Vector2.zero));
+
+        /*
+        if (animator.GetCurrentAnimatorStateInfo(0).IsName("shooting_aim")) {
+            animator.speed = 1 / maxShotChargeTime;
+        }
+        else animator.speed = 1;
+        */
+
+
+
         //Shoot if right trigger is pulled enough
         if (canShoot)
         {
@@ -190,6 +219,7 @@ public class TwinStickController : MonoBehaviour {
                 }
                 if (shotChargeSoundIsPlaying && !audioSource_shooting.isPlaying)
                     shotChargeSoundIsPlaying = false;
+
                 currentShotCharge += Time.deltaTime;
                 if (currentShotCharge > maxShotChargeTime)
                 {
@@ -219,6 +249,7 @@ public class TwinStickController : MonoBehaviour {
                 if (shotChargeSoundIsPlaying)
                     audioSource_shooting.Stop();
             }
+            animator.SetFloat("ShotCharge", currentShotCharge);
         }
         //Use closest item to the player that is within use range
         if (padState.B && useRemaining <= 0) {
