@@ -48,7 +48,6 @@ public class Activator_GroundButton : Activator {
         foreach (Crystal c in activationCrystals) {
             c.SetActivate(usable);
         }
-        Debug.Log(usable);
     }
 
     void PlayerNearby(bool isNearby) {

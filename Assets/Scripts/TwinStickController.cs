@@ -45,18 +45,19 @@ public class TwinStickController : MonoBehaviour {
 
     [HideInInspector] public GamepadState padState;
 
-
-    float rotationAngle = 0;
     float rotationAngleGoal = 0;
     float useRemaining = 0;
     float currentShotCharge = 0;
     float actualDrainSpeed = 0;
     float currentDrainAccel = 0;
     bool isInsideColor;
+    bool oppositeRotation = false;
     List<Painting> splatsUnderPlayer;
     Player player;
     CapsuleCollider capCollider;
     SplatGroup drainGroup;
+    Animator animator;
+    Vector2 lastLeftStickPosition = new Vector2(0, 1);
     
     //only used for tutorial
     public bool canShoot = true;
@@ -72,6 +73,7 @@ public class TwinStickController : MonoBehaviour {
         audioSource_shooting = aSources[1];
         audioSource_draining = aSources[2];
         audioSource_misc = aSources[3];
+        animator = GetComponent<Animator>();
     }
 
     void OnDisable() {
@@ -82,7 +84,7 @@ public class TwinStickController : MonoBehaviour {
 		
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
-        if (padState.rightStickAxis == Vector2.zero && padState.LeftStickAxis != Vector2.zero) {
+        if (padState.LeftStickAxis != Vector2.zero) {
             rotationAngleGoal = Mathf.Atan2(padState.LeftStickAxis.x, padState.LeftStickAxis.y) * Mathf.Rad2Deg;
         }
         if (padState.LeftStickAxis != Vector2.zero && stepIntervalRemaining > 0) {
@@ -94,24 +96,87 @@ public class TwinStickController : MonoBehaviour {
                 audioSource_walking.PlayOneShot(footsteps[Random.Range(0, footsteps.Length - 1)]);
             stepIntervalRemaining = 1;
         }
-	}
+        Vector2 tempLeftStickAxis = padState.LeftStickAxis;
+        if (padState.LeftStickAxis == Vector2.zero) {
+            tempLeftStickAxis = lastLeftStickPosition;
+        }
+        if (Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis) > 90) {
+            oppositeRotation = true;
+        }
+        else {
+            oppositeRotation = false;
+        }
+        //Rotates the player at a given Max speed
+        if (!oppositeRotation)
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal, 0), playerRotationSpeed * Time.deltaTime);
+        else
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal + 180, 0), playerRotationSpeed * Time.deltaTime);
+        if (padState.LeftStickAxis != Vector2.zero) lastLeftStickPosition = padState.LeftStickAxis;
+    }
 
 	// Update is called once per frame
 	void Update () {
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		if (useRemaining > 0) useRemaining -= Time.deltaTime;
-        
+
         //Rotates player to face in the direction of the right stick, if right stick not applied, faces same direction as before
+
+        float aimAngle = 0;
         if (padState.rightStickAxis == Vector2.zero) {
         }
         else {
-            rotationAngleGoal = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
+            aimAngle = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
+        }
+        
+        barrelEnd.rotation = Quaternion.AngleAxis(aimAngle, barrelEnd.up);
+
+        //Animations
+        Vector2 tempLeftStickAxis = padState.LeftStickAxis;
+        if (padState.LeftStickAxis == Vector2.zero) {
+            tempLeftStickAxis = lastLeftStickPosition;
+        }
+        float vertical = tempLeftStickAxis.magnitude;
+        if (Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis) > 90) {
+            vertical = -vertical;
         }
 
-        //Rotates the player at a given Max speed
-        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal, 0), playerRotationSpeed * Time.deltaTime);
+        float horizontal = 0;
+        float leftAngle = Vector2.Angle(new Vector2(0, 1), tempLeftStickAxis);
+        if (tempLeftStickAxis.x < 0)
+            leftAngle = 360 - leftAngle;
 
+        if (padState.rightStickAxis == Vector2.zero) {
+            horizontal = 0;
+        }
+        else {
+            
+            float rightAngle = Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis);
 
+            Vector2 refVec = new Vector2(Mathf.Sin((leftAngle + 90) * Mathf.Deg2Rad), Mathf.Cos((leftAngle + 90) * Mathf.Deg2Rad));
+            float relativeAngle = (rightAngle / 90);
+
+            if (Vector2.Angle(refVec, padState.rightStickAxis) < 90) {
+                if (vertical > 0) {
+                    horizontal = relativeAngle;
+                }
+                else {
+                    horizontal = 1 - (relativeAngle - 1);
+                    horizontal = -horizontal;
+                }
+            }
+            else {
+                if (vertical > 0) {
+                    horizontal = -relativeAngle;
+
+                }
+                else {
+                    horizontal = 1 - (relativeAngle - 1);
+                }
+            }
+        }
+        animator.SetFloat("Vertical", vertical);
+        animator.SetFloat("Horizontal", horizontal);
+        
         //Shoot if right trigger is pulled enough
         if (canShoot)
         {
@@ -280,7 +345,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     void Shoot(GameData.ShotType shotType) {
-        GameObject shotGo = Instantiate(shotPrefab, barrelEnd.position, transform.rotation) as GameObject;
+        GameObject shotGo = Instantiate(shotPrefab, barrelEnd.position, barrelEnd.rotation) as GameObject;
         player.Shoot(shotGo.transform);
         Shot shot = shotGo.GetComponent<Shot>();
         float bulletSpeed = GameData.shotMoveSpeedTable[(int)shotType];
