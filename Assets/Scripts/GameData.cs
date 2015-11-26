@@ -44,7 +44,8 @@ public class GameData {
 
     public enum EnemyType {
         Navi = 0,
-        Wasp = 1
+        Wasp = 1,
+		Tack = 2
     }
 
     
