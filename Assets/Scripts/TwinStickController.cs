@@ -26,6 +26,7 @@ public class TwinStickController : MonoBehaviour {
     [SerializeField] protected float rumbleSensivity = 1;
     [SerializeField] protected float maxDrainSpeed = 1;
     [SerializeField] protected float drainSpeedAccel = 1;
+    [SerializeField] protected float sonarDelay = 0.5f;
 
     //Inspector Variables
     [SerializeField] ParticleSystem particleSystemSonar;
@@ -54,8 +55,10 @@ public class TwinStickController : MonoBehaviour {
     float currentShotCharge = 0;
     float actualDrainSpeed = 0;
     float currentDrainAccel = 0;
+    float sonarDelayRemaining = 0;
     bool isInsideColor;
     bool oppositeRotation = false;
+    bool haveSonar = false;
     List<Painting> splatsUnderPlayer;
     Player player;
     CapsuleCollider capCollider;
@@ -130,6 +133,54 @@ public class TwinStickController : MonoBehaviour {
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		if (useRemaining > 0) useRemaining -= Time.deltaTime;
         aimLine.enabled = (padState.rightStickAxis != Vector2.zero);
+
+        if (sonarDelayRemaining > 0 ) {
+            sonarDelayRemaining -= Time.deltaTime;
+        }
+        else if (sonarDelayRemaining <= 0 && haveSonar) {
+            haveSonar = false;
+            particleSystemSonar.Play();
+            audioSource_misc.Stop();
+            audioSource_misc.PlayOneShot(onSonar);
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, sonarRange);
+            List<Vector3> blips = new List<Vector3>();
+            foreach (Collider c in hitColliders) {
+                bool isVisible = false;
+                foreach (MeshRenderer m in c.gameObject.GetComponentsInChildren<MeshRenderer>()) {
+                    if (m.enabled) {
+                        isVisible = true;
+                        break;
+                    }
+                }
+                if (isVisible) {
+                    Activator activator = c.gameObject.GetComponent<Activator>();
+                    if (activator != null) {
+                        if (activator.sonarTriggered) activator.Activate();
+                    }
+                }
+                else {
+                    if (c.gameObject.layer != LayerMask.NameToLayer("Hidden KeyObjects")) continue;
+                    blips.Add(c.transform.position);
+                }
+            }
+
+            Sonar(blips.ToArray());
+
+            hitColliders = Physics.OverlapSphere(transform.position, pushRange);
+            List<EnemyInfo> hitEnemies = new List<EnemyInfo>();
+            foreach (Collider c in hitColliders) {
+                EnemyInfo hitEnemy = c.GetComponent<EnemyInfo>();
+                if (Vector3.Distance(transform.position, c.transform.position) < pushRange && hitEnemy != null) {
+                    Vector3 directionToTarget = transform.position - hitEnemy.transform.position;
+                    float angle = Vector3.Angle(transform.forward, directionToTarget);
+                    if (Mathf.Abs(angle) >= 180 - pushConeRadiusDegrees) {
+                        hitEnemies.Add(hitEnemy);
+                    }
+                }
+            }
+            Push(hitEnemies.ToArray(), pushForce);
+        }
+
         //Rotates player to face in the direction of the right stick, if right stick not applied, faces same direction as before
 
         float aimAngle = 0;
@@ -158,7 +209,8 @@ public class TwinStickController : MonoBehaviour {
         if (Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis) > 90) {
             vertical = -vertical;
         }
-
+        if (padState.LeftStickAxis == Vector2.zero)
+            vertical = 0;
         float horizontal = 0;
         float leftAngle = Vector2.Angle(new Vector2(0, 1), tempLeftStickAxis);
         if (tempLeftStickAxis.x < 0)
@@ -178,9 +230,15 @@ public class TwinStickController : MonoBehaviour {
                 if (vertical > 0) {
                     horizontal = relativeAngle;
                 }
-                else {
+                else if (vertical < 0) {
                     horizontal = 1 - (relativeAngle - 1);
                     horizontal = -horizontal;
+                }
+                else if (vertical == 0) {
+                    horizontal = relativeAngle;
+                    if (oppositeRotation) 
+                        horizontal = relativeAngle - 2;
+                    Debug.Log(horizontal);
                 }
             }
             else {
@@ -188,8 +246,15 @@ public class TwinStickController : MonoBehaviour {
                     horizontal = -relativeAngle;
 
                 }
-                else {
+                else if (vertical < 0) {
                     horizontal = 1 - (relativeAngle - 1);
+                }
+                else if (vertical == 0) {
+                    horizontal = -relativeAngle;
+                    if (oppositeRotation) {
+                        horizontal = 1 - (relativeAngle - 1);
+                    }
+
                 }
             }
         }
@@ -207,7 +272,7 @@ public class TwinStickController : MonoBehaviour {
 
 
         //Shoot if right trigger is pulled enough
-        if (canShoot)
+        if (canShoot && player.canShoot)
         {
             if (padState.RightTrigger > rightTriggerDeadzone)
             {
@@ -293,58 +358,11 @@ public class TwinStickController : MonoBehaviour {
 
         //Sonar
         if (padState.LeftTrigger > leftTriggerDeadzone && player.canSonar) {
+            haveSonar = true;
+            sonarDelayRemaining = sonarDelay;
             player.Sonar();
-            particleSystemSonar.Play();
-            audioSource_misc.Stop();
-            audioSource_misc.PlayOneShot(onSonar);
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, sonarRange);
-            List<Vector3> blips = new List<Vector3>();
-            foreach (Collider c in hitColliders) {
-                bool isVisible = false;
-                foreach (MeshRenderer m in c.gameObject.GetComponentsInChildren<MeshRenderer>()) {
-                    if (m.enabled) {
-                        isVisible = true;
-                        break;
-                    }
-                }
-                if (isVisible) {
-                    Activator activator = c.gameObject.GetComponent<Activator>();
-                    if (activator != null) {
-                        if (activator.sonarTriggered) activator.Activate();
-                    }
-
-
-                    //TO BE REMOVED
-                    InteractableObject io = c.gameObject.GetComponent<InteractableObject>();
-                    if (io != null) {
-                        if (io.canBeTriggeredBySonar) io.Use();
-                    }
-
-                }
-                else {
-                    if (c.gameObject.layer != LayerMask.NameToLayer("Hidden KeyObjects")) continue;
-                    blips.Add(c.transform.position);
-                }
-            }
-
-            Sonar(blips.ToArray());
-
-            hitColliders = Physics.OverlapSphere(transform.position, pushRange);
-            List<EnemyInfo> hitEnemies = new List<EnemyInfo>();
-            foreach (Collider c in hitColliders)
-            {
-                EnemyInfo hitEnemy = c.GetComponent<EnemyInfo>();
-                if (Vector3.Distance(transform.position, c.transform.position) < pushRange && hitEnemy != null)
-                {
-                    Vector3 directionToTarget = transform.position - hitEnemy.transform.position;
-                    float angle = Vector3.Angle(transform.forward, directionToTarget);
-                    if (Mathf.Abs(angle) >= 180 - pushConeRadiusDegrees)
-                    {
-                        hitEnemies.Add(hitEnemy);
-                    }
-                }
-            }
-            Push(hitEnemies.ToArray(), pushForce);
+            animator.SetTrigger("Sonar");
+            
         }
 
         //Try to absorb color from underneath you, if you are not doing anything else, and you have capacity to absorb
@@ -399,7 +417,6 @@ public class TwinStickController : MonoBehaviour {
         particleSystemSonar.Emit(transform.position, Vector3.zero, 0.25f, 1, particleSystemSonar.startColor);
 		foreach (Vector3 v in blips) {
 			particleSystemSonarBlip.Emit(v, Vector3.zero, 0.1f, 1, keyObjectEmitColor);
-			//particleSystemSonarBlip.Emit(
 		}
 	}
 
