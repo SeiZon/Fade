@@ -48,7 +48,7 @@ public class Trigger : MonoBehaviour {
             }
             else if(disableTriggerOn == inputs.sonar)
             {
-                if (playerControl.padState.LeftTrigger > playerControl.leftTriggerDeadzone && player.canSonar)
+                if (playerControl.padState.LeftTrigger > playerControl.leftTriggerDeadzone)
                 {
                     if (deactivateOnExit) diableObjects();
 

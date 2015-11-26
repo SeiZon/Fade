@@ -1,22 +1,37 @@
 fileFormatVersion: 2
-guid: 0e3d4f49c8112f74ca0c2083efa5a053
-timeCreated: 1448557259
+guid: 3bc8d0a2a308c524eb6561dd858dec7a
+timeCreated: 1448551706
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
-    100000: crystal01
-    100002: portal
-    100004: //RootNode
-    400000: crystal01
-    400002: portal
-    400004: //RootNode
-    2300000: crystal01
-    2300002: portal
-    3300000: crystal01
-    3300002: portal
-    4300000: portal
-    4300002: crystal01
+    100000: //RootNode
+    100002: pCube28
+    100004: pCube29
+    100006: pCube32
+    100008: polySurface1
+    100010: polySurface2
+    100012: polySurface2 1
+    100014: transform17
+    100016: transform18
+    100018: transform19
+    100020: transform20
+    100022: transform21
+    400000: //RootNode
+    400002: pCube28
+    400004: pCube29
+    400006: pCube32
+    400008: polySurface1
+    400010: polySurface2
+    400012: polySurface2 1
+    400014: transform17
+    400016: transform18
+    400018: transform19
+    400020: transform20
+    400022: transform21
+    2300000: polySurface2
+    3300000: polySurface2
+    4300000: polySurface2
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,7 +56,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 50
+    globalScale: 60
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
