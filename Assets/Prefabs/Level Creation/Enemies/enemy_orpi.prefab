@@ -550,7 +550,7 @@ MonoBehaviour:
   leafX2: {fileID: 492804}
   regenerationSpeed: .100000001
   maxChargeSpeed: 1000
-  chargeDuration: 400
+  chargeDuration: 200
   orbFlySpeed: 100
   isCharging: {fileID: 0}
   isRegenerating: {fileID: 0}
@@ -1666,7 +1666,7 @@ Prefab:
     m_Modifications:
     - target: {fileID: 0}
       propertyPath: chargeDuration
-      value: 400
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
