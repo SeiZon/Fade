@@ -5,6 +5,7 @@ public class Player : MonoBehaviour {
 
     [SerializeField] protected float INITIALHP = 100;
     [SerializeField] protected float pushReloadTime = 3f;
+    [SerializeField] protected float shootReloadTime = 1;
     [SerializeField] protected float sonarReloadTime = 3f;
     [SerializeField] protected float sonarHealthCost = 0;
     [SerializeField] protected float absorbMultiplier = 1000;
@@ -14,6 +15,7 @@ public class Player : MonoBehaviour {
     
     private float pushReloadRemaining = 0;
     private float sonarReloadRemaining = 0;
+    private float shootReloadRemaining = 0;
     TwinStickController controller;
 
     public GameObject pushingParticles;
@@ -40,7 +42,6 @@ public class Player : MonoBehaviour {
             currentHp = 100;
         }
         team = GameData.Team.Player;
-        canShoot = true;
         controller = GetComponent<TwinStickController>();
         
         foreach (Transform t in healthIndicatorsT) {
@@ -55,29 +56,12 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
-        //if (!canShoot) shootReloadRemaining -= Time.deltaTime;
         if (!canPush) pushReloadRemaining -= Time.deltaTime;
         if (!canSonar) sonarReloadRemaining -= Time.deltaTime;
-        /*
-        if (shootReloadRemaining <= 0) {
-            canShoot = true;
-        }
-        else {
-            canShoot = false;
-        }
-        */
-        if (pushReloadRemaining <= 0) {
-            canPush = true;
-        }
-        else {
-            canPush = false;
-        }
-        if (sonarReloadRemaining <= 0 && currentHp > sonarHealthCost + 1) {
-            canSonar = true;
-        }
-        else {
-            canSonar = false;
-        }
+        if (!canShoot) shootReloadRemaining -= Time.deltaTime;
+        canPush = (pushReloadRemaining <= 0);
+        canSonar = (sonarReloadRemaining <= 0 && currentHp > sonarHealthCost + 1);
+        canShoot = (shootReloadRemaining <= 0);
 
         if (currentHp <= 0)
             Destroy(gameObject);
@@ -87,7 +71,7 @@ public class Player : MonoBehaviour {
 
     public void Shoot(Transform shot) {
         if (OnPlayerShot != null) OnPlayerShot(shot);
-        //Play Shoot animation
+        shootReloadRemaining = shootReloadTime;
     }
 
     public void Push() {
@@ -95,19 +79,15 @@ public class Player : MonoBehaviour {
 
         Quaternion particleRotation = new Quaternion(0, transform.rotation.y, 0, transform.rotation.w);
         GameObject pa = Instantiate(pushingParticles, transform.position, particleRotation) as GameObject;
-
-        //Play Push animation
+        
     }
 
     public void Sonar() {
         sonarReloadRemaining = sonarReloadTime;
         currentHp -= sonarHealthCost;
-        //Play Sonar animation
     }
 
     public bool Drain(float amount) {
-        //Play Drain animation (Needs to be continous
-        //TESTING REMOVE
         if (DEBUGMODE) return true;
 
         if (currentHp >= INITIALHP) return false;

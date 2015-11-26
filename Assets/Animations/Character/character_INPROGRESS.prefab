@@ -1850,6 +1850,7 @@ MonoBehaviour:
   rumbleSensivity: .800000012
   maxDrainSpeed: .0199999996
   drainSpeedAccel: .00999999978
+  sonarDelay: 1
   particleSystemSonar: {fileID: 19896510}
   particleSystemSonarBlip: {fileID: 0}
   keyObjectEmitColor: {r: 1, g: 0, b: 0, a: .141000003}
@@ -11542,7 +11543,7 @@ ParticleSystem:
       minMaxState: 0
     gravityModifier: 0
     inheritVelocity: 0
-    maxNumParticles: 2
+    maxNumParticles: 1
   ShapeModule:
     serializedVersion: 2
     enabled: 1
