@@ -63,10 +63,14 @@ public class Player : MonoBehaviour {
         canSonar = (sonarReloadRemaining <= 0 && currentHp > sonarHealthCost + 1);
         canShoot = (shootReloadRemaining <= 0);
 
+        if (Input.GetKeyDown(KeyCode.A)) {
+            TakeDamage(100);
+            Debug.Log(currentHp);
+        }
+
         if (currentHp <= 0)
-            Destroy(gameObject);
-        else
-            affectHealthIndicator();
+            Die();
+            
     }
 
     public void Shoot(Transform shot) {
@@ -97,6 +101,8 @@ public class Player : MonoBehaviour {
             {
                 currentHp = INITIALHP;
             }
+
+            affectHealthIndicator();
             return true;
         }
     }
@@ -114,25 +120,24 @@ public class Player : MonoBehaviour {
         //Play take damage animation
         currentHp -= dmg;
         controller.TakeDamage();
+        affectHealthIndicator();
     }
 
     void Die() {
         //Play death animation
+        Destroy(gameObject);
     }
 
     void affectHealthIndicator()
     {
-        if (alpha != ((0.5f / INITIALHP) * currentHp) +0.5f)
-        {
-            alpha = ((0.5f / INITIALHP) * currentHp) + 0.5f;
-
-            foreach (Transform t in healthIndicatorsT) {
-                Color baseColor = Color.white;
-                Color finalColor = baseColor * Mathf.LinearToGammaSpace(1-alpha);
-                SkinnedMeshRenderer meshRend = t.GetComponent<SkinnedMeshRenderer>();
-                foreach (Material m in meshRend.materials) {
-                    m.SetColor("_EmissionColor", finalColor);
-                }
+        alpha = ((0.5f / INITIALHP) * currentHp) + 0.5f;
+        Debug.Log(alpha);
+        foreach (Transform t in healthIndicatorsT) {
+            Color baseColor = Color.white;
+            Color finalColor = baseColor * Mathf.LinearToGammaSpace(1-alpha);
+            SkinnedMeshRenderer meshRend = t.GetComponent<SkinnedMeshRenderer>();
+            foreach (Material m in meshRend.materials) {
+                m.SetColor("_EmissionColor", finalColor);
             }
         }
     }
