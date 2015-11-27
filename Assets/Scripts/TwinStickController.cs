@@ -68,6 +68,17 @@ public class TwinStickController : MonoBehaviour {
     LineRenderer slingshotLineRenderer;
     
     //only used for tutorial
+    public bool CanShoot {
+        get {
+            return canShoot;
+        }
+        set {
+            if (!value)
+                slingshotLineRenderer.SetVertexCount(0);
+            slingshot.GetComponent<SkinnedMeshRenderer>().enabled = value;
+        }
+    }
+
     public bool canShoot = true;
 
 
@@ -90,7 +101,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
 	void FixedUpdate() {
-		
+        CanShoot = canShoot;
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
         if (padState.LeftStickAxis != Vector2.zero) {
@@ -131,8 +142,8 @@ public class TwinStickController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
-		if (useRemaining > 0) useRemaining -= Time.deltaTime;
-        aimLine.enabled = (padState.rightStickAxis != Vector2.zero);
+		if (useRemaining > 0 && canShoot) useRemaining -= Time.deltaTime;
+        aimLine.enabled = (padState.rightStickAxis != Vector2.zero && canShoot);
 
         if (sonarDelayRemaining > 0 ) {
             sonarDelayRemaining -= Time.deltaTime;
@@ -185,16 +196,20 @@ public class TwinStickController : MonoBehaviour {
 
         float aimAngle = 0;
         if (padState.rightStickAxis == Vector2.zero) {
-            slingshotLineRenderer.SetVertexCount(2);
-            slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
-            slingshotLineRenderer.SetPosition(1, slingshotEnds[1].position);
+            if (canShoot) {
+                slingshotLineRenderer.SetVertexCount(2);
+                slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
+                slingshotLineRenderer.SetPosition(1, slingshotEnds[1].position);
+            }
         }
         else {
             aimAngle = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
-            slingshotLineRenderer.SetVertexCount(3);
-            slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
-            slingshotLineRenderer.SetPosition(1, leftHand.position);
-            slingshotLineRenderer.SetPosition(2, slingshotEnds[1].position);
+            if (canShoot) {
+                slingshotLineRenderer.SetVertexCount(3);
+                slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
+                slingshotLineRenderer.SetPosition(1, leftHand.position);
+                slingshotLineRenderer.SetPosition(2, slingshotEnds[1].position);
+            }
         }
         
         barrelEnd.rotation = Quaternion.AngleAxis(aimAngle, barrelEnd.up);
@@ -257,9 +272,17 @@ public class TwinStickController : MonoBehaviour {
                 }
             }
         }
+
+        if (!canShoot) {
+            horizontal = 0;
+        }
+        else {
+
+            animator.SetBool("RightStickInUse", (padState.rightStickAxis != Vector2.zero));
+        }
         animator.SetFloat("Vertical", vertical);
         animator.SetFloat("Horizontal", horizontal);
-        animator.SetBool("RightStickInUse", (padState.rightStickAxis != Vector2.zero));
+
 
         /*
         if (animator.GetCurrentAnimatorStateInfo(0).IsName("shooting_aim")) {

@@ -30,7 +30,7 @@ public class Player : MonoBehaviour {
     public static event PlayerShot OnPlayerShot;
 
     //health indic
-    [SerializeField] Transform[] healthIndicatorsT;
+    [SerializeField] Material[] healthIndicatorsT;
     [SerializeField] bool isTutorialLevel = false;
     float alpha = 1;
     //
@@ -43,14 +43,7 @@ public class Player : MonoBehaviour {
         }
         team = GameData.Team.Player;
         controller = GetComponent<TwinStickController>();
-        
-        foreach (Transform t in healthIndicatorsT) {
-            Color finalColor = Color.white * Mathf.LinearToGammaSpace(0.003F);
-            SkinnedMeshRenderer meshRend = t.GetComponent<SkinnedMeshRenderer>();
-            foreach (Material m in meshRend.materials) {
-                m.SetColor("_EmissionColor", finalColor);
-            }
-        }
+        affectHealthIndicator();
         //
     }
 
@@ -131,14 +124,10 @@ public class Player : MonoBehaviour {
     void affectHealthIndicator()
     {
         alpha = ((0.5f / INITIALHP) * currentHp) + 0.5f;
-        Debug.Log(alpha);
-        foreach (Transform t in healthIndicatorsT) {
-            Color baseColor = Color.white;
-            Color finalColor = baseColor * Mathf.LinearToGammaSpace(1-alpha);
-            SkinnedMeshRenderer meshRend = t.GetComponent<SkinnedMeshRenderer>();
-            foreach (Material m in meshRend.materials) {
-                m.SetColor("_EmissionColor", finalColor);
-            }
+        Color baseColor = Color.white;
+        Color finalColor = baseColor * Mathf.LinearToGammaSpace(1-alpha);
+        foreach (Material m in healthIndicatorsT) {
+            m.SetColor("_EmissionColor", finalColor);
         }
     }
 }
