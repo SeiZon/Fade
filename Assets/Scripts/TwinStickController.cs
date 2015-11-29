@@ -182,11 +182,7 @@ public class TwinStickController : MonoBehaviour {
             foreach (Collider c in hitColliders) {
                 EnemyInfo hitEnemy = c.GetComponent<EnemyInfo>();
                 if (Vector3.Distance(transform.position, c.transform.position) < pushRange && hitEnemy != null) {
-                    Vector3 directionToTarget = transform.position - hitEnemy.transform.position;
-                    float angle = Vector3.Angle(transform.forward, directionToTarget);
-                    if (Mathf.Abs(angle) >= 180 - pushConeRadiusDegrees) {
-                        hitEnemies.Add(hitEnemy);
-                    }
+                    hitEnemies.Add(hitEnemy);
                 }
             }
             Push(hitEnemies.ToArray(), pushForce);
@@ -473,5 +469,23 @@ public class TwinStickController : MonoBehaviour {
     public void TakeDamage() {
         audioSource_misc.Stop();
         audioSource_misc.PlayOneShot(onHit);
+    }
+
+    public bool isFullyChargedShot()
+    {
+        bool fullyCharged = false;
+
+        if (canShoot && player.canShoot)
+        {
+            if (padState.RightTrigger > rightTriggerDeadzone)
+            {
+                if (currentShotCharge > maxShotChargeTime)
+                {
+                    fullyCharged = true;
+                }
+            }
+        }
+
+        return fullyCharged;
     }
 }

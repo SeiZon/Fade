@@ -82,6 +82,7 @@ public class Player : MonoBehaviour {
     public void Sonar() {
         sonarReloadRemaining = sonarReloadTime;
         currentHp -= sonarHealthCost;
+        affectHealthIndicator();
     }
 
     public bool Drain(float amount) {

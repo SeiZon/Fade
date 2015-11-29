@@ -44,7 +44,6 @@ public class Shot : MonoBehaviour {
             EnemyInfo enemy = collision.gameObject.GetComponent<EnemyInfo>();
             if (enemy != null) {
                 enemy.TakeDamage(damage);
-
                 //check if we hit orpi. we don't want hit particle on orpi
                 EnemyOrpi orpi = collision.gameObject.GetComponent<EnemyOrpi>();
 
@@ -57,6 +56,15 @@ public class Shot : MonoBehaviour {
                 Orb orb = collision.gameObject.GetComponent<Orb>();
                 if (orb != null) {
                     orb.explodeIt();
+                }
+                else
+                {
+                    Boss boss = collision.gameObject.GetComponent<Boss>();
+                    if (boss != null)
+                    {
+                        boss.getShot(shotType);
+                        Destroy(gameObject);
+                    }
                 }
             }
             Player myself = collision.gameObject.GetComponent<Player>();
