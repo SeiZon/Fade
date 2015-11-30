@@ -7322,6 +7322,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: footsteps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 443938, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: m_LocalPosition.x
       value: -21
@@ -7353,6 +7357,22 @@ Prefab:
     - target: {fileID: 443938, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: footsteps.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c88a688becbceae4b8082c5f1527170b, type: 3}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: footsteps.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 442998f3097a8654c98bdc86b3cc5810, type: 3}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: footsteps.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ecdced3741f14f24f8826966ac1025ff, type: 3}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: stepSoundIntervalMultiplier
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
