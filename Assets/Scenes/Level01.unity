@@ -2047,6 +2047,10 @@ Prefab:
       propertyPath: activators.Array.data[0]
       value: 
       objectReference: {fileID: 2019210563}
+    - target: {fileID: 11430240, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
+      propertyPath: levelName
+      value: Level02
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
   m_IsPrefabParent: 0
