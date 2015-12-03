@@ -4,8 +4,8 @@ using System.Collections;
 public class Activator : MonoBehaviour {
 
     [SerializeField] protected bool usable;
-    [SerializeField] bool repeatable;
-    [SerializeField] bool toggleable;
+    [SerializeField] protected bool repeatable;
+    [SerializeField] protected bool toggleable;
     [SerializeField] Activator[] prerequisites;
 
     public delegate void OnActivate(bool activationState);
@@ -55,16 +55,20 @@ public class Activator : MonoBehaviour {
         if (!toggleable && !repeatable) usable = false;
         if (toggleable) {
             isActivated = !isActivated;
-            Debug.Log("TEST:" + isActivated);
         }
         else  {
             isActivated = true;
         }
-        Debug.Log(gameObject.name + " IS ACTIVATED");
         if (OnActivated != null)
         OnActivated(isActivated);
         foreach (Animator a in animators) {
             a.SetBool("Activated", isActivated);
         }
+    }
+
+    public virtual void SimpleActivate(bool isActivated) {
+        if (OnActivated != null)
+            OnActivated(isActivated);
+        this.isActivated = isActivated;
     }
 }
