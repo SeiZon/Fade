@@ -86,6 +86,7 @@ public class EnemySpawner : MonoBehaviour {
 
     void SpawnEnemy(Vector3 position, Quaternion rotation, GameData.EnemyType enemyType) {
         GameObject enemy = (GameObject)Instantiate(enemyPrefabs[(int)enemyType], position, rotation);
+        enemy.GetComponent<EnemyInfo>().onDeath += EnemyKilled;
     }
 
     public void EnemyKilled() {

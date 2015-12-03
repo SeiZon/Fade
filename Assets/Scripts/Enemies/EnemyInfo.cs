@@ -17,6 +17,9 @@ public abstract class EnemyInfo : MonoBehaviour {
     protected GameData.Team team { get; private set; }
     protected Animator animator;
 
+    public delegate void OnDeath();
+    public OnDeath onDeath;
+
 	// Use this for initialization
 	protected virtual void Start () {
         player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -39,6 +42,8 @@ public abstract class EnemyInfo : MonoBehaviour {
     }
 
     protected virtual void Die() {
+        if (onDeath != null)
+            onDeath();
     }
 
     public void Pushed(float force, Vector3 pushOrigin)
