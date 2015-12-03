@@ -360,10 +360,9 @@ public class TwinStickController : MonoBehaviour {
             }
             useRemaining = useCooldown;
         }
-
-        //SUPERDUPER DEBUG BECAUSE I FORGOT MY CONTROLLER! PLEASE REMOVE KEYBOARD INPUT PART OF IF! TODO
+        
         //Sonar
-        if ((padState.LeftTrigger > leftTriggerDeadzone || Input.GetKeyDown(KeyCode.H)) && player.canSonar) {
+        if (padState.LeftTrigger > leftTriggerDeadzone && player.canSonar) {
             haveSonar = true;
             sonarDelayRemaining = sonarDelay;
             player.Sonar();
