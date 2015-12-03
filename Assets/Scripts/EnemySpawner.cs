@@ -12,11 +12,14 @@ public class EnemySpawner : MonoBehaviour {
         None
     }
 
+    [SerializeField] Activator startSpawningOn;
+    [SerializeField] Activator stopSpawningOn;
     [SerializeField] protected GameObject[] enemyPrefabs;
     [SerializeField] protected float spawnCooldownTime = 15;
     [SerializeField] protected bool loopSpawnOrder = true;
     [SerializeField] protected GameData.EnemyType[] spawnOrder;
     [SerializeField] protected int[] spawnAmount;
+    [SerializeField] GameObject[] spawnPoints;
 
     public bool isSpawning;
 
@@ -24,14 +27,20 @@ public class EnemySpawner : MonoBehaviour {
     int spawnOrderCounter = 0;
     int enemiesToKill;
     bool allEnemiesDead = true;
-    GameObject[] spawnPoints;
+    bool startActivator = false;
+    bool stopActivator = false;
 
 	// Use this for initialization
 	void Start () {
         if (enemyPrefabs.Length == 0) {
             Debug.LogError("No enemy prefabs detected. Please link up prefabs.");
+            Destroy(gameObject);
         }
-        spawnPoints = GameObject.FindGameObjectsWithTag("EnemySpawnPoint");
+        if (spawnPoints == null) {
+            Debug.LogError("No spawnpoints registered in enemyspawner.");
+            Destroy(gameObject);
+        }
+        startSpawningOn.OnActivated += OnStart;
 	}
 	
 	// Update is called once per frame
@@ -84,5 +93,19 @@ public class EnemySpawner : MonoBehaviour {
         if (enemiesToKill <= 0) {
             allEnemiesDead = true;
         }
+    }
+
+    void OnStop(bool isActivated) {
+        stopActivator = isActivated;
+        if (isActivated)
+            isSpawning = false;
+        else {
+            isSpawning = startActivator;
+        }
+    }
+
+    void OnStart(bool isActivated) {
+        startActivator = isActivated;
+        isSpawning = isActivated;
     }
 }
