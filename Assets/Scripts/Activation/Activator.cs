@@ -10,8 +10,7 @@ public class Activator : MonoBehaviour {
 
     public delegate void OnActivate(bool activationState);
     public event OnActivate OnActivated;
-
-    public bool sonarTriggered;
+    
     public bool isActivated;
 
     

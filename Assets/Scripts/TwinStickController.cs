@@ -172,9 +172,9 @@ public class TwinStickController : MonoBehaviour {
                     }
                 }
                 if (isVisible) {
-                    Activator activator = c.gameObject.GetComponent<Activator>();
+                    Activator_OnSonar activator = c.gameObject.GetComponent<Activator_OnSonar>();
                     if (activator != null) {
-                        if (activator.sonarTriggered) activator.Activate();
+                        activator.Activate();
                     }
                 }
                 else {
@@ -361,29 +361,9 @@ public class TwinStickController : MonoBehaviour {
             useRemaining = useCooldown;
         }
 
-        //Pushes enemies in front of player in cone
-        /*
-        if (padState.RightShoulder && player.canPush) {
-            player.Push();
-            audioSource_misc.Stop();
-            audioSource_misc.PlayOneShot(onPush);
-            Collider[] hitColliders = Physics.OverlapSphere(transform.position, pushRange);
-            List<EnemyInfo> hitEnemies = new List<EnemyInfo>();
-            foreach (Collider c in hitColliders) {
-                EnemyInfo hitEnemy = c.GetComponent<EnemyInfo>();
-                if (Vector3.Distance(transform.position, c.transform.position) < pushRange && hitEnemy != null) {
-                    Vector3 directionToTarget = transform.position - hitEnemy.transform.position;
-                    float angle = Vector3.Angle(transform.forward, directionToTarget);
-                    if (Mathf.Abs(angle) >= 180 - pushConeRadiusDegrees) {
-                        hitEnemies.Add(hitEnemy);
-                    }
-                }
-            }
-            Push(hitEnemies.ToArray(), pushForce);
-        }*/
-
+        //SUPERDUPER DEBUG BECAUSE I FORGOT MY CONTROLLER! PLEASE REMOVE KEYBOARD INPUT PART OF IF! TODO
         //Sonar
-        if (padState.LeftTrigger > leftTriggerDeadzone && player.canSonar) {
+        if ((padState.LeftTrigger > leftTriggerDeadzone || Input.GetKeyDown(KeyCode.H)) && player.canSonar) {
             haveSonar = true;
             sonarDelayRemaining = sonarDelay;
             player.Sonar();
