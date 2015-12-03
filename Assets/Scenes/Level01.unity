@@ -924,7 +924,7 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: e085b7c4da2c8254fa882efa64eed201, type: 3}
-    m_FontSize: 20
+    m_FontSize: 30
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -957,11 +957,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 2109984690}
   m_RootOrder: 0
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 150, y: 150}
-  m_SizeDelta: {x: 160, y: 30}
-  m_Pivot: {x: .5, y: .5}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 20, y: -54}
+  m_SizeDelta: {x: 250, y: 30}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1001 &391516472
 Prefab:
   m_ObjectHideFlags: 0
@@ -1154,7 +1154,7 @@ Transform:
   m_Children:
   - {fileID: 739076555}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
 --- !u!1001 &469292478
 Prefab:
   m_ObjectHideFlags: 0
@@ -2196,7 +2196,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 411108, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 11435144, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
       propertyPath: activators.Array.data[0]
@@ -2209,6 +2209,14 @@ Prefab:
     - target: {fileID: 11430240, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
       propertyPath: levelName
       value: Level02
+      objectReference: {fileID: 0}
+    - target: {fileID: 103778, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 19807746, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
+      propertyPath: playOnAwake
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
@@ -3113,7 +3121,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 172624, guid: 4e39df1a102e36c41ae90cb107aaf759, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e39df1a102e36c41ae90cb107aaf759, type: 2}
@@ -3885,8 +3893,8 @@ RectTransform:
   m_RootOrder: 2
   m_AnchorMin: {x: 0, y: .5}
   m_AnchorMax: {x: 0, y: .5}
-  m_AnchoredPosition: {x: 153, y: 123}
-  m_SizeDelta: {x: 100, y: 100}
+  m_AnchoredPosition: {x: 129, y: -90}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: .5, y: .5}
 --- !u!114 &1639469265
 MonoBehaviour:

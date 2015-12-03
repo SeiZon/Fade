@@ -9,7 +9,17 @@ public class Boss : MonoBehaviour {
     Transform outerRing, innerRing, particleArmor;
     Material myMaterial;
     float colorCode = 0;
+
+    [SerializeField] float shotDamage = 50;
+    [SerializeField] float shotSwingSpeed = 30;
+    Transform barrelSwing;
+    Transform barrelEnd;
+
+    [SerializeField] float outerRingHealth = 1000, innerRingHealth = 1000;
+    float curOutHP, curInHP;
+    [SerializeField] int outerRingSpinSpeed = 50, innerRingSpinSpeed = 100, particleArmorSpeed = 150;
     
+
     float floor;
 
     [SerializeField]GameObject[] enemies;
@@ -18,8 +28,6 @@ public class Boss : MonoBehaviour {
 
     List<GameObject> enemiesInScene;
     
-    [SerializeField] int outerRingSpinSpeed = 50, innerRingSpinSpeed = 100, particleArmorSpeed = 150;
-
     [SerializeField] int stunCooldown = 100;
     int curSpawnCooldown, curStunCooldown;
 
@@ -91,10 +99,18 @@ public class Boss : MonoBehaviour {
         {
             floor = 0;
         }
+
+        curOutHP = outerRingHealth;
+        curInHP = innerRingHealth;
+
+        barrelSwing = transform.FindChild("barrelSwing");
+        barrelEnd = barrelSwing.FindChild("barrelEnd");
 	}
 	
 	// Update is called once per frame
 	void Update () {
+        fire();
+
         switch(gameState)
         {
             case gameStates.bossFight:
@@ -161,6 +177,10 @@ public class Boss : MonoBehaviour {
 
         if(curLevel == levels.lvl1)
         {
+            if(curOutHP <= 0)
+            {
+                bossState = states.wounded;
+            }
             //spawn enemies 1
             if (maxEnemies[0] > enemiesInScene.Count)
             {
@@ -194,6 +214,10 @@ public class Boss : MonoBehaviour {
         }
         else if(curLevel == levels.lvl2)
         {
+            if (curInHP <= 0)
+            {
+                bossState = states.wounded;
+            }
             //spawn enemies 2
             if (maxEnemies[1] > enemiesInScene.Count)
             {
@@ -417,6 +441,29 @@ public class Boss : MonoBehaviour {
         {
             //if final
             bossState = states.die;
+        }
+        else if(curLevel != levels.lvl3)
+        {
+            int damage = GameData.shotDamageTable[(int)player.team];
+
+            if(curLevel == levels.lvl1)
+            {
+                curOutHP -= damage;
+            }
+            else
+            {
+                curInHP -= damage;
+            }
+        }
+    }
+
+    void fire()
+    {
+        
+
+        if (barrelSwing.rotation.y <= 90 || barrelSwing.rotation.y > 275)
+        {
+            barrelSwing.Rotate(-Vector3.up * shotSwingSpeed * Time.deltaTime);
         }
     }
 
