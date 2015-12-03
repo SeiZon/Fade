@@ -42,31 +42,35 @@ public class Shot : MonoBehaviour {
     void OnTriggerEnter(Collider collision) {
         if (team == GameData.Team.Player) {
             EnemyInfo enemy = collision.gameObject.GetComponent<EnemyInfo>();
+            Orb orb = collision.gameObject.GetComponent<Orb>();
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            Activator_OnShot activator = collision.gameObject.GetComponent<Activator_OnShot>();
+
             if (enemy != null) {
                 enemy.TakeDamage(damage);
                 //check if we hit orpi. we don't want hit particle on orpi
                 EnemyOrpi orpi = collision.gameObject.GetComponent<EnemyOrpi>();
 
-                if (orpi == null)
-                {
+                if (orpi == null) {
                     Instantiate(shotParticle, enemy.transform.position, Quaternion.identity);
                 }
             }
-            else {
-                Orb orb = collision.gameObject.GetComponent<Orb>();
-                if (orb != null) {
-                    orb.explodeIt();
+            else if (orb != null) {
+                orb.explodeIt();
+            }
+            else if (boss != null) {
+                boss.getShot(shotType);
+                Destroy(gameObject);
+            }
+            else if (activator != null) {
+                if (activator.requiresChargedShot) {
+                    if (shotType == GameData.ShotType.Charged)
+                        activator.Activate();
                 }
                 else
-                {
-                    Boss boss = collision.gameObject.GetComponent<Boss>();
-                    if (boss != null)
-                    {
-                        boss.getShot(shotType);
-                        Destroy(gameObject);
-                    }
-                }
+                     activator.Activate();
             }
+            
             Player myself = collision.gameObject.GetComponent<Player>();
             if (myself != null) return;
             Destroy(gameObject);

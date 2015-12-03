@@ -37,6 +37,7 @@ public class TwinStickController : MonoBehaviour {
     [SerializeField] Transform[] slingshotEnds;
     [SerializeField] Transform slingshot;
     [SerializeField] Transform leftHand;
+    [SerializeField] bool isLyingDown;
 
     //Player sounds
     [SerializeField] float soundVolume = 1;
@@ -101,6 +102,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
 	void FixedUpdate() {
+        if (isLyingDown) return;
         CanShoot = canShoot;
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
@@ -141,6 +143,12 @@ public class TwinStickController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        animator.SetBool("LyingDown", isLyingDown);
+
+        if (isLyingDown) {
+            return;
+        }
+
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		if (useRemaining > 0 && canShoot) useRemaining -= Time.deltaTime;
         aimLine.enabled = (padState.rightStickAxis != Vector2.zero && canShoot);
