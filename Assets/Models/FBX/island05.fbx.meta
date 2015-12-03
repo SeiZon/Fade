@@ -1,22 +1,27 @@
 fileFormatVersion: 2
-guid: fc0b929652ecae44797a21c0aea02f0c
-timeCreated: 1449079631
+guid: 6d08da1484b11514ca4bf85fad7a732b
+timeCreated: 1449139228
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: island_003
-    100004: island_walls_003
+    100002: island_04
+    100004: island_bridgewall_04
+    100006: island_walls_04
     400000: //RootNode
-    400002: island_003
-    400004: island_walls_003
-    2300000: island_003
-    2300002: island_walls_003
-    3300000: island_003
-    3300002: island_walls_003
-    4300000: island_walls_003
-    4300002: island_003
+    400002: island_04
+    400004: island_bridgewall_04
+    400006: island_walls_04
+    2300000: island_04
+    2300002: island_bridgewall_04
+    2300004: island_walls_04
+    3300000: island_04
+    3300002: island_bridgewall_04
+    3300004: island_walls_04
+    4300000: island_walls_04
+    4300002: island_04
+    4300004: island_bridgewall_04
     9500000: //RootNode
   materials:
     importMaterials: 1

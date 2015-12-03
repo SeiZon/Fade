@@ -1,22 +1,49 @@
 fileFormatVersion: 2
-guid: fc0b929652ecae44797a21c0aea02f0c
-timeCreated: 1449079631
+guid: 1f239406d191c1d439dda045fcfee220
+timeCreated: 1449078888
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
   fileIDToRecycleName:
     100000: //RootNode
-    100002: island_003
-    100004: island_walls_003
+    100002: flower03_yellow
+    100004: pCube1
+    100006: pCube10
+    100008: pCube2
+    100010: pCube23
+    100012: pCube4
+    100014: pCube5
+    100016: pCylinder1
+    100018: pCylinder2
+    100020: transform1
+    100022: transform2
+    100024: transform3
+    100026: transform4
+    100028: transform5
+    100030: transform6
+    100032: transform7
+    100034: transform8
     400000: //RootNode
-    400002: island_003
-    400004: island_walls_003
-    2300000: island_003
-    2300002: island_walls_003
-    3300000: island_003
-    3300002: island_walls_003
-    4300000: island_walls_003
-    4300002: island_003
+    400002: flower03_yellow
+    400004: pCube1
+    400006: pCube10
+    400008: pCube2
+    400010: pCube23
+    400012: pCube4
+    400014: pCube5
+    400016: pCylinder1
+    400018: pCylinder2
+    400020: transform1
+    400022: transform2
+    400024: transform3
+    400026: transform4
+    400028: transform5
+    400030: transform6
+    400032: transform7
+    400034: transform8
+    2300000: flower03_yellow
+    3300000: flower03_yellow
+    4300000: flower03_yellow
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -41,7 +68,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 120
+    globalScale: 40
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
