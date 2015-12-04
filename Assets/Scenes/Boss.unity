@@ -893,11 +893,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 434396, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 11.3999996
+      value: 6.19999981
       objectReference: {fileID: 0}
     - target: {fileID: 434396, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -27.7299995
+      value: -20.2000008
       objectReference: {fileID: 0}
     - target: {fileID: 434396, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
       propertyPath: m_LocalRotation.x
@@ -918,6 +918,14 @@ Prefab:
     - target: {fileID: 434396, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
       propertyPath: m_RootOrder
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211998, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
+      propertyPath: Priority
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 8211998, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
+      propertyPath: m_Pitch
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ea310be6b8cf81341a9587b87ab3669f, type: 2}
@@ -953,7 +961,7 @@ Transform:
   - {fileID: 975403660}
   - {fileID: 1736501302}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 8
 --- !u!1 &1321425519
 GameObject:
   m_ObjectHideFlags: 0
@@ -1169,7 +1177,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
       propertyPath: bossState
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
       propertyPath: firstSwingCooldown
@@ -1221,7 +1229,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 198894, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: curLevel
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
@@ -1257,7 +1269,7 @@ Transform:
   - {fileID: 2056164444}
   - {fileID: 1361789714}
   m_Father: {fileID: 0}
-  m_RootOrder: 8
+  m_RootOrder: 9
 --- !u!1 &1676880895
 GameObject:
   m_ObjectHideFlags: 0
