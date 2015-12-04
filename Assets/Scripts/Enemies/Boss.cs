@@ -28,6 +28,7 @@ public class Boss : MonoBehaviour {
 
     float floor;
 
+    bool waveSpawned = false;
     [SerializeField]GameObject[] enemies;
     [SerializeField]int[] enemySpawnCooldowns,  maxEnemies;
     [SerializeField]Transform[] levelPositions;
@@ -91,7 +92,7 @@ public class Boss : MonoBehaviour {
     ParticleSystem beamEnd;
     ParticleSystem beamCharge;
 
-    [SerializeField] int beamCooldown, beamDamage;
+    [SerializeField] int beamCooldown, finLvlBeamCooldown, beamDamage;
     int curBeamCooldown;
 
     [SerializeField] float beamSpeed, beamLength;
@@ -241,52 +242,7 @@ public class Boss : MonoBehaviour {
                 bossState = states.wounded;
             }
             //spawn enemies 1
-            if (maxEnemies[0] > enemiesInScene.Count)
-            {
-                if (curSpawnCooldown <= 0)
-                {
-                    Vector3 dir = transform.forward;
-                    int rand = Random.Range(0, 3);
-                    switch (rand)
-                    {
-                        case 0:
-                            dir = transform.forward;
-                            break;
-                        case 1:
-                            dir = transform.right;
-                            break;
-                        case 2:
-                            dir = -transform.right;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[0].transform.localScale.y));
-                    Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
-
-                    GameObject enemy = Instantiate(enemies[0], spawnPos, Quaternion.identity) as GameObject;
-                    enemiesInScene.Add(enemy);
-                    
-                    curSpawnCooldown = enemySpawnCooldowns[0];
-                }
-                else
-                {
-                    curSpawnCooldown--;
-                }
-            }
-            else
-            {
-                //check for enemies
-                foreach(GameObject g in enemiesInScene)
-                {
-                    if(g == null)
-                    {
-                        enemiesInScene.Remove(g);
-                        break;
-                    }
-                }
-            }
+            spawnEnemies(0);
         }
         else if(curLevel == levels.lvl2)
         {
@@ -298,102 +254,13 @@ public class Boss : MonoBehaviour {
                 bossState = states.wounded;
             }
             //spawn enemies 2
-            if (maxEnemies[1] > enemiesInScene.Count)
-            {
-                if (curSpawnCooldown <= 0)
-                {
-                    Vector3 dir = transform.forward;
-                    int rand = Random.Range(0, 3);
-                    switch (rand)
-                    {
-                        case 0:
-                            dir = transform.forward;
-                            break;
-                        case 1:
-                            dir = transform.right;
-                            break;
-                        case 2:
-                            dir = -transform.right;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[1].transform.localScale.y));
-                    Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
-
-                    GameObject enemy = Instantiate(enemies[1], spawnPos, Quaternion.identity) as GameObject;
-                    enemiesInScene.Add(enemy);
-
-                    curSpawnCooldown = enemySpawnCooldowns[1];
-                }
-                else
-                {
-                    curSpawnCooldown--;
-                }
-            }
-            else
-            {
-                //check for enemies
-                foreach (GameObject g in enemiesInScene)
-                {
-                    if (g == null)
-                    {
-                        enemiesInScene.Remove(g);
-                        break;
-                    }
-                }
-            }
+            spawnEnemies(1);
         }
         else if(curLevel == levels.lvl3)
         {
+            beaming();
             //spawn enemies 3 and randomly color sucking orbs
-            if (maxEnemies[2] > enemiesInScene.Count)
-            {
-                if (curSpawnCooldown <= 0)
-                {
-                    Vector3 dir = transform.forward;
-                    int rand = Random.Range(0, 3);
-                    switch (rand)
-                    {
-                        case 0:
-                            dir = transform.forward;
-                            break;
-                        case 1:
-                            dir = transform.right;
-                            break;
-                        case 2:
-                            dir = -transform.right;
-                            break;
-                        default:
-                            break;
-                    }
-
-                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[2].transform.localScale.y));
-                    Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
-
-                    GameObject enemy = Instantiate(enemies[2], spawnPos, Quaternion.identity) as GameObject;
-                    enemiesInScene.Add(enemy);
-
-                    curSpawnCooldown = enemySpawnCooldowns[2];
-                }
-                else
-                {
-                    curSpawnCooldown--;
-                }
-            }
-            else
-            {
-                //check for enemies
-                foreach (GameObject g in enemiesInScene)
-                {
-                    if (g == null)
-                    {
-                        enemiesInScene.Remove(g);
-                        break;
-                    }
-                }
-            }
+            spawnEnemies(2);
         }
     }
     void wounded()
@@ -428,10 +295,13 @@ public class Boss : MonoBehaviour {
                 Destroy(innerRing.gameObject);
             }
 
-            if(beam != null)
+            if(beam.enabled)
             {
-                Destroy(beam.gameObject);
-                Destroy(beamFacing.gameObject);
+                beam.enabled = false;
+            }
+            if(beamCooldown != finLvlBeamCooldown)
+            {
+                curBeamCooldown = beamCooldown = finLvlBeamCooldown;
             }
 
             if (Vector3.Distance(transform.position, translatePos(levelPositions[2])) < 0.5F)
@@ -452,6 +322,10 @@ public class Boss : MonoBehaviour {
             //lose particlearmor for a period, get stunned and reset to invincible and particlearmor after cooldown
             if(curStunCooldown <= 0)
             {
+                if (!beam.enabled)
+                {
+                    beam.enabled = true;
+                }
                 if (!particleArmor.gameObject.activeSelf)
                 {
                     audio.PlayOneShot(sndEnableParticleArmor);
@@ -463,6 +337,10 @@ public class Boss : MonoBehaviour {
             }
             else
             {
+                if (beam.enabled)
+                {
+                    beam.enabled = false;
+                }
                 if (particleArmor.gameObject.activeSelf)
                 {
                     particleArmor.gameObject.SetActive(false);
@@ -657,6 +535,65 @@ public class Boss : MonoBehaviour {
 
             _fire = fireState.calc;
             barrelSwing.localRotation = swingStart;
+        }
+    }
+
+    void spawnEnemies(int lvl)
+    {
+        if (!waveSpawned)
+        {
+            if (curSpawnCooldown <= 0)
+            {
+                if (maxEnemies[lvl] > enemiesInScene.Count)
+                {
+                    Vector3 dir = transform.forward;
+                    int rand = Random.Range(0, 3);
+                    switch (rand)
+                    {
+                        case 0:
+                            dir = transform.forward;
+                            break;
+                        case 1:
+                            dir = transform.right;
+                            break;
+                        case 2:
+                            dir = -transform.right;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[lvl].transform.localScale.y));
+                    Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
+
+                    GameObject enemy = Instantiate(enemies[lvl], spawnPos, Quaternion.identity) as GameObject;
+                    enemiesInScene.Add(enemy);
+                }
+                else
+                {
+                    waveSpawned = true;
+                    curSpawnCooldown = enemySpawnCooldowns[lvl];
+                }
+            }
+            else
+            {
+                curSpawnCooldown--;
+            }
+        }
+        else
+        {
+            foreach (GameObject g in enemiesInScene)
+            {
+                if (g == null)
+                {
+                    enemiesInScene.Remove(g);
+                    break;
+                }
+            }
+            if (enemiesInScene.Count < 1)
+            {
+                waveSpawned = false;
+            }
         }
     }
 
