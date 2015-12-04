@@ -167,7 +167,7 @@ public class TwinStickController : MonoBehaviour {
                 }
             }
             if (drainGroup != null) {
-                player.Drain(1 * Time.deltaTime);
+                player.Drain(0.005f * Time.deltaTime);
                 drainGroup.Drain(maxDrainSpeed / 2);
                 isReviving = true;
             }
