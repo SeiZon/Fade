@@ -8,6 +8,7 @@ public abstract class EnemyInfo : MonoBehaviour {
     [SerializeField] protected float aggroRange;
 
     protected Transform player;
+    protected Player playerScript;
     protected int curHealth;
     protected AudioSource audioSource;
 
@@ -22,6 +23,7 @@ public abstract class EnemyInfo : MonoBehaviour {
 	// Use this for initialization
 	protected virtual void Start () {
         player = GameObject.FindGameObjectWithTag("Player").transform;
+        playerScript = player.GetComponent<Player>();
         team = GameData.Team.Enemy;
         curHealth = startHealth;
 
@@ -31,6 +33,7 @@ public abstract class EnemyInfo : MonoBehaviour {
 
     protected virtual void Update() {
         if (player == null) enabled = false;
+        if (playerScript.isDead) enabled = false;
     }
     
     protected void lookAt(Transform target)

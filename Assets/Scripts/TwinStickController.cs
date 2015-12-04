@@ -66,6 +66,7 @@ public class TwinStickController : MonoBehaviour {
     bool rightStickInUse = false;
     bool isUp = false;
     bool isReviving = false;
+    bool isDead = false;
     List<Painting> splatsUnderPlayer;
     Player player;
     CapsuleCollider capCollider;
@@ -111,7 +112,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
 	void FixedUpdate() {
-        if (!isUp) return;
+        if (!isUp || isDead) return;
         CanShoot = canShoot;
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
@@ -154,6 +155,7 @@ public class TwinStickController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
+        if (isDead) return;
         animator.SetBool("LyingDown", isLyingDown);
         animator.SetBool("IsUp", isUp);
         if (isLyingDown) {
@@ -164,7 +166,6 @@ public class TwinStickController : MonoBehaviour {
                     drainGroup = paint.splatGroup;
                 }
             }
-
             if (drainGroup != null) {
                 player.Drain(1 * Time.deltaTime);
                 drainGroup.Drain(maxDrainSpeed / 2);
@@ -460,6 +461,7 @@ public class TwinStickController : MonoBehaviour {
 	}
 
     public void AddToSplats(Painting painting) {
+        if (isDead) return;
         if (splatsUnderPlayer.Contains(painting)) return;
         splatsUnderPlayer.Add(painting);
         if (drainGroup == null) {
@@ -468,6 +470,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     public void RemoveFromSplats(Painting painting) {
+        if (isDead) return;
         if (!splatsUnderPlayer.Contains(painting)) return;
         splatsUnderPlayer.Remove(painting);
         if (splatsUnderPlayer.Count == 0) {
@@ -488,6 +491,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     public void TakeDamage() {
+        if (isDead) return;
         audioSource_misc.Stop();
         audioSource_misc.PlayOneShot(onHit);
     }
@@ -509,8 +513,9 @@ public class TwinStickController : MonoBehaviour {
 
         return fullyCharged;
     }
-
-    public void WakeUp() {
-        
+    
+    public void Die() {
+        animator.SetBool("Dead", true);
+        isDead = true;
     }
 }

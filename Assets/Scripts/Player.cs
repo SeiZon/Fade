@@ -24,6 +24,7 @@ public class Player : MonoBehaviour {
     public bool canShoot { get; private set; }
     public bool canPush { get; private set; }
     public bool canSonar { get; private set; }
+    public bool isDead { get; private set; }
 
     //Events that can be hooked into
     public delegate void PlayerShot(Transform shot);
@@ -115,11 +116,12 @@ public class Player : MonoBehaviour {
         currentHp -= dmg;
         controller.TakeDamage();
         affectHealthIndicator();
+
     }
 
     void Die() {
-        //Play death animation
-        Destroy(gameObject);
+        isDead = true;
+        controller.Die();
     }
 
     void affectHealthIndicator()
