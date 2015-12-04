@@ -108,7 +108,6 @@ public class EnemyWasp : EnemyInfo {
         audioSource.Stop();
         audioSource.PlayOneShot(onDestroyed);
         Instantiate(orbPrefab, transform.position + (transform.forward * 2), Quaternion.identity);
-        enemySpawner.EnemyKilled();
         Destroy(gameObject);
     }
 

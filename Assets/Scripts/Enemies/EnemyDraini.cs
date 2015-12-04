@@ -22,7 +22,6 @@ public class EnemyDraini : EnemyInfo{
     [SerializeField] GameObject splatPrefab;
     [SerializeField] GameObject explodeParticle;
     [SerializeField] AudioClip onExplode;
-    AudioSource audioSource;
     bool hasExploded = false;
 
     Material healthIndicator;
@@ -34,8 +33,6 @@ public class EnemyDraini : EnemyInfo{
         curHealth = 10;
 
         mama = GameObject.FindGameObjectWithTag("Boss").GetComponent<Boss>();
-
-        audioSource = GetComponent<AudioSource>();
 
         healthIndicator = GetComponent<MeshRenderer>().material;
 

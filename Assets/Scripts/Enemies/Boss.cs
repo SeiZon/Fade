@@ -54,13 +54,13 @@ public class Boss : MonoBehaviour {
     //island, objective and behaviour tracker
     private levels curLevel = levels.lvl1;
 
-    [HideInInspector] public enum states
+    public enum states
     {
         invincible,
         wounded,
         die
     }
-    [HideInInspector] public states bossState = states.invincible;
+    public states bossState = states.invincible;
 
     private enum gameStates
     {
@@ -592,7 +592,7 @@ public class Boss : MonoBehaviour {
 
             if (curShtCooldown <= 0)
             {
-                GameObject shotGo = Instantiate(bossShot, barrelEnd.position, midDir) as GameObject;
+                GameObject shotGo = Instantiate(bossShot, barrelEnd.position, barrelEnd.rotation) as GameObject;
 
                 Shot shot = shotGo.GetComponent<Shot>();
                 shot.Initialize(GameData.shotMoveSpeedTable[(int)GameData.Team.Enemy], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], GameData.Team.Enemy, GameData.ShotType.Normal, transform);

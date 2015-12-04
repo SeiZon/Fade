@@ -9,7 +9,6 @@ public abstract class EnemyInfo : MonoBehaviour {
 
     protected Transform player;
     protected int curHealth;
-    protected EnemySpawner enemySpawner;
     protected AudioSource audioSource;
 
     protected bool canGetPush = true;
@@ -25,7 +24,7 @@ public abstract class EnemyInfo : MonoBehaviour {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         team = GameData.Team.Enemy;
         curHealth = startHealth;
-        enemySpawner = GameObject.FindGameObjectWithTag("EnemySpawner").GetComponent<EnemySpawner>();
+
         if(GetComponent<Animator>() != null) animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
 	}
