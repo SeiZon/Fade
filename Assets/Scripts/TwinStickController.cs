@@ -212,8 +212,12 @@ public class TwinStickController : MonoBehaviour {
                 }
                 if (isVisible) {
                     Activator_OnSonar activator = c.gameObject.GetComponent<Activator_OnSonar>();
+                    Activator_GroundButton activatorGb = c.gameObject.GetComponent<Activator_GroundButton>();
                     if (activator != null) {
                         activator.Activate();
+                    }
+                    else if (activatorGb != null) {
+                        activatorGb.Activate();
                     }
                 }
                 else {
