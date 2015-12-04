@@ -968,8 +968,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159446}
-  m_LocalRotation: {x: 0, y: -.999998689, z: 0, w: -.00163609604}
-  m_LocalPosition: {x: .670000017, y: 3.66000009, z: -.800000012}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 38.6800003, y: 5.61000013, z: 16.1900005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 414188}
@@ -1811,6 +1811,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftStickSensivity: .25
   rightStickSensivity: .25
+  leftStickDeadzone: .5
+  rightStickDeadzone: .5
   rightTriggerDeadzone: .100000001
   leftTriggerDeadzone: .100000001
   shotPrefab: {fileID: 198944, guid: 6423453c8b41f244c8690b044413fd40, type: 2}
@@ -1824,7 +1826,7 @@ MonoBehaviour:
   sonarRange: 20
   moveSpeed: 350
   maxShotChargeTime: 1.79999995
-  minShotChargeTime: .100000001
+  minShotChargeTime: .0500000007
   rumbleSensivity: .800000012
   maxDrainSpeed: .0199999996
   drainSpeedAccel: .00999999978
@@ -1839,6 +1841,7 @@ MonoBehaviour:
   - {fileID: 438690}
   slingshot: {fileID: 487640}
   leftHand: {fileID: 452210}
+  isLyingDown: 0
   soundVolume: 1
   stepSoundIntervalMultiplier: .25
   isChargingShot: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
@@ -1862,7 +1865,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   INITIALHP: 500
   pushReloadTime: 1
-  shootReloadTime: .75
+  shootReloadTime: .25
   sonarReloadTime: 3
   sonarHealthCost: 15
   absorbMultiplier: 8000

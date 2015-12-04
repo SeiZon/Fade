@@ -9,6 +9,8 @@ public class TwinStickController : MonoBehaviour {
     //Variables for tweaking
     [SerializeField] protected float leftStickSensivity = 0.25f;
     [SerializeField] protected float rightStickSensivity = 0.25f;
+    [SerializeField] protected float leftStickDeadzone = 0.1f;
+    [SerializeField] protected float rightStickDeadzone = 0.1f;
     public float rightTriggerDeadzone = 0.1f;
     public float leftTriggerDeadzone = 0.1f;
     [SerializeField] protected GameObject shotPrefab;
@@ -60,12 +62,15 @@ public class TwinStickController : MonoBehaviour {
     bool isInsideColor;
     bool oppositeRotation = false;
     bool haveSonar = false;
+    bool leftStickInUse = false;
+    bool rightStickInUse = false;
     List<Painting> splatsUnderPlayer;
     Player player;
     CapsuleCollider capCollider;
     SplatGroup drainGroup;
     Animator animator;
     Vector2 lastLeftStickPosition = new Vector2(0, 1);
+    Vector2 lastRightStickPosition = new Vector2(0, 1);
     LineRenderer slingshotLineRenderer;
     
     //only used for tutorial
@@ -106,10 +111,10 @@ public class TwinStickController : MonoBehaviour {
         CanShoot = canShoot;
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
-        if (padState.LeftStickAxis != Vector2.zero) {
+        if (leftStickInUse) {
             rotationAngleGoal = Mathf.Atan2(padState.LeftStickAxis.x, padState.LeftStickAxis.y) * Mathf.Rad2Deg;
         }
-        if (padState.LeftStickAxis != Vector2.zero && stepIntervalRemaining > 0) {
+        if (leftStickInUse && stepIntervalRemaining > 0) {
             stepIntervalRemaining -= Time.deltaTime * stepSoundIntervalMultiplier * padState.LeftStickAxis.magnitude;
         }
         if (stepIntervalRemaining <= 0) {
@@ -119,10 +124,14 @@ public class TwinStickController : MonoBehaviour {
             stepIntervalRemaining = 1;
         }
         Vector2 tempLeftStickAxis = padState.LeftStickAxis;
-        if (padState.LeftStickAxis == Vector2.zero) {
+        Vector2 tempRightStickAxis = padState.rightStickAxis;
+        if (!leftStickInUse) {
             tempLeftStickAxis = lastLeftStickPosition;
         }
-        if (Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis) > 90) {
+        if (!rightStickInUse && currentShotCharge > 0) {
+            tempRightStickAxis = lastRightStickPosition;
+        }
+        if (Vector2.Angle(tempLeftStickAxis, tempRightStickAxis) > 90) {
             oppositeRotation = true;
         }
         else {
@@ -133,12 +142,10 @@ public class TwinStickController : MonoBehaviour {
         float rotMod = 0;
         if (oppositeRotation)
             rotMod += 180;
-        if (padState.rightStickAxis != Vector2.zero)
+        if (rightStickInUse || currentShotCharge > 0)
             rotMod += 90;
-
         transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, rotationAngleGoal + rotMod, 0), playerRotationSpeed * Time.deltaTime);
 
-        if (padState.LeftStickAxis != Vector2.zero) lastLeftStickPosition = padState.LeftStickAxis;
     }
 
 	// Update is called once per frame
@@ -148,10 +155,12 @@ public class TwinStickController : MonoBehaviour {
         if (isLyingDown) {
             return;
         }
+        leftStickInUse = (padState.LeftStickAxis.magnitude > leftStickDeadzone);
+        rightStickInUse = (padState.rightStickAxis.magnitude > rightStickDeadzone);
 
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		if (useRemaining > 0 && canShoot) useRemaining -= Time.deltaTime;
-        aimLine.enabled = (padState.rightStickAxis != Vector2.zero && canShoot);
+        aimLine.enabled = ((rightStickInUse && canShoot) || currentShotCharge > 0);
 
         if (sonarDelayRemaining > 0 ) {
             sonarDelayRemaining -= Time.deltaTime;
@@ -199,15 +208,21 @@ public class TwinStickController : MonoBehaviour {
         //Rotates player to face in the direction of the right stick, if right stick not applied, faces same direction as before
 
         float aimAngle = 0;
-        if (padState.rightStickAxis == Vector2.zero) {
+        if (currentShotCharge <= 0) {
             if (canShoot) {
                 slingshotLineRenderer.SetVertexCount(2);
                 slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
                 slingshotLineRenderer.SetPosition(1, slingshotEnds[1].position);
             }
         }
-        else {
-            aimAngle = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
+        if (rightStickInUse || currentShotCharge > 0) {
+            if (!rightStickInUse && currentShotCharge > 0) {
+                aimAngle = Mathf.Atan2(lastRightStickPosition.x, lastRightStickPosition.y) * Mathf.Rad2Deg;
+            }
+            else if (rightStickInUse) {
+                aimAngle = Mathf.Atan2(padState.rightStickAxis.x, padState.rightStickAxis.y) * Mathf.Rad2Deg;
+            }
+
             if (canShoot) {
                 slingshotLineRenderer.SetVertexCount(3);
                 slingshotLineRenderer.SetPosition(0, slingshotEnds[0].position);
@@ -215,37 +230,41 @@ public class TwinStickController : MonoBehaviour {
                 slingshotLineRenderer.SetPosition(2, slingshotEnds[1].position);
             }
         }
-        
         barrelEnd.rotation = Quaternion.AngleAxis(aimAngle, barrelEnd.up);
 
         //Animations
+        if (leftStickInUse) lastLeftStickPosition = padState.LeftStickAxis;
+        if (rightStickInUse) lastRightStickPosition = padState.rightStickAxis;
 
         Vector2 tempLeftStickAxis = padState.LeftStickAxis;
-        if (padState.LeftStickAxis == Vector2.zero) {
+        Vector2 tempRightStickAxis = padState.rightStickAxis;
+        if (tempRightStickAxis == Vector2.zero && currentShotCharge > 0)
+            tempRightStickAxis = lastRightStickPosition;
+        if (tempLeftStickAxis == Vector2.zero)
             tempLeftStickAxis = lastLeftStickPosition;
-        }
         float vertical = tempLeftStickAxis.magnitude;
-        if (Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis) > 90) {
+
+        if (Vector2.Angle(tempLeftStickAxis, tempRightStickAxis) > 90) {
             vertical = -vertical;
         }
-        if (padState.LeftStickAxis == Vector2.zero)
+        if (!leftStickInUse)
             vertical = 0;
         float horizontal = 0;
         float leftAngle = Vector2.Angle(new Vector2(0, 1), tempLeftStickAxis);
         if (tempLeftStickAxis.x < 0)
             leftAngle = 360 - leftAngle;
 
-        if (padState.rightStickAxis == Vector2.zero) {
+        if (tempRightStickAxis == Vector2.zero) {
             horizontal = 0;
         }
         else {
             
-            float rightAngle = Vector2.Angle(tempLeftStickAxis, padState.rightStickAxis);
+            float rightAngle = Vector2.Angle(tempLeftStickAxis, tempRightStickAxis);
 
             Vector2 refVec = new Vector2(Mathf.Sin((leftAngle + 90) * Mathf.Deg2Rad), Mathf.Cos((leftAngle + 90) * Mathf.Deg2Rad));
             float relativeAngle = (rightAngle / 90);
 
-            if (Vector2.Angle(refVec, padState.rightStickAxis) < 90) {
+            if (Vector2.Angle(refVec, tempRightStickAxis) < 90) {
                 if (vertical > 0) {
                     horizontal = relativeAngle;
                 }
@@ -262,7 +281,6 @@ public class TwinStickController : MonoBehaviour {
             else {
                 if (vertical > 0) {
                     horizontal = -relativeAngle;
-
                 }
                 else if (vertical < 0) {
                     horizontal = 1 - (relativeAngle - 1);
@@ -281,26 +299,15 @@ public class TwinStickController : MonoBehaviour {
             horizontal = 0;
         }
         else {
-
-            animator.SetBool("RightStickInUse", (padState.rightStickAxis != Vector2.zero));
+            animator.SetBool("RightStickInUse", (rightStickInUse || currentShotCharge > 0));
         }
         animator.SetFloat("Vertical", vertical);
         animator.SetFloat("Horizontal", horizontal);
 
-
-        /*
-        if (animator.GetCurrentAnimatorStateInfo(0).IsName("shooting_aim")) {
-            animator.speed = 1 / maxShotChargeTime;
-        }
-        else animator.speed = 1;
-        */
-
-
-
         //Shoot if right trigger is pulled enough
         if (canShoot && player.canShoot)
         {
-            if (padState.RightTrigger > rightTriggerDeadzone)
+            if (padState.RightTrigger > rightTriggerDeadzone && (rightStickInUse || currentShotCharge > 0))
             {
                 XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge / maxShotChargeTime) * rumbleSensivity, (currentShotCharge / maxShotChargeTime) * rumbleSensivity);
                 if (!shotChargeSoundIsPlaying)

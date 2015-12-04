@@ -10,23 +10,8 @@ GameObject:
   - 4: {fileID: 419196}
   - 33: {fileID: 3394416}
   - 23: {fileID: 2343234}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: windmill_rotate
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &139884
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 496500}
-  m_Layer: 8
-  m_Name: button_tiles2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -34,7 +19,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &140594
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -42,7 +27,7 @@ GameObject:
   - 4: {fileID: 490224}
   - 33: {fileID: 3388898}
   - 23: {fileID: 2381784}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: polySurface27
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -59,7 +44,7 @@ GameObject:
   - 4: {fileID: 400492}
   - 33: {fileID: 3394892}
   - 23: {fileID: 2325614}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: windmill_buton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -76,7 +61,7 @@ GameObject:
   - 4: {fileID: 495718}
   - 33: {fileID: 3397034}
   - 23: {fileID: 2338488}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: windmill_tiles
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -92,23 +77,11 @@ GameObject:
   m_Component:
   - 4: {fileID: 447338}
   - 65: {fileID: 6502578}
-  m_Layer: 8
+  - 95: {fileID: 9560304}
+  - 54: {fileID: 5438750}
+  - 114: {fileID: 11406090}
+  m_Layer: 0
   m_Name: windmill
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &197620
-GameObject:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 488470}
-  m_Layer: 8
-  m_Name: transform47
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -125,7 +98,7 @@ Transform:
   m_LocalScale: {x: 1.33135104, y: 1.33135104, z: 1.33135092}
   m_Children: []
   m_Father: {fileID: 447338}
-  m_RootOrder: 1
+  m_RootOrder: 0
 --- !u!4 &419196
 Transform:
   m_ObjectHideFlags: 1
@@ -137,7 +110,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447338}
-  m_RootOrder: 2
+  m_RootOrder: 1
 --- !u!4 &447338
 Transform:
   m_ObjectHideFlags: 1
@@ -145,27 +118,15 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 177152}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.1750002, y: 3.05999994, z: 21.9029999}
+  m_LocalPosition: {x: 12.8450079, y: 3.75002003, z: 9.90258598}
   m_LocalScale: {x: 1.72407007, y: 1.72407019, z: 1.72407019}
   m_Children:
-  - {fileID: 496500}
   - {fileID: 400492}
   - {fileID: 419196}
   - {fileID: 495718}
+  - {fileID: 490224}
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!4 &488470
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 197620}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 496500}
-  m_RootOrder: 1
 --- !u!4 &490224
 Transform:
   m_ObjectHideFlags: 1
@@ -173,11 +134,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 140594}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -.300634146, y: 0, z: -.142178267}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 496500}
-  m_RootOrder: 0
+  m_Father: {fileID: 447338}
+  m_RootOrder: 3
 --- !u!4 &495718
 Transform:
   m_ObjectHideFlags: 1
@@ -189,21 +150,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 447338}
-  m_RootOrder: 3
---- !u!4 &496500
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 139884}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -.300634354, y: 0, z: -.142178342}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 490224}
-  - {fileID: 488470}
-  m_Father: {fileID: 447338}
-  m_RootOrder: 0
+  m_RootOrder: 2
 --- !u!23 &2325614
 MeshRenderer:
   m_ObjectHideFlags: 1
@@ -328,6 +275,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 167104}
   m_Mesh: {fileID: 4300006, guid: a5ef726c929ff9d4e8a54dd78d91f57c, type: 3}
+--- !u!54 &5438750
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177152}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: .0500000007
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &6502578
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -340,6 +302,40 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 4.76999998, z: 1.13}
   m_Center: {x: -.270000011, y: 2.01999998, z: -.189999998}
+--- !u!95 &9560304
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177152}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 1b18bb35eb148334b8610cdf03688304, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &11406090
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 177152}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77d9c63cb898e6b4cb332f6aef348f86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  usable: 1
+  repeatable: 0
+  toggleable: 0
+  prerequisites: []
+  isActivated: 0
+  requiresChargedShot: 1
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
