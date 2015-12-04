@@ -14,6 +14,7 @@ public class Boss : MonoBehaviour {
     [SerializeField] float shotSwingSpeed = 30;
     [SerializeField] int swingCooldown = 25, firstSwingCooldown, shotCooldown = 2;
     int curSwingCooldown, curShtCooldown;
+    int timesToFire = 2;
     Transform barrelSwing, barrelEnd;
 
     Quaternion midDir;
@@ -45,14 +46,14 @@ public class Boss : MonoBehaviour {
 
     [SerializeField] GameObject enemySpawnParticlePrefab, bossDieParticle;
 
-    private enum levels
+    public enum levels
     {
         lvl1,
         lvl2,
         lvl3
     }
     //island, objective and behaviour tracker
-    private levels curLevel = levels.lvl1;
+    public levels curLevel = levels.lvl1;
 
     public enum states
     {
@@ -76,7 +77,7 @@ public class Boss : MonoBehaviour {
     int curRainCooldown = 0;
 
     AudioSource audio;
-    [SerializeField] AudioClip sndLoseRing, sndDisableParticleArmor, sndEnableParticleArmor, sndDying, sndDie, sndEvilSonar;
+    [SerializeField] AudioClip sndLoseRing, sndDisableParticleArmor, sndEnableParticleArmor, sndDying, sndDie, sndEvilSonar, sndBeamCharge;
 
     enum fireState
     {
@@ -84,6 +85,26 @@ public class Boss : MonoBehaviour {
         fire
     }
     fireState _fire = fireState.calc;
+
+    LineRenderer beam;
+    Transform beamFacing;
+    ParticleSystem beamEnd;
+    ParticleSystem beamCharge;
+
+    [SerializeField] int beamCooldown, beamDamage;
+    int curBeamCooldown;
+
+    [SerializeField] float beamSpeed, beamLength;
+
+
+    enum beamState
+    {
+        idle,
+        lockOnPlayer,
+        shoot
+    }
+    beamState bstate = beamState.idle;
+
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -126,6 +147,14 @@ public class Boss : MonoBehaviour {
         curSwingCooldown = firstSwingCooldown;
         curShtCooldown = shotCooldown;
         curDrainiSpawnCooldown = drainiSpawnCooldown;
+        curBeamCooldown = beamCooldown;
+
+        beamFacing = transform.FindChild("beamFacing");
+        beamEnd = beamFacing.FindChild("boss_beam_end").GetComponent<ParticleSystem>();
+        beam = transform.FindChild("beam").GetComponent<LineRenderer>();
+        beam.SetPosition(0, transform.position);
+        beam.SetPosition(1, transform.position);
+        beamCharge = transform.FindChild("beamCharge").GetComponent<ParticleSystem>();
 	}
 	
 	// Update is called once per frame
@@ -261,6 +290,9 @@ public class Boss : MonoBehaviour {
         }
         else if(curLevel == levels.lvl2)
         {
+            drainiManager();
+            beaming();
+
             if (curInHP <= 0)
             {
                 bossState = states.wounded;
@@ -395,6 +427,13 @@ public class Boss : MonoBehaviour {
                 audio.PlayOneShot(sndLoseRing);
                 Destroy(innerRing.gameObject);
             }
+
+            if(beam != null)
+            {
+                Destroy(beam.gameObject);
+                Destroy(beamFacing.gameObject);
+            }
+
             if (Vector3.Distance(transform.position, translatePos(levelPositions[2])) < 0.5F)
             {
                 enemiesInScene.Clear();
@@ -606,7 +645,15 @@ public class Boss : MonoBehaviour {
         }
         else
         {
-            curSwingCooldown = swingCooldown;
+            if (timesToFire <= 0)
+            {
+                timesToFire = Random.Range(1,3);
+                curSwingCooldown = swingCooldown;
+            }
+            else
+            {
+                timesToFire--;
+            }
 
             _fire = fireState.calc;
             barrelSwing.localRotation = swingStart;
@@ -666,6 +713,7 @@ public class Boss : MonoBehaviour {
                 Instantiate(draini, spawnPos, Quaternion.identity);
                 
                 curDrainiSpawnCooldown = drainiSpawnCooldown;
+                reasonsMetToSpawnDraini = false;
             }
             else
             {
@@ -674,6 +722,115 @@ public class Boss : MonoBehaviour {
         }
     }
 
+    void beaming()
+    {
+        switch(bstate)
+        {
+            case beamState.idle:
+                beam_idle();
+                break;
+            case beamState.lockOnPlayer:
+                beam_lock();
+                break;
+            case beamState.shoot:
+                beam_shoot();
+                break;
+            default:
+                break;
+        }
+    }
+    void beam_idle()
+    {
+        if (beamFacing.position != transform.position)
+            beamFacing.position = transform.position;
+
+        if (beamFacing.rotation != transform.rotation)
+            beamFacing.rotation = transform.rotation;
+
+        if (beam.enabled)
+        {
+            beam.SetPosition(0, transform.position);
+            beam.SetPosition(1, transform.position);
+            beam.enabled = false;
+        }
+
+        if (beamEnd.isPlaying) beamEnd.Stop();
+
+        if(curBeamCooldown <= 0)
+        {
+            curBeamCooldown = beamCooldown;
+            bstate = beamState.lockOnPlayer;
+        }
+        else
+        {
+            curBeamCooldown--;
+        }
+    }
+    void beam_lock()
+    {
+        if (!beam.enabled) beam.enabled = true;
+
+        beam.SetPosition(0, transform.position);
+        beam.SetPosition(1, beamFacing.position);
+
+        Vector3 lookPos = player.transform.position - beamFacing.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+
+        beamFacing.rotation = rotation;
+
+        beamFacing.position = new Vector3(beamFacing.position.x, floor, beamFacing.position.z);
+
+        if (!beamCharge.isPlaying)
+        {
+            audio.PlayOneShot(sndBeamCharge);
+            beamCharge.Play();
+        }
+
+        if (beamCharge.time >= 1.5F)
+        {
+            bstate = beamState.shoot;
+            beamCharge.Stop();
+        }
+
+        
+    }
+    void beam_shoot()
+    {
+        if (!beamEnd.isPlaying) beamEnd.Play();
+
+        if (Vector3.Distance(transform.position, beamFacing.position) < beamLength)
+        {
+            beamFacing.Translate(Vector3.forward * beamSpeed * Time.deltaTime);
+
+            beam.SetPosition(0, transform.position);
+            beam.SetPosition(1, beamFacing.position);
+
+            /*Vector3 direction = player.transform.position - transform.position;
+            direction.y = floor;
+            Quaternion rotation = Quaternion.LookRotation(direction);*/
+
+            //beamFacing.localRotation = rotation;
+        }
+        else
+        {
+            bstate = beamState.idle;
+        }
+
+        Collider[] hitColliders = Physics.OverlapSphere(beamFacing.position, 1);
+
+        foreach (Collider c in hitColliders)
+        {
+            if(c.tag == "Player")
+            {
+                player.GetComponent<Player>().currentHp -= beamDamage;
+                Rigidbody rbody = player.GetComponent<Rigidbody>();
+                rbody.AddForce((player.transform.position - transform.position).normalized * pushForce, ForceMode.Impulse);
+
+                bstate = beamState.idle;
+            }
+        }
+    }
     protected void lookAt(Vector3 target)
     {
         Quaternion targetRotation = Quaternion.LookRotation(target - transform.position, Vector3.up);

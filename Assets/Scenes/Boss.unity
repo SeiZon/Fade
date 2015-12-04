@@ -1253,17 +1253,77 @@ Prefab:
       propertyPath: levelPositions.Array.data[2]
       value: 
       objectReference: {fileID: 1676880896}
-    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
-      propertyPath: shotCooldown
+    - target: {fileID: 19857396, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: InitialModule.startColor.maxColor.rgba
+      value: 3036676096
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857396, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857396, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: lengthInSec
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857396, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 19857396, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: InitialModule.maxNumParticles
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
-      propertyPath: firstSwingCooldown
-      value: 500
+      propertyPath: beamDamage
+      value: 250
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
-      propertyPath: swingCooldown
-      value: 500
+      propertyPath: bossState
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: firstSwingCooldown
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: outerRingHealth
+      value: 2500
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: innerRingHealth
+      value: 3000
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: enemySpawnCooldowns.Array.data[2]
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: maxEnemies.Array.data[1]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: enemySpawnCooldowns.Array.data[0]
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: enemySpawnCooldowns.Array.data[1]
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: maxEnemies.Array.data[2]
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: stunCooldown
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: pushForce
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
+      propertyPath: maxEnemies.Array.data[0]
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
