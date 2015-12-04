@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: cd55a0d4b796c5b48a84a7c09bc56a2c
-timeCreated: 1449150378
+guid: 74ddcf1aed1a3a24898315aa7629eb73
+timeCreated: 1449246958
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -57,7 +57,7 @@ ModelImporter:
     400046: mixamorig:Spine
     400048: mixamorig:Spine1
     400050: mixamorig:Spine2
-    7400000: death
+    7400000: lying
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -83,16 +83,16 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: death
+      name: lying
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 69
+      lastFrame: 1
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1

@@ -64,6 +64,8 @@ public class TwinStickController : MonoBehaviour {
     bool haveSonar = false;
     bool leftStickInUse = false;
     bool rightStickInUse = false;
+    bool isUp = false;
+    bool isReviving = false;
     List<Painting> splatsUnderPlayer;
     Player player;
     CapsuleCollider capCollider;
@@ -100,6 +102,8 @@ public class TwinStickController : MonoBehaviour {
         audioSource_misc = aSources[3];
         animator = GetComponent<Animator>();
         slingshotLineRenderer = slingshot.GetComponent<LineRenderer>();
+        isUp = !isLyingDown;
+        animator.SetBool("IsUp", isUp);
     }
 
     void OnDisable() {
@@ -107,7 +111,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
 	void FixedUpdate() {
-        if (isLyingDown) return;
+        if (!isUp) return;
         CanShoot = canShoot;
 		padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
@@ -151,15 +155,38 @@ public class TwinStickController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         animator.SetBool("LyingDown", isLyingDown);
-
+        animator.SetBool("IsUp", isUp);
         if (isLyingDown) {
-            return;
+            Collider[] hits = Physics.OverlapSphere(transform.position, 4);
+            foreach (Collider c in hits) {
+                Painting paint = c.GetComponent<Painting>();
+                if (paint != null) {
+                    drainGroup = paint.splatGroup;
+                }
+            }
+
+            if (drainGroup != null) {
+                player.Drain(1 * Time.deltaTime);
+                drainGroup.Drain(maxDrainSpeed / 2);
+                isReviving = true;
+            }
+            if (isReviving && drainGroup == null) {
+                isLyingDown = false;
+                
+            }
         }
-        leftStickInUse = (padState.LeftStickAxis.magnitude > leftStickDeadzone);
-        rightStickInUse = (padState.rightStickAxis.magnitude > rightStickDeadzone);
+        else {
+            if (animator.GetCurrentAnimatorStateInfo(3).IsName("Disabled")) {
+                isUp = true;
+                animator.SetBool("IsUp", isUp);
+            }
+        }
+        if (!isUp) return;
 
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
-		if (useRemaining > 0 && canShoot) useRemaining -= Time.deltaTime;
+        leftStickInUse = (padState.LeftStickAxis.magnitude > leftStickDeadzone);
+        rightStickInUse = (padState.rightStickAxis.magnitude > rightStickDeadzone);
+        if (useRemaining > 0 && canShoot) useRemaining -= Time.deltaTime;
         aimLine.enabled = ((rightStickInUse && canShoot) || currentShotCharge > 0);
 
         if (sonarDelayRemaining > 0 ) {
@@ -481,5 +508,9 @@ public class TwinStickController : MonoBehaviour {
         }
 
         return fullyCharged;
+    }
+
+    public void WakeUp() {
+        
     }
 }
