@@ -78,6 +78,7 @@ public class Orb : MonoBehaviour {
             }
         }
 
+        audioSource.pitch = Random.Range(0.1F, 3.0F);
         audioSource.PlayOneShot(onExplode);
         if (explodeParticle != null) Instantiate(explodeParticle, transform.position, Quaternion.identity);
         GetComponent<SphereCollider>().enabled = false;

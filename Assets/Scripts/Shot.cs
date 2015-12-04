@@ -59,6 +59,7 @@ public class Shot : MonoBehaviour {
                 orb.explodeIt();
             }
             else if (boss != null) {
+                if (boss.curLevel != Boss.levels.lvl3) Instantiate(shotParticle, transform.position, Quaternion.identity);
                 boss.getShot(shotType);
                 Destroy(gameObject);
             }

@@ -113,6 +113,23 @@ public class EnemyDraini : EnemyInfo{
                     }
                 }
             }
+            else
+            {
+                foreach (SplatGroup splat in splats)
+                {
+                    if (mySplat == null)
+                    {
+                        mySplat = splat;
+                    }
+                    else
+                    {
+                        if (Vector3.Distance(transform.position, splat.transform.position) < Vector3.Distance(transform.position, mySplat.transform.position))
+                        {
+                            mySplat = splat;
+                        }
+                    }
+                }
+            }
 
             if(mySplat != null)
             {
