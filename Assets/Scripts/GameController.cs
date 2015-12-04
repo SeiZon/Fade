@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityStandardAssets.ImageEffects;
 
 public class GameController : MonoBehaviour {
 
@@ -13,7 +14,8 @@ public class GameController : MonoBehaviour {
 		}
 	}
 	private static GameController instance;
-
+    VignetteAndChromaticAberration vignet;
+    Grayscale grayscale;
 
 
 	// Use this for initialization
@@ -33,10 +35,28 @@ public class GameController : MonoBehaviour {
 				}
 			}
 		}
+        vignet = GetComponent<VignetteAndChromaticAberration>();
+        grayscale = GetComponent<Grayscale>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
 	}
+
+    public void RestartLevel() {
+        Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public void SetVignet(float amount) {
+        float standard = 0.14f;
+        float max = 0.33f;
+        
+        float value = standard + max - (((max - standard) * amount) + standard);
+        vignet.intensity = value;
+    }
+
+    public void SetGrayScale(float amount) {
+        grayscale.effectAmount = amount;
+    }
 }

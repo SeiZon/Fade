@@ -17,6 +17,7 @@ public class Player : MonoBehaviour {
     private float sonarReloadRemaining = 0;
     private float shootReloadRemaining = 0;
     TwinStickController controller;
+    GameController gameController;
 
     public GameObject pushingParticles;
     public float currentHp;
@@ -44,6 +45,7 @@ public class Player : MonoBehaviour {
         }
         team = GameData.Team.Player;
         controller = GetComponent<TwinStickController>();
+        gameController = Camera.main.GetComponent<GameController>();
         affectHealthIndicator();
         //
     }
@@ -117,6 +119,9 @@ public class Player : MonoBehaviour {
         controller.TakeDamage();
         affectHealthIndicator();
 
+        float healthPercent = currentHp / INITIALHP;
+        if (healthPercent < 0.5f)
+            gameController.SetVignet(healthPercent);
     }
 
     void Die() {

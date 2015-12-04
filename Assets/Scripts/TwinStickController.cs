@@ -75,6 +75,7 @@ public class TwinStickController : MonoBehaviour {
     Vector2 lastLeftStickPosition = new Vector2(0, 1);
     Vector2 lastRightStickPosition = new Vector2(0, 1);
     LineRenderer slingshotLineRenderer;
+    GameController gameController;
     
     //only used for tutorial
     public bool CanShoot {
@@ -105,6 +106,7 @@ public class TwinStickController : MonoBehaviour {
         slingshotLineRenderer = slingshot.GetComponent<LineRenderer>();
         isUp = !isLyingDown;
         animator.SetBool("IsUp", isUp);
+        gameController = Camera.main.GetComponent<GameController>();
     }
 
     void OnDisable() {
@@ -515,7 +517,21 @@ public class TwinStickController : MonoBehaviour {
     }
     
     public void Die() {
+        if (isDead) return;
         animator.SetBool("Dead", true);
         isDead = true;
+        StartCoroutine(FadeToGray(4));
+    }
+
+    IEnumerator FadeToGray(float time) {
+        float currentTime = 0.0f;
+        float currentVal = 0;
+        do {
+            currentVal = Mathf.Lerp(0, 1, currentTime / time);
+            gameController.SetGrayScale(currentVal);
+            currentTime += Time.deltaTime;
+            yield return null;
+        } while (currentTime <= time);
+        
     }
 }
