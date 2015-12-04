@@ -10,10 +10,15 @@ public class Boss : MonoBehaviour {
     Material myMaterial;
     float colorCode = 0;
 
-    [SerializeField] float shotDamage = 50;
+    [SerializeField] GameObject bossShot;
     [SerializeField] float shotSwingSpeed = 30;
-    Transform barrelSwing;
-    Transform barrelEnd;
+    [SerializeField] int swingCooldown = 25, firstSwingCooldown, shotCooldown = 2;
+    int curSwingCooldown, curShtCooldown;
+    Transform barrelSwing, barrelEnd;
+
+    Quaternion midDir;
+    Quaternion swingStart = new Quaternion(0, 0.9F, 0, 0.3F);
+    Quaternion swingEnd = new Quaternion(0, -0.9F, 0, 0.4F);
 
     [SerializeField] float outerRingHealth = 1000, innerRingHealth = 1000;
     float curOutHP, curInHP;
@@ -27,7 +32,12 @@ public class Boss : MonoBehaviour {
     [SerializeField]Transform[] levelPositions;
 
     List<GameObject> enemiesInScene;
-    
+
+    [SerializeField] GameObject draini;
+    [SerializeField] int drainiSpawnCooldown;
+    int curDrainiSpawnCooldown;
+    bool reasonsMetToSpawnDraini = false;
+
     [SerializeField] int stunCooldown = 100;
     int curSpawnCooldown, curStunCooldown;
 
@@ -67,6 +77,13 @@ public class Boss : MonoBehaviour {
 
     AudioSource audio;
     [SerializeField] AudioClip sndLoseRing, sndDisableParticleArmor, sndEnableParticleArmor, sndDying, sndDie, sndEvilSonar;
+
+    enum fireState
+    {
+        calc,
+        fire
+    }
+    fireState _fire = fireState.calc;
 	// Use this for initialization
 	void Start () {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
@@ -103,14 +120,16 @@ public class Boss : MonoBehaviour {
         curOutHP = outerRingHealth;
         curInHP = innerRingHealth;
 
-        barrelSwing = transform.FindChild("barrelSwing");
+        barrelSwing = transform.FindChild("barrelSwing"); barrelSwing.rotation = swingStart;
         barrelEnd = barrelSwing.FindChild("barrelEnd");
+
+        curSwingCooldown = firstSwingCooldown;
+        curShtCooldown = shotCooldown;
+        curDrainiSpawnCooldown = drainiSpawnCooldown;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-        fire();
-
         switch(gameState)
         {
             case gameStates.bossFight:
@@ -177,6 +196,17 @@ public class Boss : MonoBehaviour {
 
         if(curLevel == levels.lvl1)
         {
+            drainiManager();
+
+            if (curSwingCooldown <= 0)
+            {
+                firePatterns();
+            }
+            else
+            {
+                curSwingCooldown--;
+            }
+
             if(curOutHP <= 0)
             {
                 bossState = states.wounded;
@@ -186,7 +216,24 @@ public class Boss : MonoBehaviour {
             {
                 if (curSpawnCooldown <= 0)
                 {
-                    Vector3 spawnPos = transform.position - (transform.forward * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[0].transform.localScale.y));
+                    Vector3 dir = transform.forward;
+                    int rand = Random.Range(0, 3);
+                    switch (rand)
+                    {
+                        case 0:
+                            dir = transform.forward;
+                            break;
+                        case 1:
+                            dir = transform.right;
+                            break;
+                        case 2:
+                            dir = -transform.right;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[0].transform.localScale.y));
                     Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
 
                     GameObject enemy = Instantiate(enemies[0], spawnPos, Quaternion.identity) as GameObject;
@@ -223,7 +270,24 @@ public class Boss : MonoBehaviour {
             {
                 if (curSpawnCooldown <= 0)
                 {
-                    Vector3 spawnPos = transform.position - (transform.forward * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[1].transform.localScale.y));
+                    Vector3 dir = transform.forward;
+                    int rand = Random.Range(0, 3);
+                    switch (rand)
+                    {
+                        case 0:
+                            dir = transform.forward;
+                            break;
+                        case 1:
+                            dir = transform.right;
+                            break;
+                        case 2:
+                            dir = -transform.right;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[1].transform.localScale.y));
                     Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
 
                     GameObject enemy = Instantiate(enemies[1], spawnPos, Quaternion.identity) as GameObject;
@@ -256,7 +320,24 @@ public class Boss : MonoBehaviour {
             {
                 if (curSpawnCooldown <= 0)
                 {
-                    Vector3 spawnPos = transform.position - (transform.forward * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[2].transform.localScale.y));
+                    Vector3 dir = transform.forward;
+                    int rand = Random.Range(0, 3);
+                    switch (rand)
+                    {
+                        case 0:
+                            dir = transform.forward;
+                            break;
+                        case 1:
+                            dir = transform.right;
+                            break;
+                        case 2:
+                            dir = -transform.right;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[2].transform.localScale.y));
                     Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
 
                     GameObject enemy = Instantiate(enemies[2], spawnPos, Quaternion.identity) as GameObject;
@@ -456,14 +537,140 @@ public class Boss : MonoBehaviour {
             }
         }
     }
-
-    void fire()
+    public void getHealth(int hp)
     {
-        
+        if(curLevel == levels.lvl1)
+        {
+            curOutHP += hp;
 
-        if (barrelSwing.rotation.y <= 90 || barrelSwing.rotation.y > 275)
+            if (curOutHP > outerRingHealth) curOutHP = outerRingHealth;
+        }
+        else if(curLevel == levels.lvl2)
+        {
+            curInHP += hp;
+
+            if (curInHP > innerRingHealth) curInHP = innerRingHealth;
+        }
+    }
+
+    void firePatterns()
+    {
+        switch(_fire)
+        {
+            case fireState.calc:
+                firePatterns_calcSlope();
+                break;
+            case fireState.fire:
+                firePatterns_fire();
+                break;
+            default:
+                break;
+        }
+    }
+
+    void firePatterns_calcSlope()
+    {
+        Vector3 lookPos = player.transform.position - barrelSwing.position;
+        lookPos.y = 0;
+        Quaternion rotation = Quaternion.LookRotation(lookPos);
+
+        barrelSwing.rotation = rotation;
+        midDir = barrelSwing.localRotation;
+
+        swingStart = midDir *Quaternion.AngleAxis(30f, Vector3.down);
+        swingEnd = midDir * Quaternion.AngleAxis(30F, Vector3.up);
+
+        barrelSwing.localRotation = swingStart;
+
+        _fire = fireState.fire;
+    }
+    void firePatterns_fire()
+    {
+        if (Quaternion.Angle(barrelSwing.localRotation, swingEnd) > 20F)
         {
             barrelSwing.Rotate(-Vector3.up * shotSwingSpeed * Time.deltaTime);
+
+            if (curShtCooldown <= 0)
+            {
+                GameObject shotGo = Instantiate(bossShot, barrelEnd.position, midDir) as GameObject;
+
+                Shot shot = shotGo.GetComponent<Shot>();
+                shot.Initialize(GameData.shotMoveSpeedTable[(int)GameData.Team.Enemy], GameData.shotDamageTable[(int)GameData.EnemyType.Navi], GameData.Team.Enemy, GameData.ShotType.Normal, transform);
+
+                curShtCooldown = shotCooldown;
+            }
+            else
+            {
+                curShtCooldown--;
+            }
+        }
+        else
+        {
+            curSwingCooldown = swingCooldown;
+
+            _fire = fireState.calc;
+            barrelSwing.localRotation = swingStart;
+        }
+    }
+
+    void drainiManager()
+    {
+        if (!reasonsMetToSpawnDraini)
+        {
+            if (curLevel == levels.lvl1)
+            {
+                if (curOutHP < outerRingHealth * 0.3F)
+                {
+                    reasonsMetToSpawnDraini = true;
+                }
+                else
+                {
+                    GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+
+                    foreach (GameObject wall in walls)
+                    {
+                        if (wall.layer == LayerMask.NameToLayer("Default"))
+                        {
+                            reasonsMetToSpawnDraini = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            //reasons met
+            if (curDrainiSpawnCooldown <= 0)
+            {
+                Vector3 dir = transform.forward;
+                int rand = Random.Range(0, 3);
+                switch(rand)
+                {
+                    case 0:
+                        dir = transform.forward;
+                        break;
+                    case 1:
+                        dir = transform.right;
+                        break;
+                    case 2:
+                        dir = -transform.right;
+                        break;
+                    default:
+                        break;
+                }
+
+                Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.5F));
+                Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
+
+                Instantiate(draini, spawnPos, Quaternion.identity);
+                
+                curDrainiSpawnCooldown = drainiSpawnCooldown;
+            }
+            else
+            {
+                curDrainiSpawnCooldown--;
+            }
         }
     }
 

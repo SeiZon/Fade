@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &112216
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 408248}
+  m_Layer: 0
+  m_Name: barrelEnd
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &139976
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 480494}
+  m_Layer: 0
+  m_Name: barrelSwing
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &145002
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,9 +128,10 @@ GameObject:
   - 65: {fileID: 6525246}
   - 114: {fileID: 11427154}
   - 54: {fileID: 5443912}
+  - 82: {fileID: 8248204}
   m_Layer: 0
   m_Name: Boss
-  m_TagString: Untagged
+  m_TagString: Boss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -117,6 +148,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 492016}
   m_RootOrder: 4
+--- !u!4 &408248
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 112216}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -.709999979}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 480494}
+  m_RootOrder: 0
 --- !u!4 &421332
 Transform:
   m_ObjectHideFlags: 1
@@ -153,6 +196,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 492016}
   m_RootOrder: 2
+--- !u!4 &480494
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 139976}
+  m_LocalRotation: {x: 0, y: -.915184557, z: 0, w: .403035134}
+  m_LocalPosition: {x: 0, y: -.331999987, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 408248}
+  m_Father: {fileID: 492016}
+  m_RootOrder: 5
 --- !u!4 &486690
 Transform:
   m_ObjectHideFlags: 1
@@ -180,6 +236,7 @@ Transform:
   - {fileID: 467560}
   - {fileID: 421332}
   - {fileID: 402684}
+  - {fileID: 480494}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!23 &2329542
@@ -333,6 +390,76 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!82 &8248204
+AudioSource:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 198894}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    - time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
 --- !u!114 &11427154
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -344,6 +471,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f9c286228181544b85182b991387407, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bossShot: {fileID: 198944, guid: f72d90f42850b924fa04531af08562a9, type: 2}
+  shotSwingSpeed: 90
+  swingCooldown: 1000
+  firstSwingCooldown: 1000
+  shotCooldown: 2
+  outerRingHealth: 1000
+  innerRingHealth: 1000
+  outerRingSpinSpeed: 80
+  innerRingSpinSpeed: 110
+  particleArmorSpeed: 150
   enemies:
   - {fileID: 194516, guid: 77877596c7cfba746942bc702f1c98da, type: 2}
   - {fileID: 179300, guid: dd529729d29b13542b29dc3d5e9ca530, type: 2}
@@ -354,9 +491,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  outerRingSpinSpeed: 80
-  innerRingSpinSpeed: 110
-  particleArmorSpeed: 150
   stunCooldown: 400
   retreatSpeed: 10
   turnSpeed: 50
@@ -369,6 +503,12 @@ MonoBehaviour:
   rainCooldown: 50
   minRainCooldown: 10
   rainDropSpeed: 3
+  sndLoseRing: {fileID: 0}
+  sndDisableParticleArmor: {fileID: 0}
+  sndEnableParticleArmor: {fileID: 0}
+  sndDying: {fileID: 0}
+  sndDie: {fileID: 0}
+  sndEvilSonar: {fileID: 0}
 --- !u!198 &19857396
 ParticleSystem:
   m_ObjectHideFlags: 1
