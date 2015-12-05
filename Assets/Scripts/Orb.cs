@@ -8,7 +8,7 @@ public class Orb : MonoBehaviour {
     [SerializeField] bool enemyOrb = false;
     [SerializeField] GameObject splatPrefab;
     [SerializeField] GameObject explodeParticle;
-    [SerializeField] AudioClip onExplode;
+    [SerializeField] AudioClip[] onExplode;
 
     AudioSource audioSource;
     bool explode = false;
@@ -78,8 +78,7 @@ public class Orb : MonoBehaviour {
             }
         }
 
-        audioSource.pitch = Random.Range(0.1F, 3.0F);
-        audioSource.PlayOneShot(onExplode);
+        audioSource.PlayOneShot(onExplode[Random.Range(0,onExplode.Length-1)]);
         if (explodeParticle != null) Instantiate(explodeParticle, transform.position, Quaternion.identity);
         GetComponent<SphereCollider>().enabled = false;
         GetComponent<MeshRenderer>().enabled = false;

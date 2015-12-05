@@ -764,7 +764,7 @@ public class Boss : MonoBehaviour {
         {
             if(c.tag == "Player")
             {
-                player.GetComponent<Player>().currentHp -= beamDamage;
+                player.GetComponent<Player>().TakeDamage(beamDamage);
                 Rigidbody rbody = player.GetComponent<Rigidbody>();
                 rbody.AddForce((player.transform.position - transform.position).normalized * pushForce, ForceMode.Impulse);
 

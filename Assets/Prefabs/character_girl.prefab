@@ -1512,8 +1512,8 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: .200000003
+  m_Pitch: 1.29999995
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -1582,7 +1582,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: .150000006
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -1843,14 +1843,18 @@ MonoBehaviour:
   leftHand: {fileID: 452210}
   isLyingDown: 0
   soundVolume: 1
-  stepSoundIntervalMultiplier: .25
+  stepSoundIntervalMultiplier: 3
   isChargingShot: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
-  onShotRelease: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5, type: 3}
+  onShotRelease: {fileID: 8300000, guid: 6b7cf9ba978474547b400ac60916b1d5, type: 3}
   onHit: {fileID: 0}
-  onSonar: {fileID: 8300000, guid: 3b2a39b9978dda2469ae01288dfda42a, type: 3}
-  isDraining: {fileID: 0}
+  onSonar: {fileID: 8300000, guid: 15c3b596a68124a448be35e190de3c53, type: 3}
+  isDraining: {fileID: 8300000, guid: 2221d64f02f17234c84cb34f4d5e2f42, type: 3}
   onPush: {fileID: 0}
-  footsteps: []
+  footsteps:
+  - {fileID: 8300000, guid: c88a688becbceae4b8082c5f1527170b, type: 3}
+  - {fileID: 8300000, guid: 442998f3097a8654c98bdc86b3cc5810, type: 3}
+  - {fileID: 8300000, guid: ecdced3741f14f24f8826966ac1025ff, type: 3}
+  isUp: 0
   canShoot: 1
 --- !u!114 &11473724
 MonoBehaviour:
@@ -1871,7 +1875,7 @@ MonoBehaviour:
   absorbMultiplier: 8000
   DEBUGMODE: 0
   pushingParticles: {fileID: 199522, guid: 092a82a4dc75ad44c83e444698c08b8d, type: 2}
-  currentHp: 100
+  currentHp: 500
   healthIndicatorsT:
   - {fileID: 2100000, guid: 5255f989e52592d4db5fca657e25c970, type: 2}
   isTutorialLevel: 0
@@ -12686,7 +12690,55 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: isChargingShot
+      value: 
+      objectReference: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onShotRelease
+      value: 
+      objectReference: {fileID: 8300000, guid: 6b7cf9ba978474547b400ac60916b1d5, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onSonar
+      value: 
+      objectReference: {fileID: 8300000, guid: 15c3b596a68124a448be35e190de3c53, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Volume
+      value: .200000003
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: stepSoundIntervalMultiplier
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: c88a688becbceae4b8082c5f1527170b, type: 3}
+    - target: {fileID: 0}
+      propertyPath: m_Pitch
+      value: 1.29999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 442998f3097a8654c98bdc86b3cc5810, type: 3}
+    - target: {fileID: 0}
+      propertyPath: footsteps.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: ecdced3741f14f24f8826966ac1025ff, type: 3}
+    - target: {fileID: 0}
+      propertyPath: isDraining
+      value: 
+      objectReference: {fileID: 8300000, guid: 2221d64f02f17234c84cb34f4d5e2f42, type: 3}
+    - target: {fileID: 0}
+      propertyPath: currentHp
+      value: 500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 159446}
