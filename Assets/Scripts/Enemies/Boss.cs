@@ -46,6 +46,7 @@ public class Boss : MonoBehaviour {
     [SerializeField] float retreatSpeed = 10, turnSpeed = 50, pushForce;
 
     [SerializeField] GameObject enemySpawnParticlePrefab, bossDieParticle;
+    [SerializeField] Rain[] rain;
 
     public enum levels
     {
@@ -215,6 +216,10 @@ public class Boss : MonoBehaviour {
         {
             curRainCooldown--;
         }
+        foreach (Rain r in rain) {
+            r.spawn = true;
+        }
+
     }
 
     void invincible()
@@ -389,6 +394,7 @@ public class Boss : MonoBehaviour {
             colorCode += 0.002F;
             myMaterial.SetColor("_Color", new Color(colorCode, colorCode, colorCode, 255));
         }
+        
         
     }
 

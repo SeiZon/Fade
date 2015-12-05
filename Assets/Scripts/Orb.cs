@@ -9,6 +9,7 @@ public class Orb : MonoBehaviour {
     [SerializeField] GameObject splatPrefab;
     [SerializeField] GameObject explodeParticle;
     [SerializeField] AudioClip[] onExplode;
+    [SerializeField] float destroyTimer = 8;
 
     AudioSource audioSource;
     bool explode = false;
@@ -36,6 +37,9 @@ public class Orb : MonoBehaviour {
             if (!audioSource.isPlaying)
                 Destroy(gameObject);
         }
+        destroyTimer -= Time.deltaTime;
+        if (destroyTimer <= 0)
+            Destroy(gameObject);
 	}
 
     public void explodeIt()

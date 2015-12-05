@@ -115,8 +115,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a648f8f368dc4b1428d7472ab4dcb4a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  introMovieTexture: {fileID: 15200000, guid: 8c1db9327f0141840a6747833727ecf1, type: 3}
-  outroMovieTexture: {fileID: 15200000, guid: 8fff042d72f53bb47a4edf8e610816ed, type: 3}
+  introMovieTexture: {fileID: 15200000, guid: f690128a60b728d439bc6c543d77d8f9, type: 3}
+  outroMovieTexture: {fileID: 15200000, guid: a81b15cd8b6795b4fa66e16c575e74b1, type: 3}
   titleScreen: {fileID: 1038464154}
   whiteOverlay: {fileID: 1611407380}
   pressStartText: {fileID: 486222845}

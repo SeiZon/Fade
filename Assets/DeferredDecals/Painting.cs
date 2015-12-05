@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class Painting : MonoBehaviour {
     [SerializeField] float desiredSize = 10, scaleSpeed = 0.5F, scaleUpdate = 0.05f, groupUpdate = 5, minSizeBeforeDestroy = 0.5f;
     [SerializeField] GameObject splatGroupPrefab;
+    [SerializeField] bool dontGroup = false;
 
     Vector3 desiredScale = Vector3.zero;
     SphereCollider sphereCollider;
@@ -58,11 +59,7 @@ public class Painting : MonoBehaviour {
         }
 
         if (transform.lossyScale.x < minSizeBeforeDestroy) {
-            transform.localScale = Vector3.zero;
-            HideAll();
-            playercontroller.RemoveFromSplats(this);
-            splatGroup.splats.Remove(this);
-            Destroy(gameObject);
+            Delete();
         }
         /*
         if (groupUpdateRemaining > 0) {
@@ -80,6 +77,7 @@ public class Painting : MonoBehaviour {
         bool foundGroup = false;
         
         foreach (Collider c in hitColliders) {
+            if (dontGroup) break;
             Painting painting = c.GetComponent<Painting>();
             if (painting == null) continue;
             if (painting.splatGroup == null) continue;
@@ -195,6 +193,14 @@ public class Painting : MonoBehaviour {
             }
         }
 
+    }
+
+    public void Delete() {
+        transform.localScale = Vector3.zero;
+        HideAll();
+        playercontroller.RemoveFromSplats(this);
+        splatGroup.splats.Remove(this);
+        Destroy(gameObject);
     }
     
 }

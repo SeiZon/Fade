@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class SplatGroup : MonoBehaviour {
 
     [SerializeField] float splatRemaining;
+    [SerializeField] int maxSplats = 30;
     public List<Painting> splats;
 
 	// Use this for initialization
@@ -16,6 +17,9 @@ public class SplatGroup : MonoBehaviour {
 	void Update () {
         if (splats.Count == 0)
             Destroy(gameObject);
+        if (splats.Count > maxSplats) {
+            splats[0].Delete();
+        }
 	}
 
     public void Drain(float drainSpeed) {
