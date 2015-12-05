@@ -12393,7 +12393,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 474596, guid: eea45d7a97236694b952008c3a0a2451, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 119.299561
+      value: 119.059998
       objectReference: {fileID: 0}
     - target: {fileID: 474596, guid: eea45d7a97236694b952008c3a0a2451, type: 2}
       propertyPath: m_LocalPosition.z
@@ -14830,7 +14830,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 443938, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 11473724, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: healthIndicatorsT.Array.data[0]
@@ -22757,7 +22757,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 474596, guid: eea45d7a97236694b952008c3a0a2451, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 121.076965
+      value: 118.940002
       objectReference: {fileID: 0}
     - target: {fileID: 474596, guid: eea45d7a97236694b952008c3a0a2451, type: 2}
       propertyPath: m_LocalPosition.z
