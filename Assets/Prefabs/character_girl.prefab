@@ -1844,13 +1844,14 @@ MonoBehaviour:
   isLyingDown: 0
   soundVolume: 1
   stepSoundIntervalMultiplier: .25
-  isChargingShot: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
-  onShotRelease: {fileID: 8300000, guid: a0370b42b9672304a97ab3f448e855d5, type: 3}
+  isChargingShot: {fileID: 0}
+  onShotRelease: {fileID: 8300000, guid: 426ca15449a619f49a7b55224dd06461, type: 3}
   onHit: {fileID: 0}
-  onSonar: {fileID: 8300000, guid: 3b2a39b9978dda2469ae01288dfda42a, type: 3}
+  onSonar: {fileID: 8300000, guid: d85eaa0460615a441b00824d1bcf6832, type: 3}
   isDraining: {fileID: 0}
   onPush: {fileID: 0}
   footsteps: []
+  isUp: 0
   canShoot: 1
 --- !u!114 &11473724
 MonoBehaviour:
@@ -12686,7 +12687,19 @@ Prefab:
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
-    m_Modifications: []
+    m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: isChargingShot
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: onShotRelease
+      value: 
+      objectReference: {fileID: 8300000, guid: 426ca15449a619f49a7b55224dd06461, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onSonar
+      value: 
+      objectReference: {fileID: 8300000, guid: d85eaa0460615a441b00824d1bcf6832, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 159446}

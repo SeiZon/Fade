@@ -165,7 +165,7 @@ MonoBehaviour:
   enemyOrb: 1
   splatPrefab: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
   explodeParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
-  onExplode: {fileID: 8300000, guid: 72d74fd9af42af34d8db447ecb29f32a, type: 3}
+  onExplode: {fileID: 8300000, guid: 41936aab278a92243b163eb30f8a5734, type: 3}
 --- !u!135 &13526578
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -252,7 +252,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: onExplode
       value: 
-      objectReference: {fileID: 8300000, guid: 72d74fd9af42af34d8db447ecb29f32a, type: 3}
+      objectReference: {fileID: 8300000, guid: 41936aab278a92243b163eb30f8a5734, type: 3}
     - target: {fileID: 0}
       propertyPath: Priority
       value: 0

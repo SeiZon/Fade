@@ -510,9 +510,10 @@ MonoBehaviour:
   minAttackDistance: 6
   evadeSpeed: 100
   detectRadius: 10
+  evadeDetectRadius: 18
   dodgeSpeed: 3
   dodgeDistance: 4
-  onHit: {fileID: 8300000, guid: cf863da5ee922ff4ead5cef9b3446b0d, type: 3}
+  onHit: {fileID: 8300000, guid: 724d15881cafc2242ab26442fa0b3694, type: 3}
   onDestroyed: {fileID: 0}
   onShoot: {fileID: 0}
   isDodging: {fileID: 8300000, guid: 701099f1e80e40d41baf64c0249c398e, type: 3}
@@ -597,6 +598,14 @@ Prefab:
       propertyPath: m_Drag
       value: 20
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: evadeDetectRadius
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: onHit
+      value: 
+      objectReference: {fileID: 8300000, guid: 724d15881cafc2242ab26442fa0b3694, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113360}

@@ -5,7 +5,7 @@ public class EnemyNavi : EnemyInfo {
 
     [SerializeField] Transform barrelEnd;
     [SerializeField] GameObject shotPrefab;
-    [SerializeField] int gunCooldown, stunTime, maxAttackDistance, minAttackDistance, evadeSpeed, detectRadius;
+    [SerializeField] int gunCooldown, stunTime, maxAttackDistance, minAttackDistance, evadeSpeed, detectRadius, evadeDetectRadius;
     [SerializeField] float dodgeSpeed = 1, dodgeDistance = 1;
     [SerializeField] AudioClip onHit, onDestroyed, onShoot, isDodging;
 
@@ -153,6 +153,8 @@ public class EnemyNavi : EnemyInfo {
     void checkForIncomingShots(Transform shot)
     {
         if (state == enemyState.stunned) return;
+        if (Vector3.Distance(player.transform.position, transform.position) > evadeDetectRadius) return;
+
         RaycastHit[] hitinfo;
         Ray ray = new Ray(shot.position, shot.forward);
         hitinfo = Physics.SphereCastAll(ray, shot.GetComponent<SphereCollider>().radius);
