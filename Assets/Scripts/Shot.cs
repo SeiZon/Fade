@@ -12,7 +12,6 @@ public class Shot : MonoBehaviour {
     float moveSpeed;
     int damage;
     Transform shooter;
-    
     [SerializeField] Transform child;
     [SerializeField] ParticleSystem speedIndic;
     public void Initialize(float moveSpeed, int damage, GameData.Team team, GameData.ShotType shotType, Transform shooter = null) {
@@ -88,7 +87,7 @@ public class Shot : MonoBehaviour {
             }
             
             Player myself = collision.gameObject.GetComponent<Player>();
-            if (myself != null) return;
+            if (myself != null || shotType == GameData.ShotType.Charged) return;
             Destroy(gameObject);
         }
         else if (team == GameData.Team.Enemy) {

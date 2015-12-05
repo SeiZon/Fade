@@ -16630,7 +16630,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 443938, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: m_RootOrder
-      value: 15
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 11473724, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: healthIndicatorsT.Array.data[0]
@@ -18303,7 +18303,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 23
+  m_RootOrder: 25
 --- !u!65 &973142994
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -22313,7 +22313,7 @@ Transform:
   - {fileID: 975403660}
   - {fileID: 1736501302}
   m_Father: {fileID: 0}
-  m_RootOrder: 25
+  m_RootOrder: 26
 --- !u!1 &1191039512
 GameObject:
   m_ObjectHideFlags: 0
@@ -27570,11 +27570,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
       propertyPath: outerRingHealth
-      value: 2500
+      value: 1500
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
       propertyPath: innerRingHealth
-      value: 3000
+      value: 2000
       objectReference: {fileID: 0}
     - target: {fileID: 11427154, guid: 8a27363230d176f4ebfcf65e3c5d57c7, type: 2}
       propertyPath: enemySpawnCooldowns.Array.data[2]
