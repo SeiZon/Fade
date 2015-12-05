@@ -505,7 +505,7 @@ MonoBehaviour:
   barrelEnd: {fileID: 438824}
   shotPrefab: {fileID: 198944, guid: f72d90f42850b924fa04531af08562a9, type: 2}
   gunCooldown: 150
-  stunTime: 500
+  stunTime: 200
   maxAttackDistance: 10
   minAttackDistance: 6
   evadeSpeed: 100
@@ -609,6 +609,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: startHealth
       value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: stunTime
+      value: 200
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

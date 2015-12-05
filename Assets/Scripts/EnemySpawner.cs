@@ -41,6 +41,8 @@ public class EnemySpawner : MonoBehaviour {
             Destroy(gameObject);
         }
         if(startSpawningOn != null) startSpawningOn.OnActivated += OnStart;
+
+        if (stopSpawningOn != null) stopSpawningOn.OnActivated += OnStop;
 	}
 	
 	// Update is called once per frame
