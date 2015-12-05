@@ -1015,8 +1015,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159446}
-  m_LocalRotation: {x: 0, y: .682381272, z: 0, w: .73099649}
-  m_LocalPosition: {x: -23.3999996, y: 3, z: -28.8099995}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -22.2000008, y: 3.0948422, z: -31.5599995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 414188}
@@ -1934,7 +1934,7 @@ MonoBehaviour:
   shootReloadTime: .25
   sonarReloadTime: 3
   sonarHealthCost: 15
-  absorbMultiplier: 8000
+  absorbMultiplier: 40
   DEBUGMODE: 0
   pushingParticles: {fileID: 199522, guid: 092a82a4dc75ad44c83e444698c08b8d, type: 2}
   currentHp: 1
