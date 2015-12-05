@@ -10798,7 +10798,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -16630,7 +16630,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 443938, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: m_RootOrder
-      value: 12
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 11473724, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: healthIndicatorsT.Array.data[0]
@@ -16949,7 +16949,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -17425,7 +17425,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .469999999
+      value: .800000012
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -18357,7 +18357,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -23369,7 +23369,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -26698,7 +26698,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .469999999
+      value: .800000012
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -26978,7 +26978,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -28822,7 +28822,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -30132,7 +30132,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x
@@ -38270,7 +38270,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11475254, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: spawnSpeed
-      value: .200000003
+      value: .75
       objectReference: {fileID: 0}
     - target: {fileID: 495716, guid: c77aa26cd5fcdf840b39b26d17671f82, type: 2}
       propertyPath: m_LocalScale.x

@@ -40,6 +40,7 @@ public class GUIManager : MonoBehaviour {
             if (GamePad.GetButtonDown(GamePad.Button.Start, GamePad.Index.Any) && !starting && !playing) {
                 whiteOverlay.color = new Color(titleScreen.color.r, titleScreen.color.g, titleScreen.color.b, 0);
                 pressStartText.color = new Color(pressStartText.color.r, pressStartText.color.g, pressStartText.color.b, 0);
+                titleScreen.texture = introMovieTexture;
                 introMovieTexture.Play();
                 starting = true;
                 StartCoroutine(WaitForMovie(7));

@@ -59,11 +59,7 @@ public class Painting : MonoBehaviour {
         }
 
         if (transform.lossyScale.x < minSizeBeforeDestroy) {
-            transform.localScale = Vector3.zero;
-            HideAll();
-            playercontroller.RemoveFromSplats(this);
-            splatGroup.splats.Remove(this);
-            Destroy(gameObject);
+            Delete();
         }
         /*
         if (groupUpdateRemaining > 0) {
@@ -197,6 +193,14 @@ public class Painting : MonoBehaviour {
             }
         }
 
+    }
+
+    public void Delete() {
+        transform.localScale = Vector3.zero;
+        HideAll();
+        playercontroller.RemoveFromSplats(this);
+        splatGroup.splats.Remove(this);
+        Destroy(gameObject);
     }
     
 }
