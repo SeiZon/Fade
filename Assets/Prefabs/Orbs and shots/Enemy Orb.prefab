@@ -278,6 +278,26 @@ Prefab:
       propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: onExplode.Array.data[0]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8a057acba4f1fa845ae6ad57ffe2e55a, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onExplode.Array.data[1]
+      value: 
+      objectReference: {fileID: 8300000, guid: 74acb085475f36f49a79ade07b7e4dea, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onExplode.Array.data[2]
+      value: 
+      objectReference: {fileID: 8300000, guid: 2872c96aab770db43a78f50f7ea9ad82, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onExplode.Array.data[3]
+      value: 
+      objectReference: {fileID: 8300000, guid: 8ab89662fb49524479533a475baa52f9, type: 3}
+    - target: {fileID: 0}
+      propertyPath: onExplode.Array.data[4]
+      value: 
+      objectReference: {fileID: 8300000, guid: f32654e3cb67479408ee1485f50baa43, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 111612}
