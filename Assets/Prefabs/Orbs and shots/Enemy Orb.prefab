@@ -165,7 +165,12 @@ MonoBehaviour:
   enemyOrb: 1
   splatPrefab: {fileID: 151476, guid: 9603999452dae7842b7135fe1e4d6e5f, type: 2}
   explodeParticle: {fileID: 194900, guid: 752e08d9f286af14893f4bf73b00a11d, type: 2}
-  onExplode: {fileID: 8300000, guid: 41936aab278a92243b163eb30f8a5734, type: 3}
+  onExplode:
+  - {fileID: 8300000, guid: 8a057acba4f1fa845ae6ad57ffe2e55a, type: 3}
+  - {fileID: 8300000, guid: 74acb085475f36f49a79ade07b7e4dea, type: 3}
+  - {fileID: 8300000, guid: 2872c96aab770db43a78f50f7ea9ad82, type: 3}
+  - {fileID: 8300000, guid: 8ab89662fb49524479533a475baa52f9, type: 3}
+  - {fileID: 8300000, guid: f32654e3cb67479408ee1485f50baa43, type: 3}
 --- !u!135 &13526578
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -185,6 +190,10 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 0}
+      propertyPath: onExplode.Array.size
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: explosionDelay
       value: 0
