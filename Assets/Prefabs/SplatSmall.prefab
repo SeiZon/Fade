@@ -12,7 +12,7 @@ GameObject:
   - 114: {fileID: 11478934}
   - 135: {fileID: 13572556}
   m_Layer: 0
-  m_Name: Splat
+  m_Name: SplatSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -54,11 +54,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f42af1a949db15c4199c7db32b4d2aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  desiredSize: 8
-  scaleSpeed: 3
+  desiredSize: 5
+  scaleSpeed: 10
   scaleUpdate: 1
   groupUpdate: 5
-  minSizeBeforeDestroy: .5
+  minSizeBeforeDestroy: .200000003
   splatGroupPrefab: {fileID: 121578, guid: 79fa271eb0eccf24fb3c7f0afda0bc2d, type: 2}
   dontGroup: 0
 --- !u!135 &13572556
@@ -90,11 +90,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: scaleSpeed
-      value: 3
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: desiredSize
-      value: 8
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: minSizeBeforeDestroy
+      value: .200000003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
