@@ -111,14 +111,20 @@ public class Painting : MonoBehaviour {
     }
         
     void OnTriggerStay(Collider col) {
-        if (scale || addedToGroup) return;
-        playercontroller.AddToSplats(this);
-        addedToGroup = true;
+        if (col.tag == "Player")
+        {
+            if (scale || addedToGroup) return;
+            playercontroller.AddToSplats(this);
+            addedToGroup = true;
+        }
     }
 
     void OnTriggerExit(Collider col) {
-        playercontroller.RemoveFromSplats(this);
-        addedToGroup = false;
+        if (col.tag == "Player")
+        {
+            playercontroller.RemoveFromSplats(this);
+            addedToGroup = false;
+        }
     }
 
     void HideAll() {
