@@ -119,9 +119,6 @@ public class Player : MonoBehaviour {
         controller.TakeDamage();
         affectHealthIndicator();
 
-        float healthPercent = currentHp / INITIALHP;
-        if (healthPercent < 0.5f)
-            gameController.SetVignet(healthPercent);
     }
 
     void Die() {
@@ -137,5 +134,8 @@ public class Player : MonoBehaviour {
         foreach (Material m in healthIndicatorsT) {
             m.SetColor("_EmissionColor", finalColor);
         }
+        float healthPercent = currentHp / INITIALHP;
+        if (healthPercent < 0.5f)
+            gameController.SetVignet(healthPercent);
     }
 }
