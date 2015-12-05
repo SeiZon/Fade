@@ -85,14 +85,6 @@ public class GameController : MonoBehaviour {
 
             ready = true;
         }
-
-
-
-
-        //TODO: REMOVE!
-        if (Input.GetKeyDown(KeyCode.L)) {
-            ChangeLevel("Level02");
-        }
 	}
 
     public void RestartLevel() {
@@ -151,5 +143,22 @@ public class GameController : MonoBehaviour {
     public void EndGame() {
         LockPlayer();
         guiManager.EndGame();
+    }
+
+    public void DeadPlayer() {
+        StartCoroutine(FadeToGray(4));
+        guiManager.SetState(GUIManager.GUIState.dead);
+    }
+
+    IEnumerator FadeToGray(float time) {
+        float currentTime = 0.0f;
+        float currentVal = 0;
+        do {
+            currentVal = Mathf.Lerp(0, 1, currentTime / time);
+            SetGrayScale(currentVal);
+            currentTime += Time.deltaTime;
+            yield return null;
+        } while (currentTime <= time);
+
     }
 }

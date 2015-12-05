@@ -8,13 +8,14 @@ public class GUIManager : MonoBehaviour {
     public enum GUIState {
         intro,
         normal,
-        ending
+        dead
     }
 
     [SerializeField] MovieTexture introMovieTexture;
     [SerializeField] MovieTexture outroMovieTexture;
     [SerializeField] RawImage titleScreen;
     [SerializeField] Image whiteOverlay;
+    [SerializeField] Text deathText;
     [SerializeField] Text pressStartText;
     [SerializeField] float textFadeSpeed = 1;
 
@@ -35,7 +36,6 @@ public class GUIManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (currentState == null) return;
         if (currentState == GUIState.intro) {
             if (GamePad.GetButtonDown(GamePad.Button.Start, GamePad.Index.Any) && !starting && !playing) {
                 whiteOverlay.color = new Color(titleScreen.color.r, titleScreen.color.g, titleScreen.color.b, 0);
@@ -45,24 +45,29 @@ public class GUIManager : MonoBehaviour {
                 starting = true;
                 StartCoroutine(WaitForMovie(7));
             }
-
-            if (!playing && !starting) {
-                if (textFadingIn) {
-                    currentTextFade += Time.deltaTime * textFadeSpeed;
-                    if (currentTextFade >= 1) {
-                        textFadingIn = false;
-                    }
-                }
-                else {
-                    currentTextFade -= Time.deltaTime * textFadeSpeed;
-                    if (currentTextFade <= minTextFade) {
-                        textFadingIn = true;
-                    }
-                }
-                pressStartText.color = new Color(pressStartText.color.r, pressStartText.color.g, pressStartText.color.b, currentTextFade);
+        }
+        else if (currentState == GUIState.dead) {
+            if (GamePad.GetButtonDown(GamePad.Button.Start, GamePad.Index.Any)) {
+                gameController.RestartLevel();
             }
         }
         
+        if (currentState == GUIState.dead || currentState == GUIState.intro) {
+            if (textFadingIn) {
+                currentTextFade += Time.deltaTime * textFadeSpeed;
+                if (currentTextFade >= 1) {
+                    textFadingIn = false;
+                }
+            }
+            else {
+                currentTextFade -= Time.deltaTime * textFadeSpeed;
+                if (currentTextFade <= minTextFade) {
+                    textFadingIn = true;
+                }
+            }
+            pressStartText.color = new Color(pressStartText.color.r, pressStartText.color.g, pressStartText.color.b, currentTextFade);
+            deathText.color = new Color(pressStartText.color.r, pressStartText.color.g, pressStartText.color.b, currentTextFade);
+        }
 	    
 	}
 
@@ -70,14 +75,19 @@ public class GUIManager : MonoBehaviour {
         currentState = state;
         if (state == GUIState.intro) {
             titleScreen.enabled = pressStartText.enabled = whiteOverlay.enabled = true;
+            deathText.enabled = false;
         }
         else if (state == GUIState.normal) {
             titleScreen.enabled = false;
             pressStartText.enabled = false;
             whiteOverlay.enabled = true;
+            deathText.enabled = false;
         }
-        else if (state == GUIState.ending) {
-
+        else if (state == GUIState.dead) {
+            titleScreen.enabled = false;
+            pressStartText.enabled = false;
+            whiteOverlay.enabled = false;
+            deathText.enabled = true;
         }
     }
 
