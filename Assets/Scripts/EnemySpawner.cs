@@ -40,7 +40,7 @@ public class EnemySpawner : MonoBehaviour {
             Debug.LogError("No spawnpoints registered in enemyspawner.");
             Destroy(gameObject);
         }
-        startSpawningOn.OnActivated += OnStart;
+        if(startSpawningOn != null) startSpawningOn.OnActivated += OnStart;
 	}
 	
 	// Update is called once per frame
