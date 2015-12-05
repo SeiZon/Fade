@@ -104,6 +104,7 @@ public class TwinStickController : MonoBehaviour {
         audioSource_misc = aSources[3];
         animator = GetComponent<Animator>();
         slingshotLineRenderer = slingshot.GetComponent<LineRenderer>();
+        slingshotLineRenderer.SetVertexCount(0);
         isUp = !isLyingDown;
         animator.SetBool("IsUp", isUp);
         gameController = Camera.main.GetComponent<GameController>();
@@ -160,6 +161,7 @@ public class TwinStickController : MonoBehaviour {
         if (isDead) return;
         animator.SetBool("LyingDown", isLyingDown);
         animator.SetBool("IsUp", isUp);
+        aimLine.enabled = isUp;
         if (isLyingDown) {
             Collider[] hits = Physics.OverlapSphere(transform.position, 4);
             foreach (Collider c in hits) {
@@ -188,7 +190,7 @@ public class TwinStickController : MonoBehaviour {
 
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
         leftStickInUse = (padState.LeftStickAxis.magnitude > leftStickDeadzone);
-        rightStickInUse = (padState.rightStickAxis.magnitude > rightStickDeadzone);
+        rightStickInUse = (padState.rightStickAxis.magnitude > rightStickDeadzone && canShoot);
         if (useRemaining > 0 && canShoot) useRemaining -= Time.deltaTime;
         aimLine.enabled = ((rightStickInUse && canShoot) || currentShotCharge > 0);
 
@@ -288,7 +290,7 @@ public class TwinStickController : MonoBehaviour {
         if (tempLeftStickAxis.x < 0)
             leftAngle = 360 - leftAngle;
 
-        if (tempRightStickAxis == Vector2.zero) {
+        if (tempRightStickAxis == Vector2.zero || !canShoot) {
             horizontal = 0;
         }
         else {
@@ -329,12 +331,7 @@ public class TwinStickController : MonoBehaviour {
             }
         }
 
-        if (!canShoot) {
-            horizontal = 0;
-        }
-        else {
-            animator.SetBool("RightStickInUse", (rightStickInUse || currentShotCharge > 0));
-        }
+        animator.SetBool("RightStickInUse", ((rightStickInUse || currentShotCharge > 0) && canShoot));
         animator.SetFloat("Vertical", vertical);
         animator.SetFloat("Horizontal", horizontal);
 
