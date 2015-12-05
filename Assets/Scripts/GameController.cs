@@ -51,8 +51,13 @@ public class GameController : MonoBehaviour {
     public void SetVignet(float amount) {
         float standard = 0.14f;
         float max = 0.33f;
-        
+        if (amount > 0.5f)
+            amount = 1;
+        else {
+            amount = amount / 0.5f;
+        }
         float value = standard + max - (((max - standard) * amount) + standard);
+        
         vignet.intensity = value;
     }
 

@@ -60,8 +60,8 @@ public class Player : MonoBehaviour {
         canShoot = (shootReloadRemaining <= 0);
 
         if (Input.GetKeyDown(KeyCode.A)) {
-            TakeDamage(100);
-            Debug.Log(currentHp);
+            TakeDamage(50);
+            //Debug.Log(currentHp);
         }
 
         if (currentHp <= 0)
@@ -135,7 +135,6 @@ public class Player : MonoBehaviour {
             m.SetColor("_EmissionColor", finalColor);
         }
         float healthPercent = currentHp / INITIALHP;
-        if (healthPercent < 0.5f)
             gameController.SetVignet(healthPercent);
     }
 }
