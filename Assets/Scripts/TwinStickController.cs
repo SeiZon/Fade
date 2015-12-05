@@ -59,6 +59,7 @@ public class TwinStickController : MonoBehaviour {
     float actualDrainSpeed = 0;
     float currentDrainAccel = 0;
     float sonarDelayRemaining = 0;
+    float originalYPosition = 0;
     bool isInsideColor;
     bool oppositeRotation = false;
     bool haveSonar = false;
@@ -108,6 +109,7 @@ public class TwinStickController : MonoBehaviour {
         isUp = !isLyingDown;
         animator.SetBool("IsUp", isUp);
         gameController = Camera.main.GetComponent<GameController>();
+        originalYPosition = transform.position.y;
     }
 
     void OnDisable() {
@@ -139,7 +141,7 @@ public class TwinStickController : MonoBehaviour {
         if (!rightStickInUse && currentShotCharge > 0) {
             tempRightStickAxis = lastRightStickPosition;
         }
-        if (Vector2.Angle(tempLeftStickAxis, tempRightStickAxis) > 90) {
+        if (Vector2.Angle(tempLeftStickAxis, tempRightStickAxis) > 91) {
             oppositeRotation = true;
         }
         else {
@@ -187,7 +189,6 @@ public class TwinStickController : MonoBehaviour {
             }
         }
         if (!isUp) return;
-
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
         leftStickInUse = (padState.LeftStickAxis.magnitude > leftStickDeadzone);
         rightStickInUse = (padState.rightStickAxis.magnitude > rightStickDeadzone && canShoot);
@@ -279,8 +280,7 @@ public class TwinStickController : MonoBehaviour {
         if (tempLeftStickAxis == Vector2.zero)
             tempLeftStickAxis = lastLeftStickPosition;
         float vertical = tempLeftStickAxis.magnitude;
-
-        if (Vector2.Angle(tempLeftStickAxis, tempRightStickAxis) > 90) {
+        if (Vector2.Angle(tempLeftStickAxis, tempRightStickAxis) > 91) {
             vertical = -vertical;
         }
         if (!leftStickInUse)
@@ -330,7 +330,7 @@ public class TwinStickController : MonoBehaviour {
                 }
             }
         }
-
+        
         animator.SetBool("RightStickInUse", ((rightStickInUse || currentShotCharge > 0) && canShoot));
         animator.SetFloat("Vertical", vertical);
         animator.SetFloat("Horizontal", horizontal);
@@ -340,6 +340,7 @@ public class TwinStickController : MonoBehaviour {
         {
             if (padState.RightTrigger > rightTriggerDeadzone && (rightStickInUse || currentShotCharge > 0))
             {
+                Debug.Log("RIGHT TRIGGER");
                 XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge / maxShotChargeTime) * rumbleSensivity, (currentShotCharge / maxShotChargeTime) * rumbleSensivity);
                 if (!shotChargeSoundIsPlaying)
                 {
