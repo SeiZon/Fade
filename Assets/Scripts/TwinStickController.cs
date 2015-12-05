@@ -91,7 +91,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     public bool canShoot = true;
-
+    [HideInInspector] public bool isLocked = false;
 
     // Use this for initialization
     void Start () {
@@ -118,7 +118,7 @@ public class TwinStickController : MonoBehaviour {
 
 	void FixedUpdate() {
         CanShoot = canShoot;
-        if (!isUp || isDead) return;
+        if (!isUp || isDead || isLocked) return;
         padState = GamepadInput.GamePad.GetState(GamepadInput.GamePad.Index.One);
 		GetComponent<Rigidbody>().AddForce(new Vector3(padState.LeftStickAxis.x * leftStickSensivity, 0, padState.LeftStickAxis.y * leftStickSensivity) * moveSpeed);
         if (leftStickInUse) {
@@ -160,7 +160,7 @@ public class TwinStickController : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         animator.SetBool("LyingDown", isLyingDown);
         animator.SetBool("IsUp", isUp);
         aimLine.enabled = isUp;
@@ -488,7 +488,7 @@ public class TwinStickController : MonoBehaviour {
 	}
 
     public void AddToSplats(Painting painting) {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         if (splatsUnderPlayer.Contains(painting)) return;
         splatsUnderPlayer.Add(painting);
         if (drainGroup == null) {
@@ -497,7 +497,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     public void RemoveFromSplats(Painting painting) {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         if (!splatsUnderPlayer.Contains(painting)) return;
         splatsUnderPlayer.Remove(painting);
         if (splatsUnderPlayer.Count == 0) {
@@ -518,7 +518,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     public void TakeDamage() {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         audioSource_misc.Stop();
         audioSource_misc.volume = 1F;
         audioSource_misc.PlayOneShot(onHit);
@@ -543,7 +543,7 @@ public class TwinStickController : MonoBehaviour {
     }
     
     public void Die() {
-        if (isDead) return;
+        if (isDead || isLocked) return;
         animator.SetBool("Dead", true);
         isDead = true;
         StartCoroutine(FadeToGray(4));

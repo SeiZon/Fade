@@ -17,7 +17,7 @@ public class GameController : MonoBehaviour {
     VignetteAndChromaticAberration vignet;
     Grayscale grayscale;
     [HideInInspector] public GUIManager guiManager;
-
+    TwinStickController playerController;
     [SerializeField] GameObject enemyOrb;
 
     bool ready = false;
@@ -48,7 +48,7 @@ public class GameController : MonoBehaviour {
         vignet = GetComponent<VignetteAndChromaticAberration>();
         grayscale = GetComponent<Grayscale>();
 
-        
+        playerController = GameObject.FindWithTag("Player").GetComponent<TwinStickController>();
         
 	}
 
@@ -103,6 +103,7 @@ public class GameController : MonoBehaviour {
     }
     
     public void ChangeLevel(string levelName) {
+        LockPlayer();
         guiManager.FadeToNextLevel(levelName);
     }
 
@@ -136,5 +137,13 @@ public class GameController : MonoBehaviour {
 
     public void StopGame() {
 
+    }
+
+    void LockPlayer() {
+        playerController.isLocked = true;
+    }
+
+    void UnlockPlayer() {
+        playerController.isLocked = false;
     }
 }
