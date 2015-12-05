@@ -10254,8 +10254,12 @@ Prefab:
       objectReference: {fileID: 1189302583}
     - target: {fileID: 11453392, guid: 4e749ad4a77c04c46a7a84b67c5f530c, type: 2}
       propertyPath: isSpawning
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 11453392, guid: 4e749ad4a77c04c46a7a84b67c5f530c, type: 2}
+      propertyPath: startSpawningOn
+      value: 
+      objectReference: {fileID: 626841838}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 4e749ad4a77c04c46a7a84b67c5f530c, type: 2}
   m_IsPrefabParent: 0
