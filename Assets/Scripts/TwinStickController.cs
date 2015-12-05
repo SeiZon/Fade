@@ -104,6 +104,7 @@ public class TwinStickController : MonoBehaviour {
         audioSource_misc = aSources[3];
         animator = GetComponent<Animator>();
         slingshotLineRenderer = slingshot.GetComponent<LineRenderer>();
+        slingshotLineRenderer.SetVertexCount(0);
         isUp = !isLyingDown;
         animator.SetBool("IsUp", isUp);
         gameController = Camera.main.GetComponent<GameController>();
