@@ -6,7 +6,7 @@ public class GameData {
 
     public static int[] shotDamageTable = {
         //Player
-        100,
+        50,
         //Enemy1
         20,
         //Enemy2

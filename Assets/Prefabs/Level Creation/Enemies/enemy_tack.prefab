@@ -336,7 +336,7 @@ MonoBehaviour:
   maxAttackDistance: 10
   minAttackDistance: 6
   detectRadius: 20
-  onHit: {fileID: 8300000, guid: 724d15881cafc2242ab26442fa0b3694, type: 3}
+  onHit: {fileID: 0}
   onDestroyed: {fileID: 0}
   onShoot: {fileID: 0}
   state: 0
@@ -387,7 +387,7 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: onHit
       value: 
-      objectReference: {fileID: 8300000, guid: 724d15881cafc2242ab26442fa0b3694, type: 3}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 194516}

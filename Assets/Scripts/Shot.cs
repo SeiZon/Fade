@@ -12,7 +12,9 @@ public class Shot : MonoBehaviour {
     float moveSpeed;
     int damage;
     Transform shooter;
-
+    
+    [SerializeField] Transform child;
+    [SerializeField] ParticleSystem speedIndic;
     public void Initialize(float moveSpeed, int damage, GameData.Team team, GameData.ShotType shotType, Transform shooter = null) {
         this.moveSpeed = moveSpeed;
         this.damage = damage;
@@ -23,11 +25,19 @@ public class Shot : MonoBehaviour {
         {
             this.shooter = shooter;
         }
+
+        if(speedIndic != null)
+        {
+            if(this.shotType == GameData.ShotType.Charged)
+            {
+                speedIndic.Play();
+                this.damage = 150;
+            }
+        }
     }
 
 	// Use this for initialization
 	void Start () {
-	
 	}
 	
 	// Update is called once per frame
@@ -36,6 +46,11 @@ public class Shot : MonoBehaviour {
         lifeTime -= Time.deltaTime;
         if (lifeTime <= 0) {
             Destroy(gameObject);
+        }
+
+        if (child != null)
+        {
+            child.Rotate(Vector3.up * 500 * Time.deltaTime);
         }
 	}
 

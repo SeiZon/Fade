@@ -496,7 +496,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e707baabf77d35d409f707a1096fac4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startHealth: 200
+  startHealth: 150
   moveSpeed: 8
   turnSpeed: 3
   damage: 50
@@ -513,7 +513,7 @@ MonoBehaviour:
   evadeDetectRadius: 18
   dodgeSpeed: 3
   dodgeDistance: 4
-  onHit: {fileID: 8300000, guid: 724d15881cafc2242ab26442fa0b3694, type: 3}
+  onHit: {fileID: 0}
   onDestroyed: {fileID: 0}
   onShoot: {fileID: 0}
   isDodging: {fileID: 8300000, guid: 701099f1e80e40d41baf64c0249c398e, type: 3}
@@ -605,7 +605,11 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: onHit
       value: 
-      objectReference: {fileID: 8300000, guid: 724d15881cafc2242ab26442fa0b3694, type: 3}
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: startHealth
+      value: 150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 113360}

@@ -93,6 +93,8 @@ public class TwinStickController : MonoBehaviour {
     public bool canShoot = true;
     [HideInInspector] public bool isLocked = false;
 
+
+    [SerializeField] ParticleSystem speedIndicSling;
     // Use this for initialization
     void Start () {
         player = GetComponent<Player>();
@@ -353,9 +355,20 @@ public class TwinStickController : MonoBehaviour {
                 currentShotCharge += Time.deltaTime;
                 if (currentShotCharge > maxShotChargeTime)
                 {
+                    if (!speedIndicSling.isPlaying)
+                        speedIndicSling.Play();
+
                     currentShotCharge = maxShotChargeTime;
                     audioSource_shooting.Stop();
                     shotChargeSoundIsPlaying = false;
+                }
+                else
+                {
+                    if (speedIndicSling.isPlaying)
+                    {
+                        speedIndicSling.Clear();
+                        speedIndicSling.Stop();
+                    }
                 }
             }
             else if (currentShotCharge > 0)
@@ -366,7 +379,10 @@ public class TwinStickController : MonoBehaviour {
                     audioSource_shooting.Stop();
                     audioSource_shooting.PlayOneShot(onShotRelease, soundVolume);
                     GameData.ShotType shotType;
-                    if (currentShotCharge == maxShotChargeTime) shotType = GameData.ShotType.Charged;
+                    if (currentShotCharge == maxShotChargeTime)
+                    {
+                        shotType = GameData.ShotType.Charged; 
+                    }
                     else shotType = GameData.ShotType.Normal;
                     Shoot(shotType);
                     currentShotCharge = 0;
@@ -378,8 +394,22 @@ public class TwinStickController : MonoBehaviour {
                 //XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 if (shotChargeSoundIsPlaying)
                     audioSource_shooting.Stop();
+
+                if (speedIndicSling.isPlaying)
+                {
+                    speedIndicSling.Clear();
+                    speedIndicSling.Stop();
+                }
             }
             animator.SetFloat("ShotCharge", currentShotCharge);
+        }
+        else
+        {
+            if (speedIndicSling.isPlaying)
+            {
+                speedIndicSling.Clear();
+                speedIndicSling.Stop();
+            }
         }
         //Use closest item to the player that is within use range
         if (padState.B && useRemaining <= 0) {
@@ -483,7 +513,7 @@ public class TwinStickController : MonoBehaviour {
 	void Sonar(Vector3[] blips) {
         particleSystemSonar.Emit(transform.position, Vector3.zero, 0.25f, 1, particleSystemSonar.startColor);
 		foreach (Vector3 v in blips) {
-			particleSystemSonarBlip.Emit(v, Vector3.zero, 0.1f, 1, keyObjectEmitColor);
+			particleSystemSonarBlip.Emit(v, Vector3.zero, 0.1f, 3, keyObjectEmitColor);
 		}
 	}
 

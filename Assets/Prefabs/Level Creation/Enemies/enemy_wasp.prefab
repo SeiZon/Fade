@@ -317,7 +317,7 @@ MonoBehaviour:
   chargeDistance: 15
   rotatingPoint: {fileID: 406160}
   maxRotateSpeed: 1
-  onHit: {fileID: 8300000, guid: cf863da5ee922ff4ead5cef9b3446b0d, type: 3}
+  onHit: {fileID: 0}
   onDestroyed: {fileID: 0}
   onCharge: {fileID: 8300000, guid: 701099f1e80e40d41baf64c0249c398e, type: 3}
   speedParticle: {fileID: 107442}
@@ -1489,6 +1489,10 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: m_Constraints
       value: 116
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: onHit
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
