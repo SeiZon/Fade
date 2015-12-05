@@ -92,11 +92,28 @@ public class GUIManager : MonoBehaviour {
         StartCoroutine(FadeIn(2));
     }
 
+    public void EndGame() {
+        titleScreen.texture = outroMovieTexture;
+        titleScreen.enabled = true;
+        whiteOverlay.enabled = false;
+        outroMovieTexture.Play();
+        StartCoroutine(WaitForEnd(20));
+    }
+
+    void ResetGame() {
+        gameController.RestartGame();
+    }
 
     IEnumerator WaitForMovie(float time) {
         yield return new WaitForSeconds(time);
 
         FadeIntro();
+    }
+
+    IEnumerator WaitForEnd(float time) {
+        yield return new WaitForSeconds(time);
+
+        ResetGame();
     }
 
     IEnumerator FadeIntroScreen(float time) {
@@ -143,5 +160,10 @@ public class GUIManager : MonoBehaviour {
 
         playing = false;
         gameController.LoadLevel(levelName);
+    }
+
+    public void SetFade(float percent) {
+        whiteOverlay.enabled = (percent > 0);
+        whiteOverlay.color = new Color(whiteOverlay.color.r, whiteOverlay.color.g, whiteOverlay.color.b, percent);
     }
 }

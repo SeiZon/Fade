@@ -78,9 +78,6 @@ public class GameController : MonoBehaviour {
             if (Application.loadedLevelName == "Level01") {
                 guiManager.SetState(GUIManager.GUIState.intro);
             }
-            //else if (Application.loadedLevelName == "Level05") {
-            //   guiManager.SetState(GUIManager.GUIState.intro);
-            //}
             else {
                 guiManager.SetState(GUIManager.GUIState.normal);
                 guiManager.FadeToGame();
@@ -100,6 +97,10 @@ public class GameController : MonoBehaviour {
 
     public void RestartLevel() {
         Application.LoadLevel(Application.loadedLevel);
+    }
+
+    public void RestartGame() {
+        Application.LoadLevel("Level01");
     }
     
     public void ChangeLevel(string levelName) {
@@ -145,5 +146,10 @@ public class GameController : MonoBehaviour {
 
     void UnlockPlayer() {
         playerController.isLocked = false;
+    }
+
+    public void EndGame() {
+        LockPlayer();
+        guiManager.EndGame();
     }
 }
