@@ -2264,6 +2264,10 @@ Prefab:
       propertyPath: playOnAwake
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 198302, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
+      propertyPath: m_Name
+      value: portal
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c050eddc16e8fad46a16d0c9f6b5b092, type: 2}
   m_IsPrefabParent: 0
