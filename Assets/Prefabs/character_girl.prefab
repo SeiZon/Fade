@@ -1015,8 +1015,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 159446}
-  m_LocalRotation: {x: 0, y: -.999998689, z: 0, w: -.00163609604}
-  m_LocalPosition: {x: .670000017, y: 3.66000009, z: -.800000012}
+  m_LocalRotation: {x: 0, y: .682381272, z: 0, w: .73099649}
+  m_LocalPosition: {x: -23.3999996, y: 3, z: -28.8099995}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 414188}
@@ -1885,7 +1885,7 @@ MonoBehaviour:
   pushRange: 15
   sonarRange: 20
   moveSpeed: 350
-  maxShotChargeTime: 1.39999998
+  maxShotChargeTime: 1.29999995
   minShotChargeTime: .0500000007
   rumbleSensivity: .800000012
   maxDrainSpeed: .0199999996

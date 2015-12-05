@@ -2094,6 +2094,10 @@ Prefab:
       propertyPath: m_AnchorMax.x
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11434758, guid: 8eb0a9b3dd5ee5b4987bd1b3aa54037c, type: 2}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8eb0a9b3dd5ee5b4987bd1b3aa54037c, type: 2}
   m_IsPrefabParent: 0
