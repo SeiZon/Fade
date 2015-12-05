@@ -172,7 +172,6 @@ public class Painting : MonoBehaviour {
             Transform t = revealedGeometry[i];
             if (!currentObjects.Contains(t)) {
                 revealedGeometry.Remove(t);
-                Debug.Log(t.gameObject.name);
 
                 foreach (Transform child in t.GetComponentsInChildren<Transform>()) {
                     child.gameObject.layer = LayerMask.NameToLayer("Hidden Geometry");
