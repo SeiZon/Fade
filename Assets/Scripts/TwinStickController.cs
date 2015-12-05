@@ -39,7 +39,7 @@ public class TwinStickController : MonoBehaviour {
     [SerializeField] Transform[] slingshotEnds;
     [SerializeField] Transform slingshot;
     [SerializeField] Transform leftHand;
-    [SerializeField] bool isLyingDown;
+    public bool isLyingDown;
 
     //Player sounds
     [SerializeField] float soundVolume = 1;
@@ -65,7 +65,7 @@ public class TwinStickController : MonoBehaviour {
     bool haveSonar = false;
     bool leftStickInUse = false;
     bool rightStickInUse = false;
-    bool isUp = false;
+    [HideInInspector] public bool isUp = false;
     bool isReviving = false;
     bool isDead = false;
     List<Painting> splatsUnderPlayer;
@@ -340,7 +340,6 @@ public class TwinStickController : MonoBehaviour {
         {
             if (padState.RightTrigger > rightTriggerDeadzone && (rightStickInUse || currentShotCharge > 0))
             {
-                Debug.Log("RIGHT TRIGGER");
                 XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge / maxShotChargeTime) * rumbleSensivity, (currentShotCharge / maxShotChargeTime) * rumbleSensivity);
                 if (!shotChargeSoundIsPlaying)
                 {

@@ -24,12 +24,8 @@ public class Trigger : MonoBehaviour {
         {
             GetComponent<MeshRenderer>().enabled = false;
         }
-
-        if (disableTriggerOn != inputs.dontDisable)
-        {
-            player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
-            playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<TwinStickController>();
-        }
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
+        playerControl = GameObject.FindGameObjectWithTag("Player").GetComponent<TwinStickController>();
 	}
 	
 	// Update is called once per frame
@@ -69,7 +65,7 @@ public class Trigger : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if(other.GetComponent<Player>() != null)
+        if(other.GetComponent<Player>() != null && playerControl.isUp)
         {
             inTrigger = true;
             foreach (GameObject obj in objectsToActivate)
@@ -79,6 +75,18 @@ public class Trigger : MonoBehaviour {
             }
         }
     }
+
+	void OnTriggerStay(Collider other) {
+		if(!inTrigger && other.GetComponent<Player>() != null && playerControl.isUp)
+		{
+			inTrigger = true;
+			foreach (GameObject obj in objectsToActivate)
+			{
+				if (obj != null && !obj.activeSelf)
+					obj.SetActive(true);
+			}
+		}
+	}
 
     void OnTriggerExit(Collider other)
     {
