@@ -277,6 +277,8 @@ public class Boss : MonoBehaviour {
             {
                 enemiesInScene.Clear();
 
+				transform.rotation = new Quaternion(0,0,0,0);
+
                 bossState = states.invincible;
                 curLevel = levels.lvl2;
             }
@@ -307,6 +309,8 @@ public class Boss : MonoBehaviour {
             if (Vector3.Distance(transform.position, translatePos(levelPositions[2])) < 0.5F)
             {
                 enemiesInScene.Clear();
+
+				transform.rotation = new Quaternion(0,0,0,0);
 
                 bossState = states.invincible;
                 curLevel = levels.lvl3;
