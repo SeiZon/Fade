@@ -2,7 +2,7 @@
 using System.Collections;
 using GamepadInput;
 using System.Collections.Generic;
-using XInputDotNetPure;
+//using XInputDotNetPure;
 
 public class TwinStickController : MonoBehaviour {
 
@@ -113,7 +113,7 @@ public class TwinStickController : MonoBehaviour {
     }
 
     void OnDisable() {
-        XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
+        //XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
     }
 
 	void FixedUpdate() {
@@ -340,7 +340,7 @@ public class TwinStickController : MonoBehaviour {
         {
             if (padState.RightTrigger > rightTriggerDeadzone && (rightStickInUse || currentShotCharge > 0))
             {
-                XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge / maxShotChargeTime) * rumbleSensivity, (currentShotCharge / maxShotChargeTime) * rumbleSensivity);
+                //XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, (currentShotCharge / maxShotChargeTime) * rumbleSensivity, (currentShotCharge / maxShotChargeTime) * rumbleSensivity);
                 if (!shotChargeSoundIsPlaying)
                 {
                     audioSource_shooting.PlayOneShot(isChargingShot, soundVolume);
@@ -374,7 +374,7 @@ public class TwinStickController : MonoBehaviour {
                 {
                     currentShotCharge = 0;
                 }
-                XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
+                //XInputDotNetPure.GamePad.SetVibration(PlayerIndex.One, 0, 0);
                 if (shotChargeSoundIsPlaying)
                     audioSource_shooting.Stop();
             }
