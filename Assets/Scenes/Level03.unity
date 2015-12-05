@@ -7400,8 +7400,36 @@ Prefab:
       objectReference: {fileID: 8300000, guid: ecdced3741f14f24f8826966ac1025ff, type: 3}
     - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
       propertyPath: stepSoundIntervalMultiplier
-      value: 8
+      value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 8224114, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: m_Volume
+      value: .150000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 8224114, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: m_Pitch
+      value: 1.29999995
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: onSonar
+      value: 
+      objectReference: {fileID: 8300000, guid: 15c3b596a68124a448be35e190de3c53, type: 3}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: isDraining
+      value: 
+      objectReference: {fileID: 8300000, guid: 2221d64f02f17234c84cb34f4d5e2f42, type: 3}
+    - target: {fileID: 8262564, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: m_Volume
+      value: .25
+      objectReference: {fileID: 0}
+    - target: {fileID: 11473724, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: currentHp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11430396, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
+      propertyPath: isChargingShot
+      value: 
+      objectReference: {fileID: 8300000, guid: c8a788bc416f01b46a95d5324496a719, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1e1ade605b126b04eb144c72391a5a92, type: 2}
   m_IsPrefabParent: 0

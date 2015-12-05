@@ -202,6 +202,7 @@ public class TwinStickController : MonoBehaviour {
             haveSonar = false;
             particleSystemSonar.Play();
             audioSource_misc.Stop();
+            audioSource_misc.volume = 0.05F;
             audioSource_misc.PlayOneShot(onSonar);
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, sonarRange);
             List<Vector3> blips = new List<Vector3>();
@@ -420,15 +421,38 @@ public class TwinStickController : MonoBehaviour {
 
                 drainGroup.Drain(actualDrainSpeed);
                 if (!audioSource_draining.isPlaying)
+                {
+                    audioSource_draining.volume = 0.05F;
                     audioSource_draining.PlayOneShot(isDraining);
+                }
             }
             else {
-                if (audioSource_draining.isPlaying)
-                    audioSource_draining.Stop();
+                
+
+                if(audioSource_draining.volume <= 0)
+                {
+                    if (audioSource_draining.isPlaying)
+                        audioSource_draining.Stop();
+                }
+                else
+                {
+                    audioSource_draining.volume -= 0.02F;
+                }
+
                 if (particleDrain.isPlaying) particleDrain.Stop();
             }
         }
         else {
+            if (audioSource_draining.volume <= 0)
+            {
+                if (audioSource_draining.isPlaying)
+                    audioSource_draining.Stop();
+            }
+            else
+            {
+                audioSource_draining.volume -= 0.02F;
+            }
+
             actualDrainSpeed = 0;
             player.StopDraining();
             if (particleDrain.isPlaying) particleDrain.Stop();
@@ -496,6 +520,7 @@ public class TwinStickController : MonoBehaviour {
     public void TakeDamage() {
         if (isDead) return;
         audioSource_misc.Stop();
+        audioSource_misc.volume = 1F;
         audioSource_misc.PlayOneShot(onHit);
     }
 
