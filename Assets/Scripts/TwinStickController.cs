@@ -576,8 +576,18 @@ public class TwinStickController : MonoBehaviour {
         if (isDead || isLocked) return;
         animator.SetBool("Dead", true);
         isDead = true;
-        gameController.DeadPlayer();
+        StartCoroutine(FadeToGray(4));
     }
 
-    
+    IEnumerator FadeToGray(float time) {
+        float currentTime = 0.0f;
+        float currentVal = 0;
+        do {
+            currentVal = Mathf.Lerp(0, 1, currentTime / time);
+            gameController.SetGrayScale(currentVal);
+            currentTime += Time.deltaTime;
+            yield return null;
+        } while (currentTime <= time);
+        
+    }
 }
