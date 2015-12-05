@@ -16,7 +16,17 @@ public class GameController : MonoBehaviour {
 	private static GameController instance;
     VignetteAndChromaticAberration vignet;
     Grayscale grayscale;
+    [HideInInspector] public GUIManager guiManager;
+    TwinStickController playerController;
+    [SerializeField] GameObject enemyOrb;
 
+    bool ready = false;
+    bool loaded = false;
+
+    void Awake() {
+        Application.LoadLevelAdditive("GUI");
+        StartCoroutine(WaitForGUILoad());
+    }
 
 	// Use this for initialization
 	void Start () {
@@ -37,15 +47,68 @@ public class GameController : MonoBehaviour {
 		}
         vignet = GetComponent<VignetteAndChromaticAberration>();
         grayscale = GetComponent<Grayscale>();
+
+        playerController = GameObject.FindWithTag("Player").GetComponent<TwinStickController>();
+        
 	}
+
+    IEnumerator WaitForGUILoad() {
+        int safeCounter = 100;
+        GameObject guiMan = null;
+        while (guiMan == null) {
+            guiMan = GameObject.FindWithTag("GUIManager");
+            if (guiMan != null) {
+                guiManager = guiMan.GetComponent<GUIManager>();
+                break;
+            }
+            safeCounter--;
+            if (safeCounter < 0) {
+                Debug.LogError("INFINITE LOOP!");
+                break;
+            }
+            yield return new WaitForEndOfFrame();
+        }
+        
+        loaded = true;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-	
+        if (loaded && !ready) {
+            if (Application.loadedLevelName == "Level01") {
+                guiManager.SetState(GUIManager.GUIState.intro);
+            }
+            //else if (Application.loadedLevelName == "Level05") {
+            //   guiManager.SetState(GUIManager.GUIState.intro);
+            //}
+            else {
+                guiManager.SetState(GUIManager.GUIState.normal);
+                guiManager.FadeToGame();
+            }
+
+            ready = true;
+        }
+
+
+
+
+        //TODO: REMOVE!
+        if (Input.GetKeyDown(KeyCode.L)) {
+            ChangeLevel("Level02");
+        }
 	}
 
     public void RestartLevel() {
         Application.LoadLevel(Application.loadedLevel);
+    }
+    
+    public void ChangeLevel(string levelName) {
+        LockPlayer();
+        guiManager.FadeToNextLevel(levelName);
+    }
+
+    public void LoadLevel(string levelName) {
+        Application.LoadLevel(levelName);
     }
 
     public void SetVignet(float amount) {
@@ -63,5 +126,24 @@ public class GameController : MonoBehaviour {
 
     public void SetGrayScale(float amount) {
         grayscale.effectAmount = amount;
+    }
+
+    public void BeginGame() {
+        if (Application.loadedLevelName == "Level01") {
+            Instantiate(enemyOrb, new Vector3(-0.1163069f, 25.8f, 0.2f), Quaternion.identity);
+        }
+
+    }
+
+    public void StopGame() {
+
+    }
+
+    void LockPlayer() {
+        playerController.isLocked = true;
+    }
+
+    void UnlockPlayer() {
+        playerController.isLocked = false;
     }
 }

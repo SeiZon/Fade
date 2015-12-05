@@ -12,6 +12,7 @@ TagManager:
   - EnemySpawner
   - Boss
   - Wall
+  - GUIManager
   layers:
   - Default
   - TransparentFX

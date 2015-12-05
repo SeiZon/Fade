@@ -41,7 +41,7 @@ public class Player : MonoBehaviour {
     void Start() {
         currentHp = INITIALHP;
         if (isTutorialLevel) {
-            currentHp = 100;
+            currentHp = 1;
         }
         team = GameData.Team.Player;
         controller = GetComponent<TwinStickController>();
