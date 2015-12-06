@@ -160,12 +160,12 @@ public class Boss : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void FixedUpdate () {
         switch(gameState)
         {
             case gameStates.bossFight:
                 bossFight();
-                break;
+                break; 
             case gameStates.ending:
                 ending();
                 break;
