@@ -175,8 +175,8 @@ public class TwinStickController : MonoBehaviour {
                 }
             }
             if (drainGroup != null) {
-                player.Drain(0.005f * Time.deltaTime);
-                drainGroup.Drain(maxDrainSpeed / 2);
+                player.Drain(0.025f * Time.deltaTime);
+                drainGroup.Drain(1f * Time.deltaTime);
                 isReviving = true;
             }
             if (isReviving && drainGroup == null) {
@@ -580,18 +580,7 @@ public class TwinStickController : MonoBehaviour {
         if (isDead || isLocked) return;
         animator.SetBool("Dead", true);
         isDead = true;
-        StartCoroutine(FadeToGray(4));
+        gameController.DeadPlayer();
     }
-
-    IEnumerator FadeToGray(float time) {
-        float currentTime = 0.0f;
-        float currentVal = 0;
-        do {
-            currentVal = Mathf.Lerp(0, 1, currentTime / time);
-            gameController.SetGrayScale(currentVal);
-            currentTime += Time.deltaTime;
-            yield return null;
-        } while (currentTime <= time);
-        
-    }
+    
 }

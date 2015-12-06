@@ -11,9 +11,8 @@ public class InvertedRain : MonoBehaviour {
     void Start() {
         col = GetComponent<SphereCollider>();
     }
-
-	// Update is called once per frame
-	void Update () {
+    
+    void FixedUpdate() {
         if (timer > 0) {
             timer -= Time.deltaTime;
             return;
@@ -31,6 +30,5 @@ public class InvertedRain : MonoBehaviour {
         }
         if (splatgroups.Count == 0)
             Destroy(gameObject);
-        
-	}
+    }
 }
