@@ -224,7 +224,8 @@ public class GUIManager : MonoBehaviour {
     IEnumerator FadeIn(float time) {
         float currentAlpha = 1;
         float currentTime = 0.0f;
-
+        whiteOverlay.color = new Color(titleScreen.color.r, titleScreen.color.g, titleScreen.color.b, currentAlpha);
+        whiteOverlay.enabled = true;
         do {
             currentAlpha = Mathf.Lerp(1, 0, currentTime / time);
             whiteOverlay.color = new Color(titleScreen.color.r, titleScreen.color.g, titleScreen.color.b, currentAlpha);
@@ -239,6 +240,8 @@ public class GUIManager : MonoBehaviour {
     IEnumerator FadeOut(float time, string levelName) {
         float currentAlpha = 0;
         float currentTime = 0.0f;
+        whiteOverlay.color = new Color(titleScreen.color.r, titleScreen.color.g, titleScreen.color.b, currentAlpha);
+        whiteOverlay.enabled = true;
 
         do {
             currentAlpha = Mathf.Lerp(0, 1, currentTime / time);

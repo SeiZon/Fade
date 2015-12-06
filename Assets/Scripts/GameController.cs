@@ -49,7 +49,10 @@ public class GameController : MonoBehaviour {
         grayscale = GetComponent<Grayscale>();
 
         playerController = GameObject.FindWithTag("Player").GetComponent<TwinStickController>();
-        
+        if (!Application.isEditor) {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = false;
+        }
 	}
 
     IEnumerator WaitForGUILoad() {

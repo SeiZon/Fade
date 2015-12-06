@@ -247,7 +247,6 @@ public class EnemyNavi : EnemyInfo {
     }
     void evade() {
         if (incomingProjectile == null) return;
-        Debug.Log(Vector3.Distance(transform.position, player.position));
         if (Vector3.Distance(transform.position, player.position) > aggroRange) return;
         audioSource.Stop();
         audioSource.PlayOneShot(isDodging);
