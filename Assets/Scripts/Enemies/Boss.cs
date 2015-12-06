@@ -573,7 +573,7 @@ public class Boss : MonoBehaviour {
                             break;
                     }
 
-                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * 0.6F)) + (transform.up * (enemies[lvl].transform.localScale.y));
+                    Vector3 spawnPos = transform.position - (dir * (transform.localScale.x * 0.7F)) - (transform.up * (transform.localScale.y * (0.6F-(lvl == 1 ? 0.1F : 0F)))) + (transform.up * (enemies[lvl].transform.localScale.y));
                     Instantiate(enemySpawnParticlePrefab, spawnPos, Quaternion.identity);
 
                     GameObject enemy = Instantiate(enemies[lvl], spawnPos, Quaternion.identity) as GameObject;

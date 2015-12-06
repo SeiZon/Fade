@@ -93,7 +93,7 @@ public class Player : MonoBehaviour {
 
         if (currentHp >= INITIALHP) return false;
         else {
-            currentHp += (amount*100*(0.5F*INITIALHP));
+            currentHp += (amount*absorbMultiplier*(0.5F*INITIALHP));
             if (currentHp > INITIALHP)
             {
                 currentHp = INITIALHP;

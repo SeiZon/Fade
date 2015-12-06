@@ -7,6 +7,8 @@ public class EnemyWasp : EnemyInfo {
     [SerializeField] float maxRotateSpeed = 1;
     [SerializeField] AudioClip onHit, onDestroyed, onCharge;
     [SerializeField] GameObject speedParticle;
+    [SerializeField] int chargeTime = 250;
+    int curChargeTime;
 
     Vector3 chargeStartPos = Vector3.zero;
 
@@ -27,6 +29,7 @@ public class EnemyWasp : EnemyInfo {
 	protected override void Start () {
         base.Start();
         curReadyTime = readyTime;
+        curChargeTime = chargeTime;
 	}
 	
     void FixedUpdate() {
@@ -92,12 +95,20 @@ public class EnemyWasp : EnemyInfo {
     {
         if (!speedParticle.activeSelf) speedParticle.SetActive(true);
 
-        if(Vector3.Distance(chargeStartPos, transform.position) < chargeDistance)
+        if(curChargeTime <= 0)
+        {
+            curChargeTime = chargeTime;
+            if (speedParticle.activeSelf) speedParticle.SetActive(false);
+            state = enemyState.idle;
+        }
+        else if(Vector3.Distance(chargeStartPos, transform.position) < chargeDistance)
         {
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+            curChargeTime--;
         }
         else
         {
+            curChargeTime = chargeTime;
             if (speedParticle.activeSelf) speedParticle.SetActive(false);
             state = enemyState.idle;
         }
