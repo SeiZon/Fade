@@ -88,6 +88,7 @@ public class GameController : MonoBehaviour {
 	}
 
     public void RestartLevel() {
+        Time.timeScale = 1;
         Application.LoadLevel(Application.loadedLevel);
     }
 
@@ -132,12 +133,26 @@ public class GameController : MonoBehaviour {
 
     }
 
-    void LockPlayer() {
+    public void LockPlayer() {
         playerController.isLocked = true;
     }
 
-    void UnlockPlayer() {
+    public void UnlockPlayer() {
         playerController.isLocked = false;
+    }
+
+    public void PauseGame() {
+        LockPlayer();
+        guiManager.SetState(GUIManager.GUIState.pause);
+        SetGrayScale(1);
+        Time.timeScale = 0.0001f;
+    }
+
+    public void ResumeGame() {
+        UnlockPlayer();
+        guiManager.SetState(GUIManager.GUIState.normal);
+        SetGrayScale(0);
+        Time.timeScale = 1f;
     }
 
     public void EndGame() {

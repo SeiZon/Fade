@@ -488,6 +488,10 @@ public class TwinStickController : MonoBehaviour {
             if (particleDrain.isPlaying) particleDrain.Stop();
         }
 
+        if (padState.Start) {
+            gameController.PauseGame();
+        }
+
     }
 
     void Shoot(GameData.ShotType shotType) {
