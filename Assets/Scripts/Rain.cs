@@ -20,8 +20,7 @@ public class Rain : MonoBehaviour {
         particles = GetComponent<ParticleSystem>();
     }
 
-    // Update is called once per frame
-    void Update() {
+    void FixedUpdate() {
         if (!spawn) {
             particles.Stop();
             return;
@@ -44,7 +43,7 @@ public class Rain : MonoBehaviour {
             spawnTimer = spawnSpeed;
         }
     }
-
+    
     void SpawnOrb() {
         float x = Random.Range(transform.position.x - col.radius, transform.position.x + col.radius);
         float z = Random.Range(transform.position.z - col.radius, transform.position.z + col.radius);

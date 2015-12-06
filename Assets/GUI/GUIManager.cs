@@ -61,8 +61,8 @@ public class GUIManager : MonoBehaviour {
 	void Update () {
         if (currentState == GUIState.intro) {
             if (GamePad.GetButtonDown(GamePad.Button.Start, GamePad.Index.Any) && !starting && !playing) {
-                whiteOverlay.color = new Color(titleScreen.color.r, titleScreen.color.g, titleScreen.color.b, 0);
-                pressStartText.color = new Color(pressStartText.color.r, pressStartText.color.g, pressStartText.color.b, 0);
+                whiteOverlay.enabled = false;
+                pressStartText.enabled = false;
                 titleScreen.texture = introMovieTexture;
                 introMovieTexture.Play();
                 starting = true;
