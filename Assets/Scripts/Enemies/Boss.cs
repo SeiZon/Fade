@@ -56,6 +56,8 @@ public class Boss : MonoBehaviour {
     }
     //island, objective and behaviour tracker
     public levels curLevel = levels.lvl1;
+    [SerializeField] int activeDistance = 25;
+    bool beginAttacking = false;
 
     public enum states
     {
@@ -78,8 +80,8 @@ public class Boss : MonoBehaviour {
     [SerializeField] int rainCooldown = 50, minRainCooldown = 10, rainDropSpeed = 3;
     int curRainCooldown = 0;
 
-    AudioSource audio;
-    [SerializeField] AudioClip sndLoseRing, sndDisableParticleArmor, sndEnableParticleArmor, sndDying, sndDie, sndEvilSonar, sndBeamCharge;
+    AudioSource audio_sonar, audio_beam, audio_misc;
+    [SerializeField] AudioClip sndLoseRing, sndDisableParticleArmor, sndEnableParticleArmor, sndDying, sndDie, sndEvilSonar, sndBeamCharge, sndBeamFire;
 
     enum fireState
     {
@@ -127,7 +129,9 @@ public class Boss : MonoBehaviour {
         particleSystemDying = transform.FindChild("dying").GetComponent<ParticleSystem>();
 
         myMaterial = GetComponent<MeshRenderer>().material;
-        audio = GetComponent<AudioSource>();
+        audio_sonar = GetComponents<AudioSource>()[0];
+        audio_beam = GetComponents<AudioSource>()[1];
+        audio_misc = GetComponents<AudioSource>()[2];
 
         RaycastHit hit;
         Ray downRay = new Ray(transform.position, -Vector3.up);
@@ -231,53 +235,64 @@ public class Boss : MonoBehaviour {
             transform.position = Vector3.Lerp(transform.position, new Vector3(transform.position.x, 8.38F, transform.position.z), Time.deltaTime);
         }
 
-        if(curLevel == levels.lvl1)
+        if (beginAttacking)
         {
-            drainiManager();
+            if (curLevel == levels.lvl1)
+            {
+                drainiManager();
 
-            if (curSwingCooldown <= 0)
-            {
-                firePatterns();
-            }
-            else
-            {
-                curSwingCooldown--;
-            }
+                if (curSwingCooldown <= 0)
+                {
+                    firePatterns();
+                }
+                else
+                {
+                    curSwingCooldown--;
+                }
 
-            if(curOutHP <= 0)
-            {
-                bossState = states.wounded;
+                if (curOutHP <= 0)
+                {
+                    bossState = states.wounded;
+                }
+                //spawn enemies 1
+                spawnEnemies(0);
             }
-            //spawn enemies 1
-            spawnEnemies(0);
+            else if (curLevel == levels.lvl2)
+            {
+                drainiManager();
+                beaming();
+
+                if (curInHP <= 0)
+                {
+                    bossState = states.wounded;
+                }
+                //spawn enemies 2
+                spawnEnemies(1);
+            }
+            else if (curLevel == levels.lvl3)
+            {
+                beaming();
+                //spawn enemies 3 and randomly color sucking orbs
+                spawnEnemies(2);
+            }
         }
-        else if(curLevel == levels.lvl2)
+        else
         {
-            drainiManager();
-            beaming();
-
-            if (curInHP <= 0)
+            if(Vector3.Distance(transform.position, player.transform.position) < activeDistance)
             {
-                bossState = states.wounded;
+                beginAttacking = true;
             }
-            //spawn enemies 2
-            spawnEnemies(1);
-        }
-        else if(curLevel == levels.lvl3)
-        {
-            beaming();
-            //spawn enemies 3 and randomly color sucking orbs
-            spawnEnemies(2);
         }
     }
     void wounded()
     {
+        beginAttacking = false;
         if (curLevel == levels.lvl1)
         {
             //get outer ring destroyed, go to next island
             if(outerRing != null)
             {
-                audio.PlayOneShot(sndLoseRing);
+                audio_misc.PlayOneShot(sndLoseRing);
                 Destroy(outerRing.gameObject);
             }
             if(Vector3.Distance(transform.position, translatePos(levelPositions[1])) < 0.5F)
@@ -300,7 +315,7 @@ public class Boss : MonoBehaviour {
             //get inner ring destroyed, go to next island
             if (innerRing != null)
             {
-                audio.PlayOneShot(sndLoseRing);
+                audio_misc.PlayOneShot(sndLoseRing);
                 Destroy(innerRing.gameObject);
             }
 
@@ -339,7 +354,7 @@ public class Boss : MonoBehaviour {
                 }
                 if (!particleArmor.gameObject.activeSelf)
                 {
-                    audio.PlayOneShot(sndEnableParticleArmor);
+                    audio_misc.PlayOneShot(sndEnableParticleArmor);
                     particleArmor.gameObject.SetActive(true);
                 }
 
@@ -355,7 +370,7 @@ public class Boss : MonoBehaviour {
                 if (particleArmor.gameObject.activeSelf)
                 {
                     particleArmor.gameObject.SetActive(false);
-                    audio.PlayOneShot(sndDisableParticleArmor);
+                    audio_misc.PlayOneShot(sndDisableParticleArmor);
                 }
 
                 if(transform.position.y > floor)
@@ -381,7 +396,7 @@ public class Boss : MonoBehaviour {
 
             if (particleSystemDying.isPlaying) particleSystemDying.Stop();
 
-            audio.PlayOneShot(sndDie);
+            audio_misc.PlayOneShot(sndDie);
 
             gameState = gameStates.ending;
         }
@@ -389,7 +404,7 @@ public class Boss : MonoBehaviour {
         {
             if (!particleSystemDying.isPlaying)
             {
-                audio.PlayOneShot(sndDying);
+                audio_misc.PlayOneShot(sndDying);
                 particleSystemDying.Play();
             }
 
@@ -423,7 +438,7 @@ public class Boss : MonoBehaviour {
         {
             if (!particleSystemSonar.isPlaying)
             {
-                audio.PlayOneShot(sndEvilSonar);
+                audio_sonar.PlayOneShot(sndEvilSonar);
                 particleSystemSonar.Play();
             }
 
@@ -732,12 +747,15 @@ public class Boss : MonoBehaviour {
 
         if (!beamCharge.isPlaying)
         {
-            audio.PlayOneShot(sndBeamCharge);
+            audio_beam.volume = 1;
+            audio_beam.loop = false;
+            audio_beam.PlayOneShot(sndBeamCharge);
             beamCharge.Play();
         }
 
         if (beamCharge.time >= 1.5F)
         {
+            audio_beam.volume = 0.1F;
             bstate = beamState.shoot;
             beamCharge.Stop();
         }
@@ -748,8 +766,12 @@ public class Boss : MonoBehaviour {
     {
         if (!beamEnd.isPlaying) beamEnd.Play();
 
+        audio_beam.loop = true;
+        audio_beam.PlayOneShot(sndBeamFire);
+
         if (Vector3.Distance(transform.position, beamFacing.position) < beamLength)
         {
+            audio_beam.volume -= 0.001F;
             beamFacing.Translate(Vector3.forward * beamSpeed * Time.deltaTime);
 
             beam.SetPosition(0, transform.position);
@@ -763,6 +785,8 @@ public class Boss : MonoBehaviour {
         }
         else
         {
+            audio_beam.loop = false;
+            audio_beam.Stop();
             bstate = beamState.idle;
         }
 
@@ -776,6 +800,8 @@ public class Boss : MonoBehaviour {
                 Rigidbody rbody = player.GetComponent<Rigidbody>();
                 rbody.AddForce((player.transform.position - transform.position).normalized * pushForce, ForceMode.Impulse);
 
+                audio_beam.loop = false;
+                audio_beam.Stop();
                 bstate = beamState.idle;
             }
         }

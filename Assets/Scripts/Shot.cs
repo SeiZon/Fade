@@ -82,7 +82,7 @@ public class Shot : MonoBehaviour {
             }
             
             Player myself = collision.gameObject.GetComponent<Player>();
-            if (myself != null || shotType == GameData.ShotType.Charged) return;
+            if ((myself != null || shotType == GameData.ShotType.Charged) && collision.tag != "Wall") return;
             Destroy(gameObject);
         }
         else if (team == GameData.Team.Enemy) {
@@ -92,6 +92,13 @@ public class Shot : MonoBehaviour {
                 GameObject pa = Instantiate(shotParticlePlayer, enemy.transform.position, Quaternion.identity) as GameObject;
                 if(shooter != null) pa.transform.LookAt(shooter);
             }
+
+            Boss boss = collision.gameObject.GetComponent<Boss>();
+            if (boss != null) return;
+
+            Shot shot = collision.gameObject.GetComponent<Shot>();
+            if (shot != null) return;
+
             EnemyInfo enemyInfo = collision.gameObject.GetComponent<EnemyInfo>();
             if (enemyInfo != null) return;
             Destroy(gameObject);
