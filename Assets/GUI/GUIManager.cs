@@ -149,7 +149,7 @@ public class GUIManager : MonoBehaviour {
         else if (state == GUIState.normal) {
             titleScreen.enabled = false;
             pressStartText.enabled = false;
-            whiteOverlay.enabled = true;
+            whiteOverlay.enabled = false;
             deathText.enabled = false;
             pauseMenu.SetActive(false);
         }
@@ -232,7 +232,7 @@ public class GUIManager : MonoBehaviour {
             currentTime += Time.deltaTime;
             yield return null;
         } while (currentTime <= time);
-
+        whiteOverlay.enabled = false;
         playing = true;
         gameController.BeginGame();
     }

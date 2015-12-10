@@ -95,7 +95,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shader: {fileID: 4800000, guid: daf9781cad112c75d0008dfa8d76c639, type: 3}
-  effectAmount: 1
+  effectAmount: 0
   textureRamp: {fileID: 0}
   rampOffset: 0
 --- !u!114 &11414790
