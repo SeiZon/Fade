@@ -177,6 +177,7 @@ public class Boss : MonoBehaviour {
     void bossFight()
     {
         animateRings();
+        UpdateRingColors(curLevel);
 
         if (bossState != states.die)
         {
@@ -197,6 +198,7 @@ public class Boss : MonoBehaviour {
             default:
                 break;
         }
+        
     }
     void ending()
     {
@@ -783,5 +785,31 @@ public class Boss : MonoBehaviour {
         Quaternion targetRotation = Quaternion.LookRotation(target - transform.position, Vector3.up);
         targetRotation = new Quaternion(0, targetRotation.y, 0, targetRotation.w);
         transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, Time.deltaTime * turnSpeed);
+    }
+
+    void UpdateRingColors(levels level) {
+        Material activeRing = null;
+        float initHp = 0;
+        float hp = 0;
+        if (level == levels.lvl1) {
+            if (outerRing == null) return;
+            activeRing = outerRing.GetComponent<MeshRenderer>().material;
+            hp = curOutHP;
+            initHp = outerRingHealth;
+        }
+        else if (level == levels.lvl2) {
+            if (innerRing == null) return;
+            activeRing = innerRing.GetComponent<MeshRenderer>().material;
+            hp = curInHP;
+            initHp = innerRingHealth;
+        }
+        else {
+            return;
+        }
+        float percent = hp / initHp;
+            
+        Color finalColor = new Color(Mathf.Lerp(1, 0.5f, percent), Mathf.Lerp(0, 0.5f, percent), Mathf.Lerp(0, 0.5f, percent), 1);
+        activeRing.color = finalColor;
+        Debug.Log(finalColor);
     }
 }
