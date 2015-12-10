@@ -836,6 +836,5 @@ public class Boss : MonoBehaviour {
             
         Color finalColor = new Color(Mathf.Lerp(1, 0.5f, percent), Mathf.Lerp(0, 0.5f, percent), Mathf.Lerp(0, 0.5f, percent), 1);
         activeRing.color = finalColor;
-        Debug.Log(finalColor);
     }
 }
