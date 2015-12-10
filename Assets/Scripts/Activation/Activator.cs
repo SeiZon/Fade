@@ -15,7 +15,7 @@ public class Activator : MonoBehaviour {
 
     
     int prerequisitesActivated = 0;
-    Animator[] animators;
+    protected Animator[] animators;
 
     // Use this for initialization
     protected virtual void Start () {

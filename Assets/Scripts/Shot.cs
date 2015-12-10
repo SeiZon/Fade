@@ -78,12 +78,7 @@ public class Shot : MonoBehaviour {
                 Destroy(gameObject);
             }
             else if (activator != null) {
-                if (activator.requiresChargedShot) {
-                    if (shotType == GameData.ShotType.Charged)
-                        activator.Activate();
-                }
-                else
-                     activator.Activate();
+                activator.Activate(shotType);
             }
             
             Player myself = collision.gameObject.GetComponent<Player>();
