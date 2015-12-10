@@ -78,7 +78,7 @@ public class TowerActivator : MonoBehaviour {
         {
             foreach (GameObject tower in towers)
             {
-                tower.GetComponent<AudioSource>().PlayOneShot(sndActivateTower);
+                //tower.GetComponent<AudioSource>().PlayOneShot(sndActivateTower);
                 Crystal crystal = tower.GetComponent<Crystal>();
                 crystal.SetActivate(true);
                 crystal.PlayerNearby(true);
@@ -97,7 +97,7 @@ public class TowerActivator : MonoBehaviour {
                 {
                     for (int i = 0; i < towers.Length; i++)
                     {
-                        towers[i].GetComponent<AudioSource>().PlayOneShot(sndChargeLaser);
+                        //towers[i].GetComponent<AudioSource>().PlayOneShot(sndChargeLaser);
                         laserParticlesInScene[i] = Instantiate(laserParticle, towers[i].transform.position, Quaternion.identity) as GameObject;
                     }
                     state = states.towersShootLaser;
@@ -108,7 +108,7 @@ public class TowerActivator : MonoBehaviour {
         {
             foreach (GameObject tower in towers)
             {
-                tower.GetComponent<AudioSource>().PlayOneShot(sndDeactivateTower);
+                //tower.GetComponent<AudioSource>().PlayOneShot(sndDeactivateTower);
                 Crystal crystal = tower.GetComponent<Crystal>();
                 crystal.SetActivate(false);
                 crystal.PlayerNearby(false);
@@ -122,7 +122,7 @@ public class TowerActivator : MonoBehaviour {
         {
             foreach (GameObject tower in towers)
             {
-                if (!shootLaserSoundPlayed) tower.GetComponent<AudioSource>().PlayOneShot(sndShootLaser);
+                //if (!shootLaserSoundPlayed) tower.GetComponent<AudioSource>().PlayOneShot(sndShootLaser);
                 LineRenderer lr = tower.transform.FindChild("laser").GetComponent<LineRenderer>();
 
                 lr.SetColors(Color.red, Color.red);
