@@ -144,6 +144,12 @@ public class EnemyDraini : EnemyInfo{
             //return to mama
             lookAt(mama.transform);
             transform.Translate(Vector3.forward * moveSpeed * Time.deltaTime);
+
+            if(Vector3.Distance(transform.position, mama.transform.position) <= 5)
+            {
+                mama.getHealth(curHealth);
+                Destroy(this.gameObject);
+            }
         }
         else
         {
@@ -235,7 +241,7 @@ public class EnemyDraini : EnemyInfo{
         healthIndicator.SetColor("_EmissionColor", finalColor);
     }
 
-    void OnCollisionEnter(Collision col)
+    void OnTriggerEnter(Collider col)
     {
         if(col.gameObject.tag == "Boss" && returnToMama)
         {
